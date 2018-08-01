@@ -1,0 +1,30 @@
+{
+  "name": "icoworld",
+  "displayName": "icoworld",
+  "expo": {
+    "name": "icoworld2",
+    "description": "No description",
+    "slug": "icoworld2",
+    "privacy": "public",
+    "sdkVersion": "29.0.0",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./App/Images/icon.png",
+    "splash": {
+      "image": "./App/Images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "packagerOpts": {
+      "assetExts": [
+        "ttf"
+      ],
+      "sourceExts": ["ts", "tsx"],
+      "transformer": "node_modules/react-native-typescript-transformer/index.js"
+    },
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
