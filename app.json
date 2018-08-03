@@ -18,13 +18,18 @@
     },
     "packagerOpts": {
       "assetExts": [
-        "ttf"
+        "ttf",
+        "png"
       ],
       "sourceExts": ["ts", "tsx"],
       "transformer": "node_modules/react-native-typescript-transformer/index.js"
     },
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "assetBundlePatterns": [
+      "App/Images/*",
+      "App/Images/Icons/*"
+    ]
   }
 }

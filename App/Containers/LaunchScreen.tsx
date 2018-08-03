@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, Image, View } from 'react-native'
 import { Button } from 'native-base'
-import { Images } from '../Themes/index.js'
+import { Images } from 'App/Themes'
 
 // Styles
 import styles from './Styles/LaunchScreenStyles'
