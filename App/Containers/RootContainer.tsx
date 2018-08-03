@@ -21,12 +21,15 @@ function cacheImages(images) {
   });
 }
 
-// function cacheFonts() {
-//   return Font.loadAsync({
-//     'Roboto': require('../Assets/Fonts/Roboto-Regular.ttf'),
-//     'Roboto_medium': require('../Assets/Fonts/Roboto-Medium.ttf'),
-//   });
-// }
+async function cacheFonts() {
+  await Font.loadAsync({
+    'Roboto': require('../Fonts/Roboto-Regular.ttf'),
+    'Roboto_medium': require('../Fonts/Roboto-Medium.ttf'),
+    'Roboto_bold': require('../Fonts/Roboto-Bold.ttf'),
+    'Roboto_italic': require('../Fonts/Roboto-Italic.ttf'),
+    'OpenSans_semi': require('../Fonts/OpenSans-SemiBold.ttf'),
+  });
+}
 
 class RootContainer extends Component {
   state = {
@@ -43,9 +46,15 @@ class RootContainer extends Component {
   async _loadAssetsAsync() {
     const images = getItemsByKeysArr(Object.keys(Images), Images);
     const imageAssets = cacheImages(images);
-    //const fontAssets = cacheFonts();
+    const fonts = {
+      'Roboto': require('../Fonts/Roboto-Regular.ttf'),
+      'Roboto_medium': require('../Fonts/Roboto-Medium.ttf'),
+      'Roboto_bold': require('../Fonts/Roboto-Bold.ttf'),
+      'Roboto_italic': require('../Fonts/Roboto-Italic.ttf')
+    };
+    const fontsArr = getItemsByKeysArr(Object.keys(fonts), fonts);
 
-    await Promise.all([...imageAssets]);
+    await Promise.all([...imageAssets, cacheFonts()]);
   }
 
   render () {

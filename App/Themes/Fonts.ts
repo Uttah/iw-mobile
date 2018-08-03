@@ -1,9 +1,9 @@
 import { Platform } from 'react-native'
 
 const type = {
-  base: (Platform.OS === 'ios' ? 'Avenir-Book' : 'sans-serif'),
-  bold: (Platform.OS === 'ios' ? 'Avenir-Black' : 'sans-serif-condensed'),
-  emphasis: (Platform.OS === 'ios' ? 'HelveticaNeue-Italic' : 'sans-serif')
+  base: 'Roboto',
+  bold: 'Roboto_bold',
+  emphasis: 'OpenSans_semi'
 }
 
 const size = {
