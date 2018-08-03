@@ -37,3 +37,8 @@ exp publish .
 ```
 
 exp start у меня пока не заработал (Linux через VirtualBox работает).
+
+Если при публикации выдает Error: connect ECONNREFUSED, то выполните предварительно
+ ```
+exp start .
+```
