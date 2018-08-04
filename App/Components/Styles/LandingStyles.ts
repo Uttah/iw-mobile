@@ -8,8 +8,9 @@ export default StyleSheet.create({
     slide: {
         flex: 1,
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingTop: 5
+        paddingTop: 5,
+        paddingLeft: 25,
+        paddingRight: 25
     },
     logosmall: {
         height: 80,

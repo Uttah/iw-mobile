@@ -3,6 +3,7 @@ import {  View, Text, Image, TouchableOpacity } from 'react-native'
 import Swiper from './Swiper'
 import styles from './Styles/LandingStyles'
 import { Images } from 'App/Themes'
+import ListItem from 'App/Components/ListItem'
 
 export default class Landing extends Component {
 
@@ -14,48 +15,48 @@ export default class Landing extends Component {
                 </View>
                 <View style={styles.slide} key={2}>
                     <Text style={styles.slideTitle}>Преимущества для криптоинвесторов:</Text>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemNumber}>1</Text>
-                        <Text style={styles.menuItemText}>{`Единое пространство общения с основными\nучастниками ICO-рынка`}</Text>
-                    </View>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemNumber}>2</Text>
-                        <Text style={styles.menuItemText}>{`Доступ к перспективным\nочищенным от скама проектам`}</Text>
-                    </View>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemNumber}>3</Text>
-                        <Text style={styles.menuItemText}>{`Безопасная передача средств в\nдоверительное управление`}</Text>
-                    </View>
+                    <ListItem
+                        number={21}
+                        text={`Единое пространство общения с основными\nучастниками ICO-рынка`}
+                    />
+                    <ListItem
+                        number={22}
+                        text={`Доступ к перспективным\nочищенным от скама проектам`}
+                    />
+                    <ListItem
+                        number={23}
+                        text={`Безопасная передача средств в\nдоверительное управление`}
+                    />
                 </View>
                 <View style={styles.slide} key={3}>
                     <Text style={styles.slideTitle}>Преимущества для управляющих активами:</Text>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemNumber}>1</Text>
-                        <Text style={styles.menuItemText}>{`Возможность публичного ведения\nинвестиционного портфеля`}</Text>
-                    </View>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemNumber}>2</Text>
-                        <Text style={styles.menuItemText}>{`Возможность получения средств в\nдоверительное управление`}</Text>
-                    </View>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemNumber}>3</Text>
-                        <Text style={styles.menuItemText}>{`Удобная инфраструктура для\nпривлечения клиентов`}</Text>
-                    </View>
+                    <ListItem
+                        number={34}
+                        text={`Возможность публичного ведения\nинвестиционного портфеля`}
+                    />
+                    <ListItem
+                        number={35}
+                        text={`Возможность получения средств в\nдоверительное управление`}
+                    />
+                    <ListItem
+                        number={36}
+                        text={`Удобная инфраструктура для\nпривлечения клиентов`}
+                    />
                 </View>
                 <View style={styles.slide} key={4}>
                     <Text style={styles.slideTitle}>Преимущества для проектов:</Text>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemNumber}>1</Text>
-                        <Text style={styles.menuItemText}>{`Доступ к активной целевой\nаудитории`}</Text>
-                    </View>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemNumber}>2</Text>
-                        <Text style={styles.menuItemText}>{`Повышенное доверие со стороны\nинвесторов`}</Text>
-                    </View>
-                    <View style={styles.menuItem}>
-                        <Text style={styles.menuItemNumber}>3</Text>
-                        <Text style={styles.menuItemText}>{`Минимальная стоимость\nпроведения ICO`}</Text>
-                    </View>
+                    <ListItem
+                        number={41}
+                        text={`Доступ к активной целевой\nаудитории`}
+                    />
+                    <ListItem
+                        number={42}
+                        text={`Повышенное доверие со стороны\nинвесторов`}
+                    />
+                    <ListItem
+                        number={43}
+                        text={`Минимальная стоимость\nпроведения ICO`}
+                    />
                 </View>
                 <View style={styles.slide} key={5}>
                     <Text style={styles.slideTitle}>Как работает:</Text>
