@@ -9,14 +9,9 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingTop: 5
-    },
-    logosmall: {
-        height: 80,
-        marginTop: 15
+        paddingTop: 30
     },
     motivation: {
-        marginTop: 30,
         textAlign: 'center',
         fontSize: 18
     },
@@ -26,17 +21,13 @@ export default StyleSheet.create({
         fontFamily: Fonts.type.base,
         color: Colors.text
     },
+    menuItem: {
+        marginTop: 15
+    },
     menuItemText: {
         textAlign: 'center',
         fontSize: 14,
         color: Colors.text
-    },
-    menuItemNumber: {
-        fontWeight: 'bold',
-        textAlign: 'center',
-        fontSize: 20,
-        color: Colors.text,
-        marginTop: 8
     },
     slideTitle: {
         fontFamily: Fonts.type.emphasis,
@@ -44,6 +35,5 @@ export default StyleSheet.create({
         color: Colors.text,
         marginBottom: 10,
         textAlign: 'center'
-        // backgroundColor: 'red'
     }
 });

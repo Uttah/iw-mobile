@@ -25,7 +25,9 @@ export default class LaunchScreen extends Component<Props> {
   render () {
     return (
       <View style={styles.mainContainer}>
-        <Image source={Images.icoWorldLogo} style={styles.logo} resizeMode='contain'/>
+        <View style={styles.logowrap}>
+          <Image source={Images.icoWorldLogo} style={styles.logo} resizeMode='contain'/>
+        </View>
         <View style={styles.landing}>
           <Landing/>
         </View>

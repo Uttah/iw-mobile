@@ -23,6 +23,7 @@ export default StyleSheet.create({
         paddingLeft: 0,
         paddingRight: 0,
         textDecorationLine: 'underline',
-        color: Colors.charcoal
+        color: '#748398',
+        fontSize: 14
     }
 });

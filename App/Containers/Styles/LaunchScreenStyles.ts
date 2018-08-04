@@ -4,16 +4,16 @@ import { Metrics, ApplicationStyles } from 'App/Themes'
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   login: {
-    marginBottom: Metrics.section
+    flex: 2.1
   },
   landing: {
-    flex: 1.5,
-    //backgroundColor: 'green'
+    flex: 2.5
+  },
+  logowrap: {
+    flex: 1,
+    alignItems: 'center'
   },
   logo: {
-    // backgroundColor: 'blue',
-    height: 70,
-    marginTop: 35,
-    //backgroundColor: 'red'
+    width: Metrics.images.logo,
   },
 })
