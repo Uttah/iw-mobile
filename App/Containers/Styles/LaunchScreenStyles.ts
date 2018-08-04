@@ -7,6 +7,13 @@ export default StyleSheet.create({
     marginBottom: Metrics.section
   },
   landing: {
-    flex: 2
-  }
+    flex: 1.5,
+    //backgroundColor: 'green'
+  },
+  logo: {
+    // backgroundColor: 'blue',
+    height: 70,
+    marginTop: 35,
+    //backgroundColor: 'red'
+  },
 })

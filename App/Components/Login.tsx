@@ -51,14 +51,14 @@ export default class Landing extends Component {
                     />
                 </Item>
                 <Button full dark onPress={this.onPress} style={styles.button}>
-                    <Text>Войти</Text>
+                    <Text uppercase={false}>Войти</Text>
                 </Button> 
                 <View style={styles.buttons}>
                     <Button transparent>
-                        <Text style={styles.linkText}>Забыли пароль?</Text>
+                        <Text style={styles.linkText} uppercase={false}>Забыли пароль?</Text>
                     </Button> 
                     <Button transparent>
-                        <Text style={styles.linkText}>Регистрация</Text>
+                        <Text style={styles.linkText} uppercase={false}>Регистрация</Text>
                     </Button> 
                 </View> 
             </View>

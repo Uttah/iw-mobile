@@ -11,10 +11,9 @@ export default StyleSheet.create({
         alignItems: 'center',
         paddingTop: 5
     },
-    logo: {
-        width: Metrics.images.logo,
-        // backgroundColor: 'blue',
-        height: 135
+    logosmall: {
+        height: 80,
+        marginTop: 15
     },
     motivation: {
         marginTop: 30,
@@ -44,6 +43,7 @@ export default StyleSheet.create({
         fontSize: 17,
         color: Colors.text,
         marginBottom: 10,
+        textAlign: 'center'
         // backgroundColor: 'red'
     }
 });
