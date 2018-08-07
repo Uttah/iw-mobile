@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { View, StatusBar } from 'react-native'
-import ReduxNavigation from '../Navigation/ReduxNavigation'
-import { connect } from 'react-redux'
-import StartupActions from '../Redux/StartupRedux'
-import ReduxPersist from '../Config/ReduxPersist'
-import { Images } from 'App/Themes'
-import { getItemsByKeysArr } from 'App/Services/Utils'
+import React, { Component } from 'react';
+import { View, StatusBar } from 'react-native';
+import ReduxNavigation from '../Navigation/ReduxNavigation';
+import { connect } from 'react-redux';
+import StartupActions from '../Redux/StartupRedux';
+import ReduxPersist from '../Config/ReduxPersist';
+import { Images } from 'App/Themes';
+import { getItemsByKeysArr } from 'App/Services/Utils';
 
 // Styles
 import styles from './Styles/RootContainerStyles'
@@ -28,6 +28,7 @@ async function cacheFonts() {
     'Roboto_bold': require('../Fonts/Roboto-Bold.ttf'),
     'Roboto_italic': require('../Fonts/Roboto-Italic.ttf'),
     'OpenSans_semi': require('../Fonts/OpenSans-SemiBold.ttf'),
+    'Ionicons': require('@expo/vector-icons/fonts/Ionicons.ttf')
   });
 }
 
@@ -46,13 +47,6 @@ class RootContainer extends Component {
   async _loadAssetsAsync() {
     const images = getItemsByKeysArr(Object.keys(Images), Images);
     const imageAssets = cacheImages(images);
-    const fonts = {
-      'Roboto': require('../Fonts/Roboto-Regular.ttf'),
-      'Roboto_medium': require('../Fonts/Roboto-Medium.ttf'),
-      'Roboto_bold': require('../Fonts/Roboto-Bold.ttf'),
-      'Roboto_italic': require('../Fonts/Roboto-Italic.ttf')
-    };
-    const fontsArr = getItemsByKeysArr(Object.keys(fonts), fonts);
 
     await Promise.all([...imageAssets, cacheFonts()]);
   }

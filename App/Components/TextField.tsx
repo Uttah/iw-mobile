@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { Item, Input, Text, Icon, Label } from 'native-base';
 import { TextFieldStatus } from '../Services/Enums';
 import styles from './Styles/TextFieldStyles';
+import { Ionicons } from '@expo/vector-icons';
 
 type Props = {
     style: any,
@@ -22,7 +23,9 @@ export default class TextField extends Component<Props> {
                     value = {value}
                     onChangeText = {onChangeText}
                 />
-                {/* <Icon name='checkmark-circle' /> */}
+                {/* почему-то так иконки рендерятся только красного цвета */}
+                {/* <Icon name='md-checkmark-circle'/> */}
+                <Ionicons name="md-checkmark-circle" size={28} color='#2b8339' style={styles.icon}/>
             </Item>
         );        
     }
@@ -36,7 +39,7 @@ export default class TextField extends Component<Props> {
                         value = {value}
                         onChangeText = {onChangeText}
                     />
-                    {/* <Icon name='close-circle' /> */}
+                    <Ionicons name="md-close-circle" size={28} color='#ed2f2f' style={styles.icon}/>
                 </Item>
                 <Label style={styles.errorLabel}>{error}</Label>
             </View>
