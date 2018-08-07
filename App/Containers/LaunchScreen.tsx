@@ -9,6 +9,8 @@ import { NavigationScreenProp } from 'react-navigation'
 import Landing from 'App/Components/Landing'
 import Login from 'App/Components/Login'
 
+import PostList from '../Components/PostList';
+
 type Props = {
   navigation: NavigationScreenProp<any, any>,
 }
@@ -25,13 +27,7 @@ export default class LaunchScreen extends Component<Props> {
   render () {
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.logowrap}>
-          <Image source={Images.icoWorldLogo} style={styles.logo} resizeMode='contain'/>
-        </View>
-        <View style={styles.landing}>
-          <Landing/>
-        </View>
-        <Login style={styles.login}/>
+        <PostList/>
       </View>
     )
   }
