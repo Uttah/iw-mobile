@@ -5,6 +5,12 @@
 
 TypeScript прикручивала с помощью инструкций от [Microsoft](https://github.com/Microsoft/TypeScript-React-Native-Starter).
 
+## ПРОСТО ПОСМОТРЕТЬ (не разработчикам):
+- В аппсторе или Google Play устанавливаете приложение Expo на свое устройство. 
+- Логинитесь под учеткой для expo (см. карточку в трелло https://expo.io/@icoworld)
+- Открываете вкладку Profile (таб внизу)
+- Published projects -> icoworld2
+
 
 ### Установка
 
@@ -15,12 +21,6 @@ npm i react@16.3.1
 ```
 
 ### Запуск
-
-#### ПРОСТО ПОСМОТРЕТЬ (не разработчикам):
-- В аппсторе или Google Play устанавливаете приложение Expo на свое устройство. 
-- Логинитесь под учеткой для expo (см. карточку в трелло https://expo.io/@icoworld)
-- Открываете вкладку Profile (таб внизу)
-- Published projects -> icoworld2
 
 #### MacOS:
 Качаете Expo XDE, Project -> Open project, выбираете папку с проектом. Далее для дев режима нажать share, а полученный QR-код отсканировать из приложения Expo на своём мобильном. 
