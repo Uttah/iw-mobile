@@ -11,7 +11,8 @@ type Props = {
     value: string,
     onChangeText: any,
     error: string,
-    fieldStatus: TextFieldStatus
+    fieldStatus: TextFieldStatus,
+    showError: boolean
 };
 
 export default class TextField extends Component<Props> {
@@ -30,7 +31,7 @@ export default class TextField extends Component<Props> {
         );        
     }
 
-    errorTextField = (style, placeholder, value, error, onChangeText) => {
+    errorTextField = (style, placeholder, value, onChangeText, error, showError) => {
         return (
             <View style={style}>
                 <Item regular error>
@@ -41,7 +42,7 @@ export default class TextField extends Component<Props> {
                     />
                     <Ionicons name="md-close-circle" size={28} color='#ed2f2f' style={styles.icon}/>
                 </Item>
-                <Label style={styles.errorLabel}>{error}</Label>
+                {showError && <Label style={styles.errorLabel}>{error}</Label>}
             </View>
         );
     }
@@ -65,13 +66,14 @@ export default class TextField extends Component<Props> {
             placeholder, 
             value, 
             onChangeText, 
-            error 
+            error,
+            showError 
         } = this.props;
 
         return (
             <Fragment>
                 {fieldStatus == TextFieldStatus.CheckedCorrect && this.successTextField(style, placeholder, value, onChangeText)}
-                {fieldStatus == TextFieldStatus.CheckedWrong && this.errorTextField(style, placeholder, value, error, onChangeText)}
+                {fieldStatus == TextFieldStatus.CheckedWrong && this.errorTextField(style, placeholder, value, onChangeText, error, showError)}
                 {fieldStatus == TextFieldStatus.NotChecked && this.defaultTextField(style, placeholder, value, onChangeText)}
             </Fragment>
         );

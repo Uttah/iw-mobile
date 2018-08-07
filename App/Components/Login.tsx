@@ -92,28 +92,38 @@ export default class Login extends Component<Props, State> {
         }
     }
 
+    getSubmitDisabled = () => {
+        const { login, password } = this.state;
+        if (!login.length || !password.length) {
+            return true;
+        }
+        return false;
+    }
+
     render() {
         const style = this.props.style;
 
         return (
             <View style={[styles.section, style]}>
                 <TextField 
-                    placeholder = 'Email'
-                    value = {this.state.login}
-                    onChangeText = {this.onLoginChange}
-                    error={this.state.emailError}
-                    fieldStatus={this.getEmailStatus()}
                     style={styles.input}
+                    fieldStatus={this.getEmailStatus()}
+                    placeholder='Email'
+                    value={this.state.login}
+                    onChangeText={this.onLoginChange}
+                    error={this.state.emailError}
+                    showError={false}
                 />
                 <TextField 
-                    placeholder = 'Пароль'
-                    value = {this.state.password}
-                    onChangeText = {this.onPasswordChange}
-                    error={this.state.passwordError}
-                    fieldStatus={this.getPasswordStatus()}
                     style={styles.input}
+                    fieldStatus={this.getPasswordStatus()}
+                    placeholder='Пароль'
+                    value={this.state.password}
+                    onChangeText={this.onPasswordChange}
+                    error={this.state.passwordError}
+                    showError={false}
                 />
-                <Button full dark onPress={this.onPress} style={styles.button}>
+                <Button full dark style={styles.button} disabled={this.getSubmitDisabled()} onPress={this.onPress} >
                     <Text uppercase={false}>Войти</Text>
                 </Button> 
                 <View style={styles.buttons}>
