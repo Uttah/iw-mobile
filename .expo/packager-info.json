@@ -1,8 +1,8 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 1704,
-  "expoServerNgrokUrl": "https://pf-qrq.nataliadushkina.iw-mobile.exp.direct",
-  "packagerNgrokUrl": "https://packager.pf-qrq.nataliadushkina.iw-mobile.exp.direct",
-  "ngrokPid": 1720
+  "packagerPid": 23162,
+  "expoServerNgrokUrl": "https://pf-qrq.icoworld.iw-mobile.exp.direct",
+  "packagerNgrokUrl": "https://packager.pf-qrq.icoworld.iw-mobile.exp.direct",
+  "ngrokPid": 23178
 }

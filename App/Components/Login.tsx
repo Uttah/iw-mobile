@@ -1,24 +1,62 @@
-import React, { Component } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native'
-import styles from './Styles/LoginStyles'
-import { Item, Input, Button, Text } from 'native-base'
+import React, { Component } from 'react';
+import { View, Image } from 'react-native';
+import styles from './Styles/LoginStyles';
+import { Button, Text } from 'native-base';
+import TextField from './TextField';
+import validate from '../Services/Validator';
+import { TextFieldStatus } from '../Services/Enums';
 
-export default class Landing extends Component {
+type Props = {
+    style: any,
+}
+
+type State = {
+    login: string,
+    password: string,
+    emailError: string,
+    passwordError: string,
+    emailChecked: boolean,
+    passwordChecked: boolean
+}  
+
+export default class Login extends Component<Props, State> {
     state = {
         login: '',
-        password: ''
+        password: '',
+        emailError: '',
+        passwordError: '',
+        emailChecked: false,
+        passwordChecked: false
     };
 
     onLoginChange = (val) => {
         this.setState({
-            login: val
+            login: val,
+            emailChecked: false
         });
     };
 
     onPasswordChange = (val) => {
         this.setState({
-            password: val
+            password: val,
+            passwordChecked: false
         });
+    };
+
+    validateLogin = () => {
+        const emailError = validate('email', this.state.login);
+        const passwordError = validate('password', this.state.password);
+    
+        this.setState({
+            emailError: emailError,
+            passwordError: passwordError,
+            emailChecked: true,
+            passwordChecked: true
+        });
+    
+        if (!emailError && !passwordError) {
+          alert('Всё правильно!')
+        }
     };
 
     onPress = async() => {
@@ -26,8 +64,31 @@ export default class Landing extends Component {
         try {
             //await api.init(login, password);
             //this.props.navigation.navigate('NotesScreen');
+            this.validateLogin();
         } catch (err) {
             alert(err);
+        }
+    }
+
+    getEmailStatus = () => {
+        const { emailChecked, emailError } = this.state;
+        if (emailChecked && emailError.length) {
+            return TextFieldStatus.CheckedWrong;
+        } else if (emailChecked && !emailError.length) {
+            return TextFieldStatus.CheckedCorrect;
+        } else {
+            return TextFieldStatus.NotChecked;
+        }
+    }
+
+    getPasswordStatus = () => {
+        const { passwordChecked, passwordError } = this.state;
+        if (passwordChecked && passwordError.length) {
+            return TextFieldStatus.CheckedWrong;
+        } else if (passwordChecked && !passwordError.length) {
+            return TextFieldStatus.CheckedCorrect;
+        } else {
+            return TextFieldStatus.NotChecked;
         }
     }
 
@@ -36,20 +97,22 @@ export default class Landing extends Component {
 
         return (
             <View style={[styles.section, style]}>
-                <Item regular style={styles.input}>
-                    <Input 
-                        placeholder = 'Email' 
-                        value = {this.state.login}
-                        onChangeText = {this.onLoginChange}
-                    />
-                </Item>
-                <Item regular style={styles.input}>
-                    <Input 
-                        placeholder = 'Пароль' 
-                        value = {this.state.password}
-                        onChangeText = {this.onPasswordChange}
-                    />
-                </Item>
+                <TextField 
+                    placeholder = 'Email'
+                    value = {this.state.login}
+                    onChangeText = {this.onLoginChange}
+                    error={this.state.emailError}
+                    fieldStatus={this.getEmailStatus()}
+                    style={styles.input}
+                />
+                <TextField 
+                    placeholder = 'Пароль'
+                    value = {this.state.password}
+                    onChangeText = {this.onPasswordChange}
+                    error={this.state.passwordError}
+                    fieldStatus={this.getPasswordStatus()}
+                    style={styles.input}
+                />
                 <Button full dark onPress={this.onPress} style={styles.button}>
                     <Text uppercase={false}>Войти</Text>
                 </Button> 

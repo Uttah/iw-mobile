@@ -33,7 +33,7 @@ export default StyleSheet.create({
         fontFamily: Fonts.type.emphasis,
         fontSize: 17,
         color: Colors.text,
-        marginBottom: 10,
+        marginBottom: 5,
         textAlign: 'center'
     }
 });
