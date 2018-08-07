@@ -13,28 +13,40 @@ import { withClientState } from 'apollo-link-state';
 
 const store = createStore();
 
-const cache = new InMemoryCache();
-const stateLink = withClientState({
-  cache,
-  defaults: {
-    testing: {
-      __typename: 'testing',
-      name: '',
-      age: 0
-    }
-  }
-});
+// const cache = new InMemoryCache();
+// const stateLink = withClientState({
+//   cache,
+//   resolvers: {
+//     Mutation: {
+//       updateNetworkStatus: (_, { isConnected }, { cache }) => {
+//         const data = {
+//           networkStatus: {
+//             __typename: 'NetworkStatus',
+//             isConnected
+//           },
+//         };
+//         cache.writeData({ data });
+//         return null
+//       },
+//     },
+//   }
+// });
+
+// const client = new ApolloClient({
+//   cache,
+//   link: ApolloLink.from([
+//     stateLink,
+//     new HttpLink({ uri: 'http://localhost:8080/graphql' })
+//   ])
+// });
 
 const client = new ApolloClient({
-  cache,
-  link: ApolloLink.from([
-    stateLink,
-    new HttpLink({ uri: 'http://localhost:8080/graphql' })
-  ])
+  link: new HttpLink({ uri: 'http://localhost:8080/graphql' }),
+  cache: new InMemoryCache()
 });
 
 // make client to rewrite the defaults every time the store resets
-client.onResetStore(stateLink.writeDefaults);
+//client.onResetStore(stateLink.writeDefaults);
 
 class App extends Component {
   render () {
