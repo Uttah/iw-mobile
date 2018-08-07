@@ -27,6 +27,12 @@ class App extends Component {
   }
 }
 
+declare global {
+  interface Console {
+      tron: any
+  }
+}
+
 // allow reactotron overlay for fast design in dev mode
 export default DebugConfig.useReactotron
   ? console.tron.overlay(App)
