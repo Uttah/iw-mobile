@@ -124,7 +124,7 @@ export default class Login extends Component<Props, State> {
                     showError={false}
                 />
                 <Button full dark style={styles.button} disabled={this.getSubmitDisabled()} onPress={this.onPress} >
-                    <Text uppercase={false}>Войти</Text>
+                    <Text uppercase={false} style={styles.buttonText}>Войти</Text>
                 </Button> 
                 <View style={styles.buttons}>
                     <Button transparent>

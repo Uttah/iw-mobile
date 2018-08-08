@@ -19,7 +19,8 @@ export default class TextField extends Component<Props> {
     successTextField = (style, placeholder, value, onChangeText) => {
         return (
             <Item regular success style={style}>
-                <Input 
+                <Input
+                    style={styles.input} 
                     placeholder = {placeholder} 
                     value = {value}
                     onChangeText = {onChangeText}
@@ -36,6 +37,7 @@ export default class TextField extends Component<Props> {
             <View style={style}>
                 <Item regular error>
                     <Input 
+                        style={styles.input}
                         placeholder = {''} 
                         value = {value}
                         onChangeText = {onChangeText}
@@ -50,7 +52,8 @@ export default class TextField extends Component<Props> {
     defaultTextField = (style, placeholder, value, onChangeText) => {
         return (
             <Item regular style={style}>
-                <Input 
+                <Input
+                    style={styles.input}
                     placeholder = {placeholder} 
                     value = {value}
                     onChangeText = {onChangeText}

@@ -1,18 +1,22 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from 'App/Themes'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { Colors } from 'App/Themes';
 
 export default StyleSheet.create({
     section: {
-        marginLeft: 45,
-        marginRight: 45,
+        marginLeft: wp('12%'),
+        marginRight: wp('12%'),
         flex: 1
     },
     input: {
-        marginBottom: 20
+        marginBottom: hp('3.2%')
     },
     button: {
-        marginTop: 7,
+        marginTop: hp('0.9%'),
         borderRadius: 8
+    },
+    buttonText: {
+        fontSize: hp('2.7%')
     },
     buttons: {
         flex: 1,
@@ -24,6 +28,6 @@ export default StyleSheet.create({
         paddingRight: 0,
         textDecorationLine: 'underline',
         color: '#748398',
-        fontSize: 14
+        fontSize: hp('1.95%')
     }
 });
