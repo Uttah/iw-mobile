@@ -1,12 +1,15 @@
-import '../Config'
-import DebugConfig from '../Config/DebugConfig'
-import React, { Component } from 'react'
-import { Provider } from 'react-redux'
-import RootContainer from './RootContainer'
-import createStore from '../Redux'
+import '../Config';
+import DebugConfig from '../Config/DebugConfig';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { StyleProvider } from 'native-base';
+import RootContainer from './RootContainer';
+import createStore from '../Redux';
+import getTheme from '../native-base-theme/components';
+import platform from '../native-base-theme/variables/platform';
 
 // create our store
-const store = createStore()
+const store = createStore();
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
@@ -20,9 +23,11 @@ const store = createStore()
 class App extends Component {
   render () {
     return (
-      <Provider store={store}>
-        <RootContainer />
-      </Provider>
+      <StyleProvider style={getTheme(platform)}>
+        <Provider store={store}>
+          <RootContainer />
+        </Provider>
+      </StyleProvider>
     )
   }
 }
