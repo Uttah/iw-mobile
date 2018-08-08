@@ -1,20 +1,25 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, ApplicationStyles } from 'App/Themes'
+import { Metrics, Fonts, Colors, ApplicationStyles } from 'App/Themes'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   login: {
-    flex: 2
+    marginTop: 50
   },
   landing: {
-    flex: 2.5
-  },
-  logowrap: {
-    flex: 1.1,
     alignItems: 'center'
   },
   logo: {
     width: Metrics.images.logo,
     marginTop: 15
   },
+  motivation: {
+    textAlign: 'center',
+    fontSize: 18,
+    marginLeft: 26,
+    marginRight: 26,	
+    marginTop: 20,
+    fontFamily: Fonts.type.base,
+    color: Colors.text
+  }
 })
