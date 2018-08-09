@@ -35,7 +35,6 @@ export default class LaunchScreen extends Component<Props> {
     return (
       <KeyboardAwareScrollView 
         style={styles.mainContainer}  
-        contentContainerStyle={{ flexGrow: 1 }}
         enableOnAndroid={true}
         extraScrollHeight={this._getExtraScrollHeight()}
         resetScrollToCoords={{ x: 0, y: 0 }}
