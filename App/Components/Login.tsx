@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, TextInput } from 'react-native';
 import styles from './Styles/LoginStyles';
-import { Button, Text } from 'native-base';
+import { Button, Text, Input } from 'native-base';
 import TextField from './TextField';
 import validate from '../Services/Validator';
 import { TextFieldStatus } from '../Services/Enums';
@@ -20,6 +20,8 @@ type State = {
 }  
 
 export default class Login extends Component<Props, State> {
+    private passwordRef: undefined | {_root: {focus: () => void}};
+    
     state = {
         login: '',
         password: '',
@@ -113,6 +115,9 @@ export default class Login extends Component<Props, State> {
                     onChangeText={this.onLoginChange}
                     error={this.state.emailError}
                     showError={false}
+                    onSubmitEditing={() => {
+                        this.passwordRef && this.passwordRef._root.focus()
+                    }}
                 />
                 <TextField 
                     style={styles.input}
@@ -122,6 +127,7 @@ export default class Login extends Component<Props, State> {
                     onChangeText={this.onPasswordChange}
                     error={this.state.passwordError}
                     showError={false}
+                    inputRef={ref => this.passwordRef = ref}
                 />
                 <Button full dark style={styles.button} disabled={this.getSubmitDisabled()} onPress={this.onPress} >
                     <Text uppercase={false} style={styles.buttonText}>Войти</Text>

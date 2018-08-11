@@ -10,6 +10,7 @@ export default StyleSheet.create({
         marginRight: 5
     },
     input: {
+        marginTop: -11,
         fontSize: hp('2.5%')
     }
 });
