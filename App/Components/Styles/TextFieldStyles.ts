@@ -6,9 +6,6 @@ export default StyleSheet.create({
     errorLabel: {
         color: Colors.error
     },
-    icon: {
-        marginRight: 5
-    },
     input: {
         marginTop: -11,
         fontSize: hp('2.5%')

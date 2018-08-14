@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, Image, View, PixelRatio } from 'react-native';
-import { Button } from 'native-base';
+import { Text, Image, View, PixelRatio } from 'react-native';
 import { Images } from 'App/Themes';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { NavigationScreenProp } from 'react-navigation';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Login from 'App/Components/Login';
 import styles from './Styles/LaunchScreenStyles';
 
@@ -17,18 +15,22 @@ export default class LaunchScreen extends Component<Props> {
     header: null
   };
 
-  _onPress = () => {
+  state = {
+    extraScrollHeight: 0
+  };
+
+  onPress = () => {
     this.props.navigation.navigate('ProfileScreen');
   }
 
-  _getExtraScrollHeight = () => {
-    //ratios: 1, 1.5, 2, 3, 3.5 (у меня 2.6, на iphone 5s 2)
-    const ratio = PixelRatio.get();
-    if (ratio <= 2) {
-      return 70;
-    } else if (ratio > 2) {
-      return 120;
-    }
+  onButtonViewLayout = (height) => {
+    this.setState({
+      extraScrollHeight: PixelRatio.getPixelSizeForLayoutSize(height)
+    });
+  }
+
+  getExtraScrollHeight = () => {
+    return this.state.extraScrollHeight;
   }
 
   render () {
@@ -36,14 +38,18 @@ export default class LaunchScreen extends Component<Props> {
       <KeyboardAwareScrollView 
         style={styles.mainContainer}  
         enableOnAndroid={true}
-        extraScrollHeight={this._getExtraScrollHeight()}
-        resetScrollToCoords={{ x: 0, y: 0 }}
+        extraScrollHeight={this.getExtraScrollHeight()}
         >
         <View style={styles.landing}>
           <Image source={Images.icoWorldLogo} style={styles.logo} resizeMode='contain'/>
           <Text style={styles.motivation}>Социальная сеть для криптоинвесторов, управляющих активами, ICO-проектов. icoWorld создаёт удобное пространство для общения и обеспечивает честность деловых отношений.</Text>
         </View>
-        <Login style={styles.login}/>
+        <Login
+          style={styles.login} 
+          //onSuccess={() => this.props.navigation.navigate('ProfileScreen')}
+          onSuccess={() => console.log('success')}
+          onButtonViewLayout={(height) => this.onButtonViewLayout(height)}
+        />
       </KeyboardAwareScrollView>
     )
   }

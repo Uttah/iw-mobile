@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import StartupActions from '../Redux/StartupRedux';
 import ReduxPersist from '../Config/ReduxPersist';
 import { Images } from 'App/Themes';
+import Loading from '../Components/Loading';
 import { getItemsByKeysArr } from 'App/Services/Utils';
 
 // Styles
@@ -52,6 +53,7 @@ class RootContainer extends Component {
   }
 
   render () {
+    //const { isLoadingVisible } = this.props;
     if (!this.state.isReady) {
       return (
         <AppLoading
@@ -66,6 +68,7 @@ class RootContainer extends Component {
       <View style={styles.applicationView}>
         <StatusBar barStyle='light-content' />
         <ReduxNavigation />
+        {/* {isLoadingVisible ? <Loading/> : null} */}
       </View>
     );
   }
@@ -74,6 +77,12 @@ class RootContainer extends Component {
 //wraps dispatch to create nicer functions to call within our component
 const mapDispatchToProps = (dispatch) => ({
   startup: () => dispatch(StartupActions.startup())
-})
+});
 
-export default connect(null, mapDispatchToProps)(RootContainer)
+// const mapStateToProps = (state) => ({
+//   isLoadingVisible: state.root.isLoadingVisible
+// });
+
+//export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
+export default connect(null, mapDispatchToProps)(RootContainer);
+

@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { View, Image, TextInput } from 'react-native';
+import { View, Image, TextInput, Keyboard } from 'react-native';
 import styles from './Styles/LoginStyles';
 import { Button, Text, Input } from 'native-base';
 import TextField from './TextField';
 import validate from '../Services/Validator';
 import { TextFieldStatus } from '../Services/Enums';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 type Props = {
     style: any,
-}
+    onSuccess: () => void,
+    onButtonViewLayout: (val: number) => void
+};
 
 type State = {
     login: string,
@@ -17,10 +20,10 @@ type State = {
     passwordError: string,
     emailChecked: boolean,
     passwordChecked: boolean
-}  
+}; 
 
 export default class Login extends Component<Props, State> {
-    private passwordRef: undefined | {_root: {focus: () => void}};
+    private passwordRef: undefined | {_root: {focus: () => void, blur: () => void}};
     
     state = {
         login: '',
@@ -57,7 +60,7 @@ export default class Login extends Component<Props, State> {
         });
     
         if (!emailError && !passwordError) {
-          alert('Всё правильно!')
+            this.props.onSuccess();
         }
     };
 
@@ -65,7 +68,7 @@ export default class Login extends Component<Props, State> {
         const {login, password} = this.state;
         try {
             //await api.init(login, password);
-            //this.props.navigation.navigate('NotesScreen');
+            Keyboard.dismiss();
             this.validateLogin();
         } catch (err) {
             alert(err);
@@ -102,6 +105,12 @@ export default class Login extends Component<Props, State> {
         return false;
     }
 
+    onBtnLayout = (e) => {
+        const layout = e.nativeEvent.layout;
+        const btnHeight = layout.height;
+        this.props.onButtonViewLayout(btnHeight);
+    }
+
     render() {
         const style = this.props.style;
 
@@ -118,6 +127,7 @@ export default class Login extends Component<Props, State> {
                     onSubmitEditing={() => {
                         this.passwordRef && this.passwordRef._root.focus()
                     }}
+                    returnKeyType={'next'}
                 />
                 <TextField 
                     style={styles.input}
@@ -128,10 +138,19 @@ export default class Login extends Component<Props, State> {
                     error={this.state.passwordError}
                     showError={false}
                     inputRef={ref => this.passwordRef = ref}
+                    returnKeyType={'done'}
                 />
-                <Button full dark style={styles.button} disabled={this.getSubmitDisabled()} onPress={this.onPress} >
-                    <Text uppercase={false} style={styles.buttonText}>Войти</Text>
-                </Button> 
+                <View onLayout={(e) => this.onBtnLayout(e)}>
+                    <Button 
+                        full 
+                        dark 
+                        style={styles.button} 
+                        disabled={this.getSubmitDisabled()} 
+                        onPress={this.onPress}
+                    >
+                        <Text uppercase={false} style={styles.buttonText}>Войти</Text>
+                    </Button> 
+                </View>
                 <View style={styles.buttons}>
                     <Button transparent>
                         <Text style={styles.linkText} uppercase={false}>Забыли пароль?</Text>
