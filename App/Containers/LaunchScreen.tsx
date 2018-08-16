@@ -42,7 +42,7 @@ export default class LaunchScreen extends Component<Props> {
         >
         <View style={styles.landing}>
           <Image source={Images.icoWorldLogo} style={styles.logo} resizeMode='contain'/>
-          <Text style={styles.motivation}>Социальная сеть для криптоинвесторов, управляющих активами, ICO-проектов. icoWorld создаёт удобное пространство для общения и обеспечивает честность деловых отношений.!</Text>
+          <Text style={styles.motivation}>Социальная сеть для криптоинвесторов, управляющих активами, ICO-проектов. icoWorld создаёт удобное пространство для общения и обеспечивает честность деловых отношений.</Text>
         </View>
         <Login
           style={styles.login} 

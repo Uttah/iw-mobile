@@ -20,7 +20,7 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
         });
 
         if (response.ok) {
-            console.log(response.data);
+            return response.data;
             // api.setHeaders({
             //     'Authorization': `Bearer ${response.data.jwt}`
             // });

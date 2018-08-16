@@ -48,7 +48,7 @@ export default class Login extends Component<Props, State> {
         });
     };
 
-    validateLogin = () => {
+    validateLogin = async() => {
         const emailError = validate('email', this.state.login);
         const passwordError = validate('password', this.state.password);
     
@@ -60,21 +60,20 @@ export default class Login extends Component<Props, State> {
         });
     
         if (!emailError && !passwordError) {
-            this.props.onSuccess();
+            const {login, password} = this.state;
+            try {
+                const userData = await api.init(login, password);
+                alert(JSON.stringify(userData));
+                //navigate to another screen
+            } catch (err) {
+                alert(err);
+            }
         }
     };
 
-    onPress = async() => {
-        const {login, password} = this.state;
-        try {
-            await api.init(login, password);
-            //navigate to another screen
-            //попозже свяжу
-            //Keyboard.dismiss();
-            //this.validateLogin();
-        } catch (err) {
-            alert(err);
-        }
+    onPress = () => {
+        Keyboard.dismiss();
+        this.validateLogin();
     }
 
     getEmailStatus = () => {
