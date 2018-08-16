@@ -4,8 +4,8 @@ import styles from './Styles/LoginStyles';
 import { Button, Text, Input } from 'native-base';
 import TextField from './TextField';
 import validate from '../Services/Validator';
+import api from '../Services/Api';
 import { TextFieldStatus } from '../Services/Enums';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 type Props = {
     style: any,
@@ -67,9 +67,12 @@ export default class Login extends Component<Props, State> {
     onPress = async() => {
         const {login, password} = this.state;
         try {
-            //await api.init(login, password);
-            Keyboard.dismiss();
-            this.validateLogin();
+            await api.init(login, password);
+            debugger;
+            //navigate to another screen
+            //попозже свяжу
+            //Keyboard.dismiss();
+            //this.validateLogin();
         } catch (err) {
             alert(err);
         }
