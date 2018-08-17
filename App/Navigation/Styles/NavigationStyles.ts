@@ -3,6 +3,6 @@ import { Colors } from 'App/Themes'
 
 export default StyleSheet.create({
   header: {
-    backgroundColor: Colors.backgroundColor
+    backgroundColor: Colors.brandPrimary
   }
 })

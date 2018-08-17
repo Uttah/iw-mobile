@@ -2,7 +2,6 @@ import { StackNavigator } from 'react-navigation';
 import LaunchScreen from '../Containers/LaunchScreen';
 import ProfileScreen from '../Containers/ProfileScreen';
 import RegisterScreen from '../Containers/RegisterScreen';
-
 import styles from './Styles/NavigationStyles';
 
 // Manifest of possible screens
@@ -15,7 +14,8 @@ const PrimaryNav = StackNavigator({
   headerMode: 'screen',
   initialRouteName: 'LaunchScreen',
   navigationOptions: {
-    headerStyle: styles.header
+		headerStyle: styles.header,
+		headerTintColor: '#fff'
   }
 });
 
