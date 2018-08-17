@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { Colors } from 'App/Themes';
 
 export default StyleSheet.create({
+	//хорошо бы перенести в applic styles
 	section: {
 		marginLeft: wp('12%'),
 		marginRight: wp('12%'),
@@ -17,16 +19,19 @@ export default StyleSheet.create({
 	buttonText: {
 		fontSize: hp('2.7%')
 	},
-	buttons: {
-		flex: 1,
-		flexDirection: 'row',
-		justifyContent: 'space-between'
-	},
-	linkText: {
+	checkboxWrap: {
+		alignItems: 'flex-start', 
+		marginLeft: 0, 
 		paddingLeft: 0,
-		paddingRight: 0,
-		textDecorationLine: 'underline',
-		color: '#748398',
-		fontSize: hp('1.95%')
+		marginRight: 0,
+		paddingRight: 0
+	},
+	checkboxTextWrap: {
+		
+	},
+	checkboxText: {
+		fontSize: hp('1.87%'),
+		//color: '#666'
+		color: '#4c4c4c'
 	}
 });

@@ -12,33 +12,33 @@ import platform from '../native-base-theme/variables/platform';
 const store = createStore();
 
 /**
- * Provides an entry point into our application.  Both index.ios.js and index.android.js
- * call this component first.
- *
- * We create our Redux store here, put it into a provider and then bring in our
- * RootContainer.
- *
- * We separate like this to play nice with React Native's hot reloading.
- */
+* Provides an entry point into our application.  Both index.ios.js and index.android.js
+* call this component first.
+*
+* We create our Redux store here, put it into a provider and then bring in our
+* RootContainer.
+*
+* We separate like this to play nice with React Native's hot reloading.
+*/
 class App extends Component {
-  render () {
-    return (
-      <StyleProvider style={getTheme(platform)}>
-        <Provider store={store}>
-          <RootContainer />
-        </Provider>
-      </StyleProvider>
-    )
-  }
+	render () {
+		return (
+			<StyleProvider style={getTheme(platform)}>
+			<Provider store={store}>
+			<RootContainer />
+			</Provider>
+			</StyleProvider>
+		)
+	}
 }
 
 declare global {
-  interface Console {
-      tron: any
-  }
+	interface Console {
+		tron: any
+	}
 }
 
 // allow reactotron overlay for fast design in dev mode
 export default DebugConfig.useReactotron
-  ? console.tron.overlay(App)
-  : App
+? console.tron.overlay(App)
+: App
