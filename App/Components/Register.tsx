@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Keyboard, Platform } from 'react-native';
 import styles from './Styles/RegisterStyles';
 import { Button, Text, ListItem, Body, List } from 'native-base';
-import { CheckBox, Switch } from 'react-native';
+import { Switch } from 'react-native';
 import TextField from './TextField';
 import validate from '../Services/Validator';
 import api from '../Services/MyApi';
@@ -17,42 +17,54 @@ type Props = {
 };
 
 type State = {
-	login: string,
-	password: string,
 	name: string,
 	lastName: string,
-	emailError: string,
-	passwordError: string,
+	email: string,
+	password: string,
 	nameError: string,
 	lastNameError: string,
+	emailError: string,
+	passwordError: string,
+	nameChecked: boolean,
+	lastNameChecked: boolean,
 	emailChecked: boolean,
 	passwordChecked: boolean,
-	nameChecked: boolean,
-	lastNameChecked: boolean
+	consent: boolean
 }; 
 
 export default class Register extends Component<Props, State> {
 	private passwordRef: undefined | {_root: {focus: () => void, blur: () => void}};
+	private emailRef: undefined | {_root: {focus: () => void, blur: () => void}};
+	private lastNameRef: undefined | {_root: {focus: () => void, blur: () => void}};
 	
 	state = {
-		login: '',
-		password: '',
 		name: '',
 		lastName: '',
-		emailError: '',
-		passwordError: '',
+		email: '',
+		password: '',
 		nameError: '',
 		lastNameError: '',
+		emailError: '',
+		passwordError: '',
+		nameChecked: false,
+		lastNameChecked: false,
 		emailChecked: false,
 		passwordChecked: false,
-		nameChecked: false,
-		lastNameChecked: false
+		consent: false
 	};
+
+	toggleConsent = (val) => {
+		this.setState({
+			consent: val
+		});
+	}
 	
 	onFieldChange = (fieldName, val) => {
+		const error = validate(fieldName, val);
 		this.setState({
 			[fieldName]: val,
-			[fieldName + 'Checked']: false
+			[fieldName + 'Error']: error,
+			[fieldName + 'Checked']: true
 		} as any);
 	};
 	
@@ -70,20 +82,26 @@ export default class Register extends Component<Props, State> {
 	}
 	
 	validateLogin = async() => {
-		const emailError = validate('email', this.state.login);
+		const emailError = validate('email', this.state.email);
 		const passwordError = validate('password', this.state.password);
+		const nameError = validate('name', this.state.name);
+		const lastNameError = validate('lastName', this.state.lastName);
 		
 		this.setState({
 			emailError: emailError,
 			passwordError: passwordError,
+			nameError: nameError,
+			lastNameError: lastNameError,
 			emailChecked: true,
-			passwordChecked: true
+			passwordChecked: true,
+			nameChecked: true,
+			lastNameChecked: true
 		});
 		
-		if (!emailError && !passwordError) {
-			const {login, password} = this.state;
+		if (!emailError && !passwordError && !nameError && !lastNameError) {
+			const { email, password, name, lastName } = this.state;
 			try {
-				const userData = await api.init(login, password);
+				const userData = await api.init(email, password, name, lastName);
 				alert(JSON.stringify(userData));
 				//navigate to another screen
 			} catch (err) {
@@ -98,17 +116,32 @@ export default class Register extends Component<Props, State> {
 	}
 	
 	getSubmitDisabled = () => {
-		// const { login, password } = this.state;
-		// if (!login.length || !password.length) {
-		//     return true;
-		// }
+		if (this.hasBlanks() || this.hasErrors()) {
+		  return true;
+		}
+		return false;
+	}
+
+	hasBlanks = () => {
+		const { email, password, name, lastName, consent } = this.state;
+		if (!email.length || !password.length || !name.length || !lastName.length || !consent) {
+			return true;
+		}
+		return false;
+	}
+
+	hasErrors = () => {
+		const { emailError, passwordError, nameError, lastNameError } = this.state;
+		if (emailError.length || passwordError.length || nameError.length || lastNameError.length) {
+			return true;
+		}
 		return false;
 	}
 	
 	onBtnLayout = (e) => {
 		const layout = e.nativeEvent.layout;
 		const btnHeight = layout.height;
-		//this.props.onButtonViewLayout(btnHeight);
+		this.props.onButtonViewLayout(btnHeight);
 	}
 	
 	render() {
@@ -123,10 +156,10 @@ export default class Register extends Component<Props, State> {
 					value={this.state.name}
 					onChangeText={(val) => this.onFieldChange('name', val)}
 					error={this.state.nameError}
-					showError={false}
-					// onSubmitEditing={() => {
-					//     this.passwordRef && this.passwordRef._root.focus()
-					// }}
+					showError={true}
+					onSubmitEditing={() => {
+					    this.lastNameRef && this.lastNameRef._root.focus()
+					}}
 					returnKeyType={'next'}
 				/>
 				<TextField 
@@ -136,10 +169,11 @@ export default class Register extends Component<Props, State> {
 					value={this.state.lastName}
 					onChangeText={(val) => this.onFieldChange('lastName', val)}
 					error={this.state.lastNameError}
-					showError={false}
-					// onSubmitEditing={() => {
-					//     this.passwordRef && this.passwordRef._root.focus()
-					// }}
+					showError={true}
+					inputRef={ref => this.lastNameRef = ref}
+					onSubmitEditing={() => {
+					    this.emailRef && this.emailRef._root.focus()
+					}}
 					returnKeyType={'next'}
 				/>
 				<TextField 
@@ -149,10 +183,11 @@ export default class Register extends Component<Props, State> {
 					value={this.state.email}
 					onChangeText={(val) => this.onFieldChange('email', val)}
 					error={this.state.emailError}
-					showError={false}
-					// onSubmitEditing={() => {
-					//     this.passwordRef && this.passwordRef._root.focus()
-					// }}
+					showError={true}
+					inputRef={ref => this.emailRef = ref}
+					onSubmitEditing={() => {
+					    this.passwordRef && this.passwordRef._root.focus()
+					}}
 					returnKeyType={'next'}
 				/>
 				<TextField 
@@ -162,11 +197,10 @@ export default class Register extends Component<Props, State> {
 					value={this.state.password}
 					onChangeText={(val) => this.onFieldChange('password', val)}
 					error={this.state.passwordError}
-					showError={false}
-					// onSubmitEditing={() => {
-					//     this.passwordRef && this.passwordRef._root.focus()
-					// }}
+					showError={true}
+					inputRef={ref => this.passwordRef = ref}
 					returnKeyType={'done'}
+					secureTextEntry={true}
 				/>
 				<View onLayout={(e) => this.onBtnLayout(e)}>
 					<Button 
@@ -181,7 +215,11 @@ export default class Register extends Component<Props, State> {
 				</View>
 				<List>
 					<ListItem noBorder noIndent style={styles.checkboxWrap}>
-						{platform === "ios" ? <Switch value={true} tintColor={'#3f51b5'} onTintColor={'#3f51b5'}/> : <CheckBox checked={true}/>}
+						<Switch 
+							value={this.state.consent} 
+							tintColor={'#3f51b5'} 
+							onTintColor={'#3f51b5'} 
+							onValueChange={(val) => this.toggleConsent(val)}/>
 						<Body>
 							<Text style={styles.checkboxText}>Я принимаю условия Пользовательского соглашения и даю свое согласие icoWorld на обработку моей персональной информации на условиях, определенных Политикой конфиденциальности</Text>
 						</Body>

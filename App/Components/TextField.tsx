@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Item, Input, Label } from 'native-base';
 import { TextFieldStatus } from '../Services/Enums';
 import styles from './Styles/TextFieldStyles';
-import { Ionicons } from '@expo/vector-icons';
+
 
 type Props = {
     style: any,
@@ -15,7 +15,9 @@ type Props = {
     showError: boolean,
     onSubmitEditing?: (e: any) => void,
     inputRef?: any, // inputRef is custom name,
-    returnKeyType?: string
+    returnKeyType?: string,
+    onFocus?: (e: any) => void,
+    secureTextEntry?: boolean
 };
 
 export default class TextField extends Component<Props> {
@@ -36,7 +38,9 @@ export default class TextField extends Component<Props> {
             error,
             showError,
             inputRef,
-            returnKeyType
+            returnKeyType,
+            onFocus,
+            secureTextEntry
         } = this.props;
 
         return (
@@ -56,6 +60,8 @@ export default class TextField extends Component<Props> {
                             onSubmitEditing={this.handleSubmit}
                             getRef={inputRef}
                             returnKeyType={returnKeyType}
+                            onFocus={onFocus}
+                            secureTextEntry={secureTextEntry}
                         />
                     </Item>
                     {fieldStatus == TextFieldStatus.CheckedWrong && showError && <Label style={styles.errorLabel}>{error}</Label>}

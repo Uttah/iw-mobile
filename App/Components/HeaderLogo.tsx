@@ -7,11 +7,11 @@ export default class HeaderLogo extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-			<Image
-				source={Images.icoWorldLogo}
-				style={styles.logo}
-				resizeMode={'contain'}
-			/>
+				<Image
+					source={Images.icoWorldLogo}
+					style={styles.logo}
+					resizeMode={'contain'}
+				/>
 			</View>
 		);
 	}

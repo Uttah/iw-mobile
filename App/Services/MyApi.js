@@ -11,12 +11,14 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
         timeout: 10000
     });
 
-    const init = async(identifier, password) => { 
+    const init = async(identifier, password, name, lastName) => { 
         //api.setHeaders({Authorization: ''});
 
         const response = await api.post('/login', { 
             email: identifier, 
-            password: password 
+            password: password,
+            firstName: name, 
+            lastName: lastName 
         });
 
         if (response.ok) {

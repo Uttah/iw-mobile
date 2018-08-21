@@ -117,42 +117,42 @@ export default class Login extends Component<Props, State> {
     
     return (
       <View style={[styles.section, style]}>
-      <TextField 
-        style={styles.input}
-        fieldStatus={this.getEmailStatus()}
-        placeholder='Email'
-        value={this.state.login}
-        onChangeText={this.onLoginChange}
-        error={this.state.emailError}
-        showError={false}
-        onSubmitEditing={() => {
-          this.passwordRef && this.passwordRef._root.focus()
-        }}
-        returnKeyType={'next'}
-      />
-      <TextField 
-        style={styles.input}
-        fieldStatus={this.getPasswordStatus()}
-        placeholder='Пароль'
-        value={this.state.password}
-        onChangeText={this.onPasswordChange}
-        error={this.state.passwordError}
-        showError={false}
-        inputRef={ref => this.passwordRef = ref}
-        returnKeyType={'done'}
-      />
-      <View onLayout={(e) => this.onBtnLayout(e)}>
-      <Button 
-        full 
-        primary 
-        style={styles.button} 
-        disabled={this.getSubmitDisabled()} 
-        onPress={this.onPress}
-      >
-        <Text uppercase={false} style={styles.buttonText}>Войти</Text>
-      </Button> 
+        <TextField 
+          style={styles.input}
+          fieldStatus={this.getEmailStatus()}
+          placeholder='Email'
+          value={this.state.login}
+          onChangeText={this.onLoginChange}
+          error={this.state.emailError}
+          showError={false}
+          onSubmitEditing={() => {
+            this.passwordRef && this.passwordRef._root.focus()
+          }}
+          returnKeyType={'next'}
+        />
+        <TextField 
+          style={styles.input}
+          fieldStatus={this.getPasswordStatus()}
+          placeholder='Пароль'
+          value={this.state.password}
+          onChangeText={this.onPasswordChange}
+          error={this.state.passwordError}
+          showError={false}
+          inputRef={ref => this.passwordRef = ref}
+          returnKeyType={'done'}
+        />
+        <View onLayout={(e) => this.onBtnLayout(e)}>
+        <Button 
+          full 
+          primary 
+          style={styles.button} 
+          disabled={this.getSubmitDisabled()} 
+          onPress={this.onPress}
+        >
+          <Text uppercase={false} style={styles.buttonText}>Войти</Text>
+        </Button> 
       </View>
-      <View style={styles.buttons}>
+        <View style={styles.buttons}>
         <Button transparent>
           <Text style={styles.linkText} uppercase={false}>Забыли пароль?</Text>
         </Button> 
@@ -160,7 +160,7 @@ export default class Login extends Component<Props, State> {
           <Text style={styles.linkText} uppercase={false} onPress={onRegisterPress}>Регистрация</Text>
         </Button> 
       </View> 
-    </View>
+      </View>
     );
   }
 }
