@@ -1,2 +1,5 @@
 .DS_Store
 node_modules
+ios/build
+ios/icoworld.xcodeproj/xcuserdata/
+.expo

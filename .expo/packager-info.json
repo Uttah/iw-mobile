@@ -1,8 +1,9 @@
 {
   "expoServerPort": 19000,
-  "packagerPort": 19003,
-  "packagerPid": 42311,
-  "expoServerNgrokUrl": "https://xb-aph.icoworld.iw-mobile.exp.direct",
-  "packagerNgrokUrl": "https://packager.xb-aph.icoworld.iw-mobile.exp.direct",
-  "ngrokPid": 42322
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "devToolsPort": 19002
 }
