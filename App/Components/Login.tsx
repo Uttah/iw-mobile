@@ -113,7 +113,7 @@ export default class Login extends Component<Props, State> {
   }
   
   render() {
-    const { style, onRegisterPress } = this.props;
+    const { style, onRegisterPress, onForgotPress } = this.props;
     
     return (
       <View style={[styles.section, style]}>
@@ -154,7 +154,7 @@ export default class Login extends Component<Props, State> {
       </View>
         <View style={styles.buttons}>
         <Button transparent>
-          <Text style={styles.linkText} uppercase={false}>Забыли пароль?</Text>
+          <Text style={styles.linkText} uppercase={false} onPress={onForgotPress}>Забыли пароль?</Text>
         </Button> 
         <Button transparent>
           <Text style={styles.linkText} uppercase={false} onPress={onRegisterPress}>Регистрация</Text>

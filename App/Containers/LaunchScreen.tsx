@@ -22,6 +22,10 @@ export default class LaunchScreen extends Component<Props> {
 	onRegisterPress = () => {
 		this.props.navigation.navigate('RegisterScreen');
 	}
+
+	onForgotPress = () => {
+		this.props.navigation.navigate('ProfileScreen');
+	}
 	
 	onButtonViewLayout = (height) => {
 		this.setState({
@@ -47,6 +51,7 @@ export default class LaunchScreen extends Component<Props> {
 				<Login
 					style={styles.login} 
 					onRegisterPress={this.onRegisterPress}
+					onForgotPress={this.onForgotPress}
 					onButtonViewLayout={(height) => this.onButtonViewLayout(height)}
 				/>
 			</KeyboardAwareScrollView>
