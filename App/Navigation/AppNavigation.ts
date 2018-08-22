@@ -12,7 +12,7 @@ const PrimaryNav = StackNavigator({
 }, {
   // Default config for all screens
   headerMode: 'screen',
-  initialRouteName: 'LaunchScreen',
+  initialRouteName: 'ProfileScreen',
   navigationOptions: {
 		headerStyle: styles.header,
 		headerTintColor: '#fff'

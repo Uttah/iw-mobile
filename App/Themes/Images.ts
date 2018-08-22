@@ -20,7 +20,8 @@ const images = {
   hamburger: require('../Images/Icons/hamburger.png'),
   backButton: require('../Images/Icons/back-button.png'),
   closeButton: require('../Images/Icons/close-button.png'),
-  icoWorldLogo: require('../Images/icoworld_logo.jpg')
+  icoWorldLogo: require('../Images/icoworld_logo.jpg'),
+  noAvatar: require('../Images/profile.jpeg')
 }
 
 export default images
