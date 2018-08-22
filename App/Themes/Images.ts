@@ -21,7 +21,8 @@ const images = {
   backButton: require('../Images/Icons/back-button.png'),
   closeButton: require('../Images/Icons/close-button.png'),
   icoWorldLogo: require('../Images/icoworld_logo.jpg'),
-  noAvatar: require('../Images/profile.jpeg')
+  noAvatar: require('../Images/profile.jpeg'),
+  postImage: require('../Images/post_image.jpg')
 }
 
 export default images
