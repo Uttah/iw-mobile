@@ -21,6 +21,33 @@ export default class ProfileScreen extends Component {
 		activeTab: ProfileTabs.Activity
 	}
 
+	onChangeTab = ({ i }) => {
+		if (i == 0) {
+			this.setState({
+				activeTab: ProfileTabs.Activity
+			});
+		} else if (i == 1) {
+			this.setState({
+				activeTab: ProfileTabs.Portfolio
+			});
+		} else {
+			this.setState({
+				activeTab: ProfileTabs.About
+			})
+		}
+	}
+
+	onFabPress = (e) => {
+		const activeTab = this.state.activeTab;
+		if (activeTab == ProfileTabs.Activity) {
+			alert('you want to add new post?');
+		} else if (activeTab == ProfileTabs.Portfolio) {
+			alert('you want to add portfolio?');
+		} else {
+			alert('you want to edit about me?');
+		}
+	}
+
 	render() {
 		//нужна библиотека которая склоняет
 		const stats = [
@@ -42,7 +69,7 @@ export default class ProfileScreen extends Component {
 			<Container>
 				<ScrollView style={styles.mainContainer}>
 					<ProfileTop stats={stats}/>
-					<Tabs onChangeTab={(tab) => alert('you changed tab! ')}>
+					<Tabs onChangeTab={this.onChangeTab}>
 						<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
 							<ProfileTab1 items={items} />
 						</Tab>
@@ -59,9 +86,8 @@ export default class ProfileScreen extends Component {
 					containerStyle={{ width: hp('8%'), height: hp('8%') }}
 					style={{ backgroundColor: '#3f51b5', width: hp('8%'), height: hp('8%') }}
 					position='bottomRight'
-					onPress={() => alert('you pressed fab!')}>
-					{/* <MaterialIcons name='edit' /> */}
-					<MaterialIcons name='add' />
+					onPress={this.onFabPress}>
+					{this.state.activeTab == ProfileTabs.About ? <MaterialIcons name='edit' /> : <MaterialIcons name='add' />}
 				</Fab>
 			</Container>
 		);
