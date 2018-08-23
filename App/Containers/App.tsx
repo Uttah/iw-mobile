@@ -3,6 +3,7 @@ import DebugConfig from '../Config/DebugConfig';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { StyleProvider } from 'native-base';
+import { MenuProvider } from 'react-native-popup-menu';
 import RootContainer from './RootContainer';
 import createStore from '../Redux';
 import getTheme from '../native-base-theme/components';
@@ -24,9 +25,11 @@ class App extends Component {
 	render () {
 		return (
 			<StyleProvider style={getTheme(platform)}>
-			<Provider store={store}>
-			<RootContainer />
-			</Provider>
+				<Provider store={store}>
+						<MenuProvider>
+							<RootContainer />
+						</MenuProvider>
+				</Provider>
 			</StyleProvider>
 		)
 	}

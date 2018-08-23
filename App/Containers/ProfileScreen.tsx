@@ -22,13 +22,23 @@ export default class ProfileScreen extends Component {
 			{ text: 'подписан', number: 10 },
 			{ text: 'поста', number: 73 },
 		];
+		const items = [
+			{
+				id: 1,
+				name: 'forst'
+			},
+			{
+				id: 2,
+				name: 'second'
+			}
+		];
 		return (
 			<ScrollView style={styles.mainContainer}
 			>
 				<ProfileTop stats={stats}/>
 				<Tabs>
           <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
-            <ProfileTab1 />
+            <ProfileTab1 items={items} />
           </Tab>
           <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='bar-chart-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Портфолио</Text></TabHeading>}>
             <ProfileTab2 />

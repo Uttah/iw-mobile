@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import PostItem from './PostItem';
+import { FlatList } from 'react-native';
 
-export default class HeaderLogo extends Component {
-	render() {
+export default class ProfileTab1 extends Component {
+
+	renderItem = ({ item }) => {
 		return (
-			<View>
-				<PostItem/>
-			</View>
+			<PostItem item={item} />
+		);
+	};
+
+	render() {
+		const { items } = this.props;
+		return (
+			<FlatList
+				data={items}
+				renderItem={this.renderItem}
+				keyExtractor={(item) => item.id}
+			/>
 		);
 	}
 }

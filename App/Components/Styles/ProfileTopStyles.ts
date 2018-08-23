@@ -16,16 +16,16 @@ export default StyleSheet.create({
 	avatarWrap: {
 		marginLeft: wp('4.27%'),
 		marginTop: hp('2.55%'),
-    height: wp('25%') + 2,
-    width: wp('25%') + 2,
+		height: wp('25%') + 2,
+		width: wp('25%') + 2,
 		borderRadius: 8,
 		borderColor: '#b2b2b2',
 		borderWidth: 1
 	},
 	avatar: {
 		height: wp('25%'),
-    width: wp('25%'),
-    borderRadius: 8
+		width: wp('25%'),
+		borderRadius: 8
 	},
 	numbers: {
 		marginLeft: wp('6.5%')
