@@ -6,6 +6,7 @@ import TextField from './TextField';
 import validate from '../Services/Validator';
 import api from '../Services/MyApi';
 import { TextFieldStatus } from '../Services/Enums';
+import UserActions from '../Redux/UserRedux';
 
 type Props = {
   style: any,
@@ -63,7 +64,7 @@ export default class Login extends Component<Props, State> {
       const {login, password} = this.state;
       try {
         const userData = await api.init(login, password);
-        alert(JSON.stringify(userData));
+        UserActions.loginSuccess(userData.name);
         //userData.name нужно сохранить в профиле пользователя
         //navigate to another screen
       } catch (err) {
