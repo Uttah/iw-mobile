@@ -36,10 +36,10 @@ const validation = {
 };
 
 export default function validate(fieldName, value) {
-  var formValues = {};
+  const formValues = {};
   formValues[fieldName] = value;
 
-  var formFields = {};
+  const formFields = {};
   formFields[fieldName] = validation[fieldName];
 
   const result = validatejs(formValues, formFields);
