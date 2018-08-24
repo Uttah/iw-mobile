@@ -64,6 +64,7 @@ export default class Login extends Component<Props, State> {
       try {
         const userData = await api.init(login, password);
         alert(JSON.stringify(userData));
+        //userData.name нужно сохранить в профиле пользователя
         //navigate to another screen
       } catch (err) {
         alert(err);
