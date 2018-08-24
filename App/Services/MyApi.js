@@ -1,6 +1,6 @@
 import apisauce from 'apisauce';
 
-const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
+const create = (baseURL = 'https://icoworld.projects.oktend.com:3000/') => {
 const api = apisauce.create({
 	baseURL,
 	headers: {
@@ -11,14 +11,12 @@ const api = apisauce.create({
 	timeout: 10000
 });
 
-const init = async(identifier, password, name, lastName) => { 
+const init = async(identifier, password) => { 
 	//api.setHeaders({Authorization: ''});
 	
 	const response = await api.post('/login', { 
 		email: identifier, 
-		password: password,
-		firstName: name, 
-		lastName: lastName 
+		password: password
 	});
 	
 	if (response.ok) {
