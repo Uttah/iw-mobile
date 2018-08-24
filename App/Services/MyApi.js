@@ -1,12 +1,12 @@
 import apisauce from 'apisauce';
 
-const create = (baseURL = 'https://icoworld.projects.oktend.com:3000/') => {
+const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 const api = apisauce.create({
 	baseURL,
 	headers: {
 		'Accept': 'application/json, text/plain, */*',
 		'Content-Type': 'application/json',
-		'Cache-Control': 'no-cache'
+		//'Cache-Control': 'no-cache'
 	},
 	timeout: 10000
 });
