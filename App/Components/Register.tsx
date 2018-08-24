@@ -101,7 +101,7 @@ export default class Register extends Component<Props, State> {
 		if (!emailError && !passwordError && !nameError && !lastNameError) {
 			const { email, password, name, lastName } = this.state;
 			try {
-				const userData = await api.init(email, password, name, lastName);
+				const userData = await api.register(email, password, name, lastName);
 				alert(JSON.stringify(userData));
 				//navigate to another screen
 			} catch (err) {
@@ -210,7 +210,7 @@ export default class Register extends Component<Props, State> {
 						disabled={this.getSubmitDisabled()} 
 						onPress={this.onPress}
 					>
-						<Text uppercase={false} style={styles.buttonText}>Войти</Text>
+						<Text uppercase={false} style={styles.buttonText}>Зарегистрироваться</Text>
 					</Button> 
 				</View>
 				<List>
