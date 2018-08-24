@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ScrollView, View } from 'react-native';
 import { Tabs, Tab, TabHeading, Text, Fab, Button, Container } from 'native-base';
 import HeaderLogo from '../Components/HeaderLogo';
@@ -11,7 +12,7 @@ import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ProfileTabs } from '../Services/Enums';
 
-export default class ProfileScreen extends Component {
+class ProfileScreen extends Component {
 	static navigationOptions = {
 		headerTitle: <HeaderLogo/>,
 		headerRight: <View/>
@@ -20,7 +21,7 @@ export default class ProfileScreen extends Component {
 	state = {
 		activeTab: ProfileTabs.Activity
 	}
-
+	
 	onChangeTab = ({ i }) => {
 		if (i == 0) {
 			this.setState({
@@ -36,7 +37,7 @@ export default class ProfileScreen extends Component {
 			})
 		}
 	}
-
+	
 	onFabPress = (e) => {
 		const activeTab = this.state.activeTab;
 		if (activeTab == ProfileTabs.Activity) {
@@ -47,8 +48,9 @@ export default class ProfileScreen extends Component {
 			alert('you want to edit about me?');
 		}
 	}
-
+	
 	render() {
+		const name = this.props.name;
 		//нужна библиотека которая склоняет
 		const stats = [
 			{ text: 'подписчиков', number: 150 },
@@ -68,7 +70,7 @@ export default class ProfileScreen extends Component {
 		return (
 			<Container>
 				<ScrollView style={styles.mainContainer}>
-					<ProfileTop stats={stats}/>
+					<ProfileTop stats={stats} name={name}/>
 					<Tabs onChangeTab={this.onChangeTab}>
 						<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
 							<ProfileTab1 items={items} />
@@ -93,3 +95,11 @@ export default class ProfileScreen extends Component {
 		);
 	}
 }
+
+function mapStateToProps (state) {
+	let obj = {};
+	obj.name = state.user.name;
+	return obj;
+}
+
+export default connect(mapStateToProps)(ProfileScreen);

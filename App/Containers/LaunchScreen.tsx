@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Text, Image, View, PixelRatio } from 'react-native';
 import { Images } from 'App/Themes';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { NavigationScreenProp } from 'react-navigation';
 import Login from 'App/Components/Login';
 import styles from './Styles/LaunchScreenStyles';
+import UserActions from '../Redux/UserRedux';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
 }
 
-export default class LaunchScreen extends Component<Props> {
+class LaunchScreen extends Component<Props> {
 	static navigationOptions = {
 		header: null
 	};
@@ -27,7 +29,8 @@ export default class LaunchScreen extends Component<Props> {
 		alert('no screen here yet!');
 	}
 
-	onSuccess = () => {
+	onSuccess = (name) => {
+		this.props.dispatch(UserActions.loginSuccess(name));
 		this.props.navigation.navigate('ProfileScreen');
 	}
 	
@@ -63,3 +66,5 @@ export default class LaunchScreen extends Component<Props> {
 		)
 	}
 }
+
+export default connect()(LaunchScreen);

@@ -7,7 +7,7 @@ import { Images } from 'App/Themes';
 
 export default class ProfileTop extends Component {
 	render() {
-		const stats = this.props.stats;
+		const { stats, name } = this.props;
 		return (
 			<View style={styles.outer}>
 				<View style={styles.container}>
@@ -20,7 +20,7 @@ export default class ProfileTop extends Component {
 					</TouchableHighlight>
 					<StatsNumbers style={styles.numbers} stats={stats}/>
 				</View>
-				<Text style={styles.author}>Владислава Константиновна Карамагамедовна-ФазыльОглы</Text>
+				<Text style={styles.author}>{name}</Text>
 				<Text style={styles.nickname}>@hotchick</Text>
 			</View>
 		);
