@@ -102,8 +102,7 @@ export default class Register extends Component<Props, State> {
 			const { email, password, name, lastName } = this.state;
 			try {
 				const userData = await api.register(email, password, name, lastName);
-				alert(JSON.stringify(userData));
-				//navigate to another screen
+				this.props.onSuccess(userData.name);
 			} catch (err) {
 				alert(err);
 			}

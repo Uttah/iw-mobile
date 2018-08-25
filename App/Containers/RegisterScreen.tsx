@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { NavigationScreenProp } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { View, PixelRatio } from 'react-native';
@@ -6,12 +7,13 @@ import { Text } from 'native-base';
 import Register from '../Components/Register';
 import styles from './Styles/RegisterScreenStyles';
 import HeaderLogo from '../Components/HeaderLogo';
+import UserActions from '../Redux/UserRedux';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
 }
 
-export default class RegisterScreen extends Component<Props> {
+class RegisterScreen extends Component<Props> {
 	static navigationOptions = {
 		headerTitle: <HeaderLogo/>,
 		headerRight: <View/>
@@ -31,6 +33,11 @@ export default class RegisterScreen extends Component<Props> {
 		});
 	}
 
+	onSuccess = (name) => {
+		this.props.dispatch(UserActions.registerSuccess(name));
+		this.props.navigation.navigate('ProfileScreen');
+	}
+
 	render() {
 		return (
 			<KeyboardAwareScrollView
@@ -39,8 +46,14 @@ export default class RegisterScreen extends Component<Props> {
 				extraScrollHeight={this.getExtraScrollHeight()}
 			>
 				<Text style={styles.headerTitle}>Регистрация</Text>
-				<Register style={styles.register} onButtonViewLayout={this.onButtonViewLayout}/>
+				<Register 
+					style={styles.register} 
+					onButtonViewLayout={this.onButtonViewLayout}
+					onSuccess={this.onSuccess}
+				/>
 			</KeyboardAwareScrollView>
 		);
 	}
 }
+
+export default connect()(RegisterScreen);
