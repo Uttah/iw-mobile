@@ -70,9 +70,6 @@ export default StyleSheet.create({
     marginLeft: wp('3.3%'),
     marginRight: wp('4%')
   },
-  dots: {
-
-  },
   menuOption: {
     fontSize: hp('2.25%'),
     paddingBottom: hp('1.05%'),

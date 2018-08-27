@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
 import PostItem from './PostItem';
 import { FlatList } from 'react-native';
 
