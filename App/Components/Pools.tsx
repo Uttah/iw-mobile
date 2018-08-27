@@ -8,6 +8,24 @@ import { FlatList } from 'react-native';
 import styles from './Styles/PoolsStyles';
 
 export default class Pools extends Component {
+	state = {
+		showInput: false
+	};
+
+	onSearchStrChange = (text) => {
+		//const dispatch = this.props.dispatch;
+		//dispatch(updateFilterStr(text));
+		//dispatch(loadFilteredItems(text));
+	}
+
+	toggleSearch = () => {
+		// const dispatch = this.props.dispatch;
+		// dispatch(updateFilterStr(''));
+		this.setState({
+			showInput: !this.state.showInput
+		});
+	}
+
 	onChangeTab = ({ i }) => {
 		console.log(i);
 	}
@@ -72,10 +90,17 @@ export default class Pools extends Component {
 				comiss: 3,
 				author: 'Иван Федоров'
 			}
-		];		
+		];
+		const filterStr = '';		
+		
 		return (
 			<View>
-				<ControlPanel />
+				<ControlPanel 
+					showInput = {this.state.showInput}
+					onChange = {this.toggleSearch}
+					searchStr = {filterStr}
+					onSearchStrChange = {this.onSearchStrChange}
+				/>
 				<Tabs onChangeTab={this.onChangeTab}>
 					<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><MaterialIcons name='whatshot' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Популярные</Text></TabHeading>}>
 						<FlatList

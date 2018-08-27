@@ -8,7 +8,7 @@ export default StyleSheet.create({
 		marginRight: wp('12%'),
 		flex: 1
   },
-    tabname: {
+  tabname: {
 		fontSize: hp('1.5%'),
 		color: '#656C74'
 	},
