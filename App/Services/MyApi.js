@@ -1,4 +1,5 @@
 import apisauce from 'apisauce';
+import { findPools } from './FakeDatabase';
 
 const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 	const api = apisauce.create({
@@ -49,9 +50,16 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 		}
 	};
 
+	const findPools = async(filterStr) => {
+		findPools(filterStr).then(pools => {
+			return pools;
+		})
+	};
+
 	return {
 		login,
-		register
+		register,
+		findPools
 	};
 };
 

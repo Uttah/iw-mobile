@@ -26,7 +26,8 @@ class LaunchScreen extends Component<Props> {
 	}
 	
 	onForgotPress = () => {
-		alert('no screen here yet!');
+		this.props.navigation.navigate('PoolsScreen');
+		//alert('no screen here yet!');
 	}
 
 	onSuccess = (name) => {
