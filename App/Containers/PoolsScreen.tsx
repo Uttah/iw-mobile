@@ -11,6 +11,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FlatList } from 'react-native';
 import HeaderLogo from '../Components/HeaderLogo';
 import { loadPoolsAsync, loadPoolsFilteredAsync } from '../Redux/PoolsRedux';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './Styles/PoolsScreenStyles';
 
 type Props = {
@@ -80,12 +81,14 @@ class PoolsScreen extends Component<Props> {
 				enableOnAndroid={true}
 			>
 				<Text style={styles.headerTitle}>Пулы</Text>
-				<ControlPanel 
-					onChange={this.toggleSearch}
-					searchStr={this.state.filterStr}
-					onSearchStrChange={this.onSearchStrChange}
-					searchSubmit={this.searchSubmit}
-				/>
+				<View style={{height: hp('7.27%')}}>
+					<ControlPanel 
+						onChange={this.toggleSearch}
+						searchStr={this.state.filterStr}
+						onSearchStrChange={this.onSearchStrChange}
+						searchSubmit={this.searchSubmit}
+					/>
+				</View>
 				{ fetching ? <Spinner/> : null }
 				{!this.state.searchPressed && <Tabs onChangeTab={this.onChangeTab}>
 					<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><MaterialIcons name='whatshot' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Популярные</Text></TabHeading>}>

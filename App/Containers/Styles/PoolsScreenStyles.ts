@@ -27,6 +27,6 @@ export default StyleSheet.create({
 	},
 	filtered: {
 		borderTopWidth: 1,
-		borderTopColor: '#b2b2b2'
+		borderTopColor: 'rgba(178, 178, 178, 0.5)'
 	}
 });

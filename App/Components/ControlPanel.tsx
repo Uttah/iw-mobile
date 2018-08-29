@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Keyboard } from 'react-native';
 import { Item, Input, Grid, Col } from 'native-base';
 import { EvilIcons } from '@expo/vector-icons';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -15,6 +15,7 @@ export default class ControlPanel extends Component {
 		this.setState({
 			showInput: false
 		});
+		Keyboard.dismiss();
 	}
 
 	onPressInput = () => {
@@ -32,7 +33,7 @@ export default class ControlPanel extends Component {
 		} = this.props;
 		
 		return (
-			<Item style={styles.panel} underline>
+			<Item style={styles.panel}>
 				<EvilIcons name='search' style={styles.searchIcon} size={20} color={'#999'}/>
 				<Input 
 					placeholder='Поиск' 
