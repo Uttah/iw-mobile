@@ -3,24 +3,11 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export default StyleSheet.create({
 	panel: {
-		backgroundColor: '#ececec'
-	},
-	panelInner: {
-		marginLeft: wp('8.1%'),
-		marginRight: wp('8.1%'),
-		marginBottom: 5,
-		marginTop: 10,
-		borderBottomColor: '#ccc',
-		borderBottomWidth: 1,
-		position: 'relative',
-		zIndex: 1
-	},
-	left: {
-		height: hp('4.2%'),
-		position: 'relative'
-	},
-	right: {
-		height: hp('4.2%')
+		backgroundColor: '#ececec',
+		paddingLeft: wp('8.1%'),
+		paddingRight: wp('8.1%'),
+		justifyContent: 'center',
+		flex: 1,
 	},
 	searchIcon: {
 		position: 'relative',
@@ -42,5 +29,11 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between'
+	},
+	inputField: {
+		fontSize: hp('1.95%'),
+		paddingBottom: 0,
+		paddingTop: 0,
+		top: 0,
 	}
 });

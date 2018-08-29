@@ -6,56 +6,45 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import styles from './Styles/ControlPanelStyles';
 
 export default class ControlPanel extends Component {
-	static defaultProps = { showInput: false }
-	
-	showInput = (searchStr, onSearchStrChange) => {
-		return (
-			<View style={styles.input}>
-				<Item>
-					<TouchableOpacity onPress={this.onPressSearch}>
-						<EvilIcons name='search' style={styles.searchIcon} size={26} color={'#999'}/>
-					</TouchableOpacity>
-					<Input 
-						placeholder = '' 
-						value = {searchStr}
-						onChangeText = {onSearchStrChange}
-						style={{ borderColor: 'transparent', fontSize: hp('1.95%') }}
-					/>
-					<TouchableOpacity style={styles.close} onPress={this.onPressClose}>
-						<EvilIcons active name='close' size={26} color={'#999'} style={styles.closeIcon}/>
-					</TouchableOpacity>
-				</Item>
-			</View>
-		);
-	}
+	state = {
+		showInput: false
+	};
 	
 	onPressClose = () => {
 		this.props.onChange({ btn: 'close' });
+		this.setState({
+			showInput: false
+		});
 	}
-	
-	onPressSearch = () => {
-		this.props.onChange({ btn: 'search' });
+
+	onPressInput = () => {
+		this.setState({
+			showInput: true
+		});
 	}
 	
 	render () {
 		const {
-			showInput,
 			onChange,
 			searchStr,
-			onSearchStrChange
+			onSearchStrChange,
+			searchSubmit
 		} = this.props;
 		
 		return (
-			<View style={styles.panel}>
-				<Grid style={styles.panelInner}>
-					<Col style={styles.left}>
-						<TouchableOpacity onPress={this.onPressSearch}>
-							<EvilIcons name='search' style={styles.searchIcon} size={26} color={'#999'}/>
-						</TouchableOpacity>
-					</Col>
-					{showInput && this.showInput(searchStr, onSearchStrChange)}
-				</Grid>
-			</View>
+			<Item style={styles.panel} underline>
+				<EvilIcons name='search' style={styles.searchIcon} size={20} color={'#999'}/>
+				<Input 
+					placeholder='Поиск' 
+					value = {searchStr}
+					style={styles.inputField}
+					onChangeText = {onSearchStrChange}
+					onKeyPress={this.onPressInput}
+					onSubmitEditing={searchSubmit}/>
+				{this.state.showInput && <TouchableOpacity style={styles.close} onPress={this.onPressClose}>
+					<EvilIcons active name='close' size={20} color={'#999'} style={styles.closeIcon}/>
+				</TouchableOpacity>}
+			</Item>
 		);
 	}
 }

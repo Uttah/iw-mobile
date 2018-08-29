@@ -24,8 +24,8 @@ class PoolsScreen extends Component<Props> {
 	};
 
 	state = {
-		showInput: false,
-		filterStr: ''
+		filterStr: '',
+		searchPressed: false
 	};
 
 	componentDidMount() {
@@ -34,18 +34,25 @@ class PoolsScreen extends Component<Props> {
 	}
 
 	onSearchStrChange = (text) => {
-		const dispatch = this.props.dispatch;
 		this.setState({
-			filterStr: text
+			filterStr: text,
+			searchPressed: false
 		});
-		dispatch(loadPoolsFilteredAsync(text));
 	}
 
 	toggleSearch = () => {
 		this.setState({
-			showInput: !this.state.showInput,
-			filterStr: ''
+			filterStr: '',
+			searchPressed: false
 		});
+	}
+
+	searchSubmit = () => {
+		this.setState({
+			searchPressed: true
+		});
+		const dispatch = this.props.dispatch;
+		dispatch(loadPoolsFilteredAsync(this.state.filterStr));
 	}
 
 	onChangeTab = ({ i }) => {
@@ -67,22 +74,20 @@ class PoolsScreen extends Component<Props> {
 			fetching
 		} = this.props;
 
-		debugger;
-
 		return (
 			<KeyboardAwareScrollView
 				style={styles.mainContainer}  
 				enableOnAndroid={true}
 			>
 				<Text style={styles.headerTitle}>Пулы</Text>
-				{ fetching ? <Spinner/> : null }
 				<ControlPanel 
-					showInput = {this.state.showInput}
-					onChange = {this.toggleSearch}
-					searchStr = {this.state.filterStr}
-					onSearchStrChange = {this.onSearchStrChange}
+					onChange={this.toggleSearch}
+					searchStr={this.state.filterStr}
+					onSearchStrChange={this.onSearchStrChange}
+					searchSubmit={this.searchSubmit}
 				/>
-				{this.state.filterStr.length == 0 && <Tabs onChangeTab={this.onChangeTab}>
+				{ fetching ? <Spinner/> : null }
+				{!this.state.searchPressed && <Tabs onChangeTab={this.onChangeTab}>
 					<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><MaterialIcons name='whatshot' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Популярные</Text></TabHeading>}>
 						<FlatList
 							data={popular}
@@ -105,7 +110,17 @@ class PoolsScreen extends Component<Props> {
 						/>
 					</Tab>
 				</Tabs>}
-				{ this.state.filterStr.length > 0 && !fetching && <Text>Результаты поиска!</Text>}
+				{ this.state.searchPressed && !fetching &&
+					<View>
+						<Text style={styles.headerSubTitle}>Результаты поиска</Text>
+						<FlatList
+							data={filtered}
+							renderItem={this.renderItem}
+							keyExtractor={(item) => item.id}
+							style={styles.filtered}
+						/>
+					</View> 
+				}
 			</KeyboardAwareScrollView>
 		);
 	}
