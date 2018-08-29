@@ -1,9 +1,10 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import Rehydration from '../Services/Rehydration'
-import ReduxPersist from '../Config/ReduxPersist'
-import Config from '../Config/DebugConfig'
-import createSagaMiddleware from 'redux-saga'
-import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
+import { createStore, applyMiddleware, compose } from 'redux';
+import Rehydration from '../Services/Rehydration';
+import ReduxPersist from '../Config/ReduxPersist';
+import Config from '../Config/DebugConfig';
+import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
 //import ScreenTracking from './ScreenTrackingMiddleware'
 
 // creates the store
@@ -30,6 +31,8 @@ export default (rootReducer, rootSaga) => {
   middleware.push(sagaMiddleware)
 
   /* ------------- Assemble Middleware ------------- */
+
+  middleware.push(thunk);
 
   enhancers.push(applyMiddleware(...middleware))
 

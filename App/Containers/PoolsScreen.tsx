@@ -10,7 +10,7 @@ import { Tabs, Tab, TabHeading } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FlatList } from 'react-native';
 import HeaderLogo from '../Components/HeaderLogo';
-import PoolsActions from '../Redux/PoolsRedux';
+import { loadPoolsAsync } from '../Redux/PoolsRedux';
 import styles from './Styles/PoolsScreenStyles';
 
 type Props = {
@@ -24,13 +24,13 @@ class PoolsScreen extends Component<Props> {
 	};
 
 	state = {
-		showInput: false
+		showInput: false,
+		filterStr: ''
 	};
 
 	componentDidMount() {
 		const dispatch = this.props.dispatch;
-		dispatch(PoolsActions.beforeLoad(name));
-		dispatch(PoolsActions.loadItems());
+		dispatch(loadPoolsAsync());
 	}
 
 	onSearchStrChange = (text) => {
@@ -62,8 +62,8 @@ class PoolsScreen extends Component<Props> {
 			popular,
 			created,
 			invested,
-			filtered, 
-			filterStr
+			filtered,
+			fetching
 		} = this.props;
 
 		return (
@@ -72,11 +72,11 @@ class PoolsScreen extends Component<Props> {
 				enableOnAndroid={true}
 			>
 				<Text style={styles.headerTitle}>Пулы</Text>
-				{ this.props.fetching ? <Spinner/> : null }
+				{ fetching ? <Spinner/> : null }
 				<ControlPanel 
 					showInput = {this.state.showInput}
 					onChange = {this.toggleSearch}
-					searchStr = {filterStr}
+					searchStr = {this.state.filterStr}
 					onSearchStrChange = {this.onSearchStrChange}
 				/>
 				<Tabs onChangeTab={this.onChangeTab}>
@@ -108,8 +108,8 @@ class PoolsScreen extends Component<Props> {
 }
 
 function mapStateToProps (state) {
-	let keys = ['fetching', 'popular', 'created', 'invested', 'filtered', 'filterStr'],
-			obj = {};
+	let keys = ['fetching', 'popular', 'created', 'invested', 'filtered'],
+		obj = {};
 	keys.map((key) => obj[key] = state.pools[key]);
 	return obj;
 }

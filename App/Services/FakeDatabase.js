@@ -51,13 +51,30 @@ const fakeDatabase = {
 	]
 };
 
-const delay = (ms) => {
-	new Promise(resolve => setTimeout(resolve, ms));
-};
+// const delay = (ms) => 
+// 	new Promise(resolve => setTimeout(resolve, ms));
+
+// async function stall(stallTime = 500) {
+//   await new Promise(resolve => setTimeout(resolve, stallTime));
+// };
+
+function delayedPromise(ms, value) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(value), ms);
+  });
+}
 
 //number name author содержит
-export const findPools = (filterStr) => {
+export const fakeFindPools = (filterStr) => {
 	delay(500).then(() => {
 		return fakeDatabase.pools;
+	});
+}
+
+export const fakeGetPools = () => {
+	return delayedPromise(500, { 
+		popular: fakeDatabase.pools,
+		invested: fakeDatabase.pools,
+		created: fakeDatabase.pools
 	});
 }
