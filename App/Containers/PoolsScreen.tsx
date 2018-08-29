@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavigationScreenProp } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { View, PixelRatio } from 'react-native';
+import { View } from 'react-native';
 import { Text, Spinner } from 'native-base';
 import ControlPanel from '../Components/ControlPanel';
 import PoolItem from '../Components/PoolItem';
@@ -10,7 +10,7 @@ import { Tabs, Tab, TabHeading } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FlatList } from 'react-native';
 import HeaderLogo from '../Components/HeaderLogo';
-import { loadPoolsAsync } from '../Redux/PoolsRedux';
+import { loadPoolsAsync, loadPoolsFilteredAsync } from '../Redux/PoolsRedux';
 import styles from './Styles/PoolsScreenStyles';
 
 type Props = {
@@ -34,16 +34,17 @@ class PoolsScreen extends Component<Props> {
 	}
 
 	onSearchStrChange = (text) => {
-		//const dispatch = this.props.dispatch;
-		//dispatch(updateFilterStr(text));
-		//dispatch(loadFilteredItems(text));
+		const dispatch = this.props.dispatch;
+		this.setState({
+			filterStr: text
+		});
+		dispatch(loadPoolsFilteredAsync(text));
 	}
 
 	toggleSearch = () => {
-		// const dispatch = this.props.dispatch;
-		// dispatch(updateFilterStr(''));
 		this.setState({
-			showInput: !this.state.showInput
+			showInput: !this.state.showInput,
+			filterStr: ''
 		});
 	}
 
@@ -66,6 +67,8 @@ class PoolsScreen extends Component<Props> {
 			fetching
 		} = this.props;
 
+		debugger;
+
 		return (
 			<KeyboardAwareScrollView
 				style={styles.mainContainer}  
@@ -79,7 +82,7 @@ class PoolsScreen extends Component<Props> {
 					searchStr = {this.state.filterStr}
 					onSearchStrChange = {this.onSearchStrChange}
 				/>
-				<Tabs onChangeTab={this.onChangeTab}>
+				{this.state.filterStr.length == 0 && <Tabs onChangeTab={this.onChangeTab}>
 					<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><MaterialIcons name='whatshot' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Популярные</Text></TabHeading>}>
 						<FlatList
 							data={popular}
@@ -101,7 +104,8 @@ class PoolsScreen extends Component<Props> {
 							keyExtractor={(item) => item.id}
 						/>
 					</Tab>
-				</Tabs>
+				</Tabs>}
+				{ this.state.filterStr.length > 0 && !fetching && <Text>Результаты поиска!</Text>}
 			</KeyboardAwareScrollView>
 		);
 	}

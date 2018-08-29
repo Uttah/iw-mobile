@@ -12,6 +12,9 @@ export default class ControlPanel extends Component {
 		return (
 			<View style={styles.input}>
 				<Item>
+					<TouchableOpacity onPress={this.onPressSearch}>
+						<EvilIcons name='search' style={styles.searchIcon} size={26} color={'#999'}/>
+					</TouchableOpacity>
 					<Input 
 						placeholder = '' 
 						value = {searchStr}

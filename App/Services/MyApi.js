@@ -51,16 +51,8 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 	};
 
 	const findPools = async(filterStr) => {
-		const data = await fakeFindPools(filterStr);
-		return data;
+		return fakeFindPools(filterStr);
 	};
-
-	// const getPools = async() => {
-	// 	debugger;
-	// 	const data = await getPools();
-	// 	debugger;
-	// 	return data;
-	// }
 
 	const getPools = () => {
 		return fakeGetPools();

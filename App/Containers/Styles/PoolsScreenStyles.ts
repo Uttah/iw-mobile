@@ -10,5 +10,12 @@ export default StyleSheet.create({
 		textAlign: 'center',
 		marginTop: hp('2.25%'),
 		marginBottom: hp('3.15%')
+	},
+	tabname: {
+		fontSize: hp('1.5%'),
+		color: '#656C74'
+	},
+	tabicon: {
+		color: '#656C74'
 	}
 });

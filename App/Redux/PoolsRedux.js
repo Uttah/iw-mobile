@@ -7,7 +7,8 @@ import api from '../Services/MyApi';
 const { Types, Creators } = createActions({
 	beforeLoad: [],
 	setPools: ['data'],
-	setPoolsLoadErr: ['err']
+	setPoolsLoadErr: ['err'],
+	setPoolsFiltered: ['data']
 });
 
 export const loadPoolsAsync = () => {
@@ -16,6 +17,17 @@ export const loadPoolsAsync = () => {
 		api.getPools()
 			.then((data) => {
 				dispatch(Creators.setPools(data));
+			})
+			.catch((err) => dispatch(setPoolsLoadErr(err)));
+	}
+}
+
+export const loadPoolsFilteredAsync = (filterStr) => {
+	return dispatch => {
+		dispatch(Creators.beforeLoad());
+		api.findPools(filterStr)
+			.then((data) => {
+				dispatch(Creators.setPoolsFiltered(data));
 			})
 			.catch((err) => dispatch(setPoolsLoadErr(err)));
 	}
@@ -44,6 +56,14 @@ export const setPools = (state, action) => {
 	});
 };
 
+export const setPoolsFiltered = (state, action) => {
+	const { filtered } = action.data;
+	return state.merge({ 
+		filtered: filtered,
+		fetching: false
+	});
+};
+
 export const setPoolsLoadErr = (state, action) => {
 	return state.merge({ err: action.err, fetching: false });
 }
@@ -51,5 +71,6 @@ export const setPoolsLoadErr = (state, action) => {
 export const reducer = createReducer(INITIAL_STATE, {
 	[Types.BEFORE_LOAD]: beforeLoad,
 	[Types.SET_POOLS]: setPools,
+	[Types.SET_POOLS_FILTERED]: setPoolsFiltered,
 	[Types.SET_POOLS_LOAD_ERR]: setPoolsLoadErr
 });
