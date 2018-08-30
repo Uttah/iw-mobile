@@ -63,9 +63,14 @@ class PoolsScreen extends Component<Props> {
 	
 	renderItem = ({ item }) => {
 		return (
-			<PoolItem item={item} />
+			<PoolItem item={item} onPress={this.onPoolPress} />
 		);
 	};
+
+	onPoolPress = (id) => {
+		console.log(id); //replace id when backend is ready
+		this.props.navigation.navigate('PoolScreen', { id: "5b87826b26229f0026661f1e" });
+	}
 
 	render() {
 		const {
@@ -82,7 +87,6 @@ class PoolsScreen extends Component<Props> {
 				enableOnAndroid={true}
 			>
 				<Text style={styles.headerTitle}>Пулы</Text>
-				<Pool/>
 				<View style={{height: hp('7.27%')}}>
 					<ControlPanel 
 						onChange={this.toggleSearch}

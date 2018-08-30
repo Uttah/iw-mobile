@@ -8,9 +8,10 @@ import styles from './Styles/PoolItemStyles';
 
 export default class StatsNumber extends Component {
 	render() {
-    const { id, number, name, date, comiss, author } = this.props.item;
+		const { id, number, name, date, comiss, author } = this.props.item;
+		const onPress = this.props.onPress;
 		return (
-			<TouchableHighlight style={styles.container}>
+			<TouchableHighlight style={styles.container} onPress={() => onPress(id)}>
         <View style={styles.inner}>
           <Text style={styles.number}>{number}</Text>
           <Text style={styles.name}>{name}</Text>

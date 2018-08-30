@@ -1,25 +1,40 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, Query } from 'react-apollo';
 import { View, Text } from 'react-native';
 import gql from 'graphql-tag';
 
-function Pool({ data: { loading, getPool } }) {
-	if (loading) {
-		return <Text>Loading</Text>;
-	} else {
-		return (
-			<View>
-				<Text>Название пула:{getPool.poolName}</Text>
-			</View>
-		);
-	}
+type Props = {
+	poolId: number,
+};
+
+export default function Pool({poolId}: Props) {
+	return (
+		<Query query={GET_POOL} variables={{poolId}}>
+			{({ loading, error, data }) => {
+				if (loading) {
+					return <Text>Loading</Text>;
+				} 
+
+				if (error) {
+					return <Text>{JSON.stringify(error)}</Text>
+				}
+				
+				if (data) {
+					return (
+						<View>
+							<Text>Название пула:{data.getPool.poolName}</Text>
+						</View>
+					);
+				}
+
+			}}
+		</Query>
+	)
 }
 
-export default graphql(gql`
-  query pool{
-    getPool(poolId: "5b87826b26229f0026661f1e") {
-			poolName,
-			projectAdress
-    }
-  }
-`)(Pool);
+const GET_POOL = gql`
+query Pool($poolId: String!){
+	getPool(poolId: $poolId) {
+			poolName
+	}
+}`;
