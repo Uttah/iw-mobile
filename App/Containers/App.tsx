@@ -1,6 +1,10 @@
 import '../Config';
 import DebugConfig from '../Config/DebugConfig';
 import React, { Component } from 'react';
+import ApolloClient from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloProvider } from 'react-apollo';
+import { HttpLink } from 'apollo-link-http';
 import { Provider } from 'react-redux';
 import { StyleProvider } from 'native-base';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -11,6 +15,11 @@ import platform from '../native-base-theme/variables/platform';
 
 // create our store
 const store = createStore();
+
+const client = new ApolloClient({
+  link: new HttpLink({ uri: 'http://icoworld.projects.oktend.com:3000/graphql' }),
+  cache: new InMemoryCache()
+});
 
 /**
 * Provides an entry point into our application.  Both index.ios.js and index.android.js
@@ -24,13 +33,15 @@ const store = createStore();
 class App extends Component {
 	render () {
 		return (
-			<StyleProvider style={getTheme(platform)}>
-				<Provider store={store}>
-						<MenuProvider>
-							<RootContainer />
-						</MenuProvider>
-				</Provider>
-			</StyleProvider>
+			<ApolloProvider client={client}>
+				<StyleProvider style={getTheme(platform)}>
+					<Provider store={store}>
+							<MenuProvider>
+								<RootContainer />
+							</MenuProvider>
+					</Provider>
+				</StyleProvider>			
+			</ApolloProvider>
 		)
 	}
 }
