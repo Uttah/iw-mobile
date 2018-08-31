@@ -1,5 +1,5 @@
 import React from 'react';
-import { graphql, Query } from 'react-apollo';
+import { Query } from 'react-apollo';
 import { View, Text } from 'react-native';
 import gql from 'graphql-tag';
 
@@ -33,7 +33,7 @@ export default function Pool({poolId}: Props) {
 }
 
 const GET_POOL = gql`
-query Pool($poolId: String!){
+query Pool($poolId: ID!){
 	getPool(poolId: $poolId) {
 			poolName
 	}

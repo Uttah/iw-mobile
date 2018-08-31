@@ -13,7 +13,7 @@ import HeaderLogo from '../Components/HeaderLogo';
 import { loadPoolsAsync, loadPoolsFilteredAsync } from '../Redux/PoolsRedux';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './Styles/PoolsScreenStyles';
-import Pool from '../Components/Pool';
+import FilteredPools from '../Components/FilteredPools';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
@@ -120,15 +120,7 @@ class PoolsScreen extends Component<Props> {
 					</Tab>
 				</Tabs>}
 				{ this.state.searchPressed && !fetching &&
-					<View>
-						<Text style={styles.headerSubTitle}>Результаты поиска</Text>
-						<FlatList
-							data={filtered}
-							renderItem={this.renderItem}
-							keyExtractor={(item) => item.id}
-							style={styles.filtered}
-						/>
-					</View> 
+					<FilteredPools poolName={this.state.filterStr}/>
 				}
 			</KeyboardAwareScrollView>
 		);

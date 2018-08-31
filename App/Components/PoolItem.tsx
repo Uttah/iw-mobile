@@ -6,7 +6,7 @@ import { Images } from 'App/Themes';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './Styles/PoolItemStyles';
 
-export default class StatsNumber extends Component {
+export default class PoolItem extends Component {
 	render() {
 		const { id, number, name, date, comiss, author } = this.props.item;
 		const onPress = this.props.onPress;
