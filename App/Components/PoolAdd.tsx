@@ -64,7 +64,6 @@ const TEST_DATA = {
 export default class PoolAdd extends Component<Props, State> {
 	state = {
 		input: {
-			// poolName: '№123-8/15/18',
 			owner: '5b74fe23d55ae400216bd6ae',
 			projectName: '',
 			projectLink: '',

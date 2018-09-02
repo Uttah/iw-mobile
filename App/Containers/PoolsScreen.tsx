@@ -71,6 +71,11 @@ class PoolsScreen extends Component<Props> {
 		this.props.navigation.navigate('PoolScreen', { id: "5b87826b26229f0026661f1e" });
 	}
 
+	//to do: вместо onSearchPoolPress, onPoolPress только одна функция
+	onSearchPoolPress = (id) => {
+		this.props.navigation.navigate('PoolScreen', { id });
+	}
+
 	onFabPress = () => {
 		this.props.navigation.navigate('PoolAddScreen');
 	}
@@ -121,7 +126,7 @@ class PoolsScreen extends Component<Props> {
 						</Tab>
 					</Tabs>}
 					{ this.state.searchPressed && !fetching &&
-						<FilteredPools poolName={this.state.filterStr}/>
+						<FilteredPools poolName={this.state.filterStr} onPress={this.onSearchPoolPress}/>
 					}
 				</ScrollView>
 				<Fab
