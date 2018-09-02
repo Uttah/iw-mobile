@@ -17,7 +17,8 @@ import platform from '../native-base-theme/variables/platform';
 const store = createStore();
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://icoworld.projects.oktend.com:3000/graphql' }),
+	link: new HttpLink({ uri: 'http://icoworld.projects.oktend.com:3000/graphql' }),
+	//link: new HttpLink({ uri: 'http://localhost:3000/graphql' }),
   cache: new InMemoryCache()
 });
 

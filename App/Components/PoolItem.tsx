@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableHighlight, Image } from 'react-native';
+import { View, TouchableOpacity, TouchableHighlight, Image } from 'react-native';
 import { Text } from 'native-base';
 import { Col, Grid } from 'react-native-easy-grid';
 import { Images } from 'App/Themes';
@@ -11,7 +11,7 @@ export default class PoolItem extends Component {
 		const { id, number, name, date, comiss, author } = this.props.item;
 		const onPress = this.props.onPress;
 		return (
-			<TouchableHighlight style={styles.container} onPress={() => onPress(id)}>
+			<TouchableOpacity style={styles.container} onPress={() => onPress(id)}>
         <View style={styles.inner}>
           <Text style={styles.number}>{number}</Text>
           <Text style={styles.name}>{name}</Text>
@@ -32,7 +32,7 @@ export default class PoolItem extends Component {
 						</Col>
 					</Grid>
         </View>
-			</TouchableHighlight>
+			</TouchableOpacity>
 		);
 	}
 }

@@ -5,6 +5,7 @@ import RegisterScreen from '../Containers/RegisterScreen';
 import PoolsScreen from '../Containers/PoolsScreen';
 import styles from './Styles/NavigationStyles';
 import PoolViewScreen from '../Containers/PoolViewScreen';
+import PoolAddScreen from '../Containers/PoolAddScreen';
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
@@ -12,7 +13,8 @@ const PrimaryNav = StackNavigator({
   ProfileScreen: { screen: ProfileScreen },
   RegisterScreen: { screen: RegisterScreen },
   PoolsScreen: { screen: PoolsScreen },
-  PoolScreen: {screen: PoolViewScreen}
+  PoolScreen: { screen: PoolViewScreen },
+  PoolAddScreen: { screen: PoolAddScreen }
 }, {
   // Default config for all screens
   headerMode: 'screen',
