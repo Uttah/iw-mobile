@@ -65,21 +65,17 @@ const TEST_DATA = {
 
 export default class PoolAdd extends Component<Props, State> {
 	state = {
-		input: {
-			owner: '5b74fe23d55ae400216bd6ae',
-			projectName: '',
-			projectLink: '',
-			projectAdress: '',
-			poolSoftCap: '',
-			poolHardCap: '',
-			minDeposit: '',
-			maxDeposit: '',
-			endDate: '',
-			comissionOfHolder: '',
-			addressForComissionPayment: '',
-			comissionOfIcoWorld: ''
-			//...TEST_DATA
-		},
+		owner: '5b74fe23d55ae400216bd6ae',
+		projectName: '',
+		projectLink: '',
+		projectAdress: '',
+		poolSoftCap: '',
+		poolHardCap: '',
+		minDeposit: '',
+		maxDeposit: '',
+		endDate: '',
+		comissionOfHolder: '',
+		addressForComissionPayment: '',
 		poolNameError: '',
 		projectNameError: '',
 		projectLinkError: '',
@@ -91,7 +87,6 @@ export default class PoolAdd extends Component<Props, State> {
 		endDateError: '',
 		comissionOfHolderError: '',
 		addressForComissionPaymentError: '',
-		comissionOfIcoWorldError: '',
 		poolNameChecked: false,
 		projectNameChecked: false,
 		projectLinkChecked: false,
@@ -102,14 +97,14 @@ export default class PoolAdd extends Component<Props, State> {
 		maxDepositChecked: false,
 		endDateChecked: false,
 		comissionOfHolderChecked: false,
-		addressForComissionPaymentChecked: false,
-		comissionOfIcoWorldChecked: false
+		addressForComissionPaymentChecked: false
 	};
 	
 	onFieldChange = (fieldName, val) => {
-		const error = validate(fieldName, val);
+		const error = '';
+		//const error = validate(fieldName, val);
 		this.setState({
-			['input.' + fieldName]: val,
+			[fieldName]: val,
 			[fieldName + 'Error']: error,
 			[fieldName + 'Checked']: true
 		} as any);
@@ -130,9 +125,27 @@ export default class PoolAdd extends Component<Props, State> {
 
 	setDate = (newDate) => {
     this.setState({
-			['input.endDate']: newDate
+			endDate: newDate
 		} as any);
-  }
+	}
+	
+	getVariables = () => {
+		const input = {
+			owner: this.state.owner,
+			projectName: this.state.projectName,
+			projectLink: this.state.projectLink,
+			projectAdress: this.state.projectAdress,
+			poolSoftCap: +this.state.poolSoftCap,
+			poolHardCap: +this.state.poolHardCap,
+			minDeposit: +this.state.minDeposit,
+			maxDeposit: +this.state.maxDeposit,
+			endDate: this.state.endDate,
+			comissionOfHolder: +this.state.comissionOfHolder,
+			addressForComissionPayment: this.state.addressForComissionPayment,
+			comissionOfIcoWorld: 1,
+		};
+		return input;
+	};
 
 	render() {
 		const { style } = this.props;
@@ -148,7 +161,7 @@ export default class PoolAdd extends Component<Props, State> {
 							style={styles.input}
 							fieldStatus={this.getFieldStatus('projectName')}
 							placeholder='Project name'
-							value={this.state.input.projectName}
+							value={this.state.projectName}
 							onChangeText={(val) => this.onFieldChange('projectName', val)}
 							error={this.state.projectNameError}
 							showError={true}
@@ -158,7 +171,7 @@ export default class PoolAdd extends Component<Props, State> {
 							style={styles.input}
 							fieldStatus={this.getFieldStatus('projectLink')}
 							placeholder='Project link'
-							value={this.state.input.projectLink}
+							value={this.state.projectLink}
 							onChangeText={(val) => this.onFieldChange('projectLink', val)}
 							error={this.state.projectLinkError}
 							showError={true}
@@ -168,7 +181,7 @@ export default class PoolAdd extends Component<Props, State> {
 							style={styles.input}
 							fieldStatus={this.getFieldStatus('projectAdress')}
 							placeholder='Adress of the project'
-							value={this.state.input.projectAdress}
+							value={this.state.projectAdress}
 							onChangeText={(val) => this.onFieldChange('projectAdress', val)}
 							error={this.state.projectAdressError}
 							showError={true}
@@ -178,7 +191,7 @@ export default class PoolAdd extends Component<Props, State> {
 							style={styles.input}
 							fieldStatus={this.getFieldStatus('poolSoftCap')}
 							placeholder='Soft Cap of the pool'
-							value={this.state.input.poolSoftCap.toString()}
+							value={this.state.poolSoftCap.toString()}
 							onChangeText={(val) => this.onFieldChange('poolSoftCap', val)}
 							error={this.state.poolSoftCapError}
 							showError={true}
@@ -188,7 +201,7 @@ export default class PoolAdd extends Component<Props, State> {
 							style={styles.input}
 							fieldStatus={this.getFieldStatus('poolHardCap')}
 							placeholder='Hard Cap of the pool'
-							value={this.state.input.poolHardCap.toString()}
+							value={this.state.poolHardCap.toString()}
 							onChangeText={(val) => this.onFieldChange('poolHardCap', val)}
 							error={this.state.poolHardCapError}
 							showError={true}
@@ -198,7 +211,7 @@ export default class PoolAdd extends Component<Props, State> {
 							style={styles.input}
 							fieldStatus={this.getFieldStatus('minDeposit')}
 							placeholder='Min deposit per participant'
-							value={this.state.input.minDeposit.toString()}
+							value={this.state.minDeposit.toString()}
 							onChangeText={(val) => this.onFieldChange('minDeposit', val)}
 							error={this.state.minDepositError}
 							showError={true}
@@ -208,7 +221,7 @@ export default class PoolAdd extends Component<Props, State> {
 							style={styles.input}
 							fieldStatus={this.getFieldStatus('maxDeposit')}
 							placeholder='Max deposit per participant'
-							value={this.state.input.maxDeposit.toString()}
+							value={this.state.maxDeposit.toString()}
 							onChangeText={(val) => this.onFieldChange('maxDeposit', val)}
 							error={this.state.maxDepositError}
 							showError={true}
@@ -216,7 +229,7 @@ export default class PoolAdd extends Component<Props, State> {
 						/>
 						<View style={{borderWidth: 1, marginBottom: hp('3.2%'), borderColor: '#D9D5DC'}}>
 							<DatePicker
-								date={this.state['input.endDate']}
+								date={this.state.endDate}
 								mode="date"
 								placeholder="Date of the end"
 								format="DD MMM YYYY"
@@ -246,7 +259,7 @@ export default class PoolAdd extends Component<Props, State> {
 							style={styles.input}
 							fieldStatus={this.getFieldStatus('comissionOfHolder')}
 							placeholder="Comission of pool's holder"
-							value={this.state.input.comissionOfHolder.toString()}
+							value={this.state.comissionOfHolder.toString()}
 							onChangeText={(val) => this.onFieldChange('comissionOfHolder', val)}
 							error={this.state.comissionOfHolderError}
 							showError={true}
@@ -255,8 +268,8 @@ export default class PoolAdd extends Component<Props, State> {
 						<TextField 
 							style={styles.input}
 							fieldStatus={this.getFieldStatus('addressForComissionPayment')}
-							placeholder="Comission of pool's holder"
-							value={this.state.input.addressForComissionPayment}
+							placeholder="address for comission payment"
+							value={this.state.addressForComissionPayment}
 							onChangeText={(val) => this.onFieldChange('addressForComissionPayment', val)}
 							error={this.state.addressForComissionPaymentError}
 							showError={true}
@@ -270,11 +283,11 @@ export default class PoolAdd extends Component<Props, State> {
 								disabled={false} 
 								onPress={
 									() => addPool({ variables: {
-										input:this.state.input 
+										input: this.getVariables()
 									}}
 								)}
 							>
-								<Text uppercase={false} style={styles.buttonText}>Создать</Text>
+								<Text uppercase={false} style={styles.buttonText}>Create pool</Text>
 							</Button> 
 						</View>
 				</View>

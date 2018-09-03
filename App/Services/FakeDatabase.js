@@ -4,7 +4,7 @@ const fakeDatabase = {
 			id: '1',
 			number: '123-8/15/18',
 			name: 'Tether',
-			date: '25 декабря 2017',
+			date: 'Tue Jan 01 2019 00:00:00 GMT+0000 (Coordinated Universal Time)',
 			comiss: 3,
 			author: 'Владислава Константиновна Карамагомедовна-Фазыльоглы'
 		},
@@ -12,7 +12,7 @@ const fakeDatabase = {
 			id: '2',
 			number: '123-8/15/19',
 			name: 'Hether',
-			date: '26 декабря 2017',
+			date: 'Tue Jan 01 2019 00:00:00 GMT+0000 (Coordinated Universal Time)',
 			comiss: 3,
 			author: 'Иван Фёдоров'
 		},
@@ -20,7 +20,7 @@ const fakeDatabase = {
 			id: '3',
 			number: '123-8/15/19',
 			name: 'Mether',
-			date: '25 декабря 2016',
+			date: 'Tue Jan 01 2019 00:00:00 GMT+0000 (Coordinated Universal Time)',
 			comiss: 3,
 			author: 'Владислава Карамагомедовна-Фазыльоглы'
 		},
@@ -28,7 +28,7 @@ const fakeDatabase = {
 			id: '4',
 			number: '123-8/15/20',
 			name: 'Fether',
-			date: '26 декабря 2014',
+			date: 'Tue Jan 01 2019 00:00:00 GMT+0000 (Coordinated Universal Time)',
 			comiss: 3,
 			author: 'Сергей Зверев'
 		},
@@ -36,7 +36,7 @@ const fakeDatabase = {
 			id: '5',
 			number: '123-8/16/44',
 			name: 'Ketether',
-			date: '25 декабря 2016',
+			date: 'Tue Jan 01 2019 00:00:00 GMT+0000 (Coordinated Universal Time)',
 			comiss: 3,
 			author: 'Иван Федоров'
 		},
@@ -44,7 +44,7 @@ const fakeDatabase = {
 			id: '6',
 			number: '123-8/16/45',
 			name: 'Pethether',
-			date: '26 декабря 2014',
+			date: 'Tue Jan 01 2019 00:00:00 GMT+0000 (Coordinated Universal Time)',
 			comiss: 3,
 			author: 'Иван Федоров'
 		}

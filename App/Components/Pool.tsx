@@ -1,10 +1,10 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import { View } from 'react-native';
-import { List, ListItem, Text } from 'native-base';
+import { List, ListItem, Text, Spinner } from 'native-base';
 import gql from 'graphql-tag';
 import styles from './Styles/PoolStyles';
-import moment from 'moment';
+//import moment from 'moment';
 
 type Props = {
 	poolId: number,
@@ -34,7 +34,7 @@ const PoolView = ({pool}) => (
 			{ renderFieldVal('Hard Cap of the pool', pool.poolHardCap) }
 			{ renderFieldVal('Min deposit per participant', pool.minDeposit) }
 			{ renderFieldVal('Max deposit per participant', pool.maxDeposit) }
-			{ renderFieldVal('Date of the end', moment(pool.endDate).format('D MMM YYYY')) }
+			{ renderFieldVal('Date of the end', new Date(pool.endDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })) }
 			{ renderFieldVal("Comission of pool's holder", pool.comissionOfHolder, '%') }
 			{ renderFieldVal('Comission of icoWorld', pool.comissionOfIcoWorld, '%') }
 		</List>
@@ -46,7 +46,7 @@ export default function Pool({poolId}: Props) {
 		<Query query={GET_POOL} variables={{poolId}}>
 			{({ loading, error, data }) => {
 				if (loading) {
-					return <Text>Loading</Text>;
+					return <Spinner/>;
 				} 
 
 				if (error) {
@@ -61,7 +61,6 @@ export default function Pool({poolId}: Props) {
 				}
 				
 				if (data) {
-					debugger;
 					return (
 						<PoolView
 							pool={data.getPool}
