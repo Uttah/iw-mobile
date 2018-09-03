@@ -7,6 +7,8 @@ import TextField from './TextField';
 import { TextFieldStatus } from '../Services/Enums';
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
+import DatePicker from 'react-native-datepicker';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const platform = Platform.OS;
 
@@ -55,7 +57,7 @@ const TEST_DATA = {
 	poolHardCap: 10.0,
 	minDeposit: 10.0,
 	maxDeposit: 10.0,
-	endDate: '2019.01.01',
+	//endDate: new Date(),
 	comissionOfHolder: 10.0,
 	addressForComissionPayment: 'addressForComissionPayment',
 	comissionOfIcoWorld: 1
@@ -68,15 +70,15 @@ export default class PoolAdd extends Component<Props, State> {
 			projectName: '',
 			projectLink: '',
 			projectAdress: '',
-			poolSoftCap: 0.0,
-			poolHardCap: 0.0,
-			minDeposit: 0.0,
-			maxDeposit: 0.0,
+			poolSoftCap: '',
+			poolHardCap: '',
+			minDeposit: '',
+			maxDeposit: '',
 			endDate: '',
-			comissionOfHolder: 0.0,
+			comissionOfHolder: '',
 			addressForComissionPayment: '',
-			comissionOfIcoWorld: 1,
-			...TEST_DATA
+			comissionOfIcoWorld: ''
+			//...TEST_DATA
 		},
 		poolNameError: '',
 		projectNameError: '',
@@ -125,6 +127,12 @@ export default class PoolAdd extends Component<Props, State> {
 			return TextFieldStatus.NotChecked;
 		}
 	}
+
+	setDate = (newDate) => {
+    this.setState({
+			['input.endDate']: newDate
+		} as any);
+  }
 
 	render() {
 		const { style } = this.props;
@@ -206,16 +214,34 @@ export default class PoolAdd extends Component<Props, State> {
 							showError={true}
 							returnKeyType={'next'}
 						/>
-						<TextField 
-							style={styles.input}
-							fieldStatus={this.getFieldStatus('endDate')}
-							placeholder='Date of the end'
-							value={this.state.input.endDate}
-							onChangeText={(val) => this.onFieldChange('endDate', val)}
-							error={this.state.endDateError}
-							showError={true}
-							returnKeyType={'next'}
-						/>
+						<View style={{borderWidth: 1, marginBottom: hp('3.2%'), borderColor: '#D9D5DC'}}>
+							<DatePicker
+								date={this.state['input.endDate']}
+								mode="date"
+								placeholder="Date of the end"
+								format="DD MMM YYYY"
+								minDate="2018-09-03"
+								maxDate="2020-06-01"
+								confirmBtnText="Confirm"
+								cancelBtnText="Cancel"
+								customStyles={{
+									dateIcon: {
+										position: 'absolute',
+										left: 0,
+										top: 4,
+										marginLeft: 0
+									},
+									dateInput: {
+										marginLeft: 36,
+										borderWidth: 0
+									},
+									placeholderText: {
+										color: '#575757'
+									}
+								}}
+								onDateChange={(date) => {this.setDate(date)}}
+							/>
+						</View>
 						<TextField 
 							style={styles.input}
 							fieldStatus={this.getFieldStatus('comissionOfHolder')}

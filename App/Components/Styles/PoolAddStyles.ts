@@ -13,6 +13,7 @@ export default StyleSheet.create({
 	},
 	button: {
 		marginTop: hp('0.9%'),
+		marginBottom: hp('1.8%'),
 		borderRadius: 8
 	},
 	buttonText: {
