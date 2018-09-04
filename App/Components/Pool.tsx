@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { List, ListItem, Text, Spinner } from 'native-base';
 import gql from 'graphql-tag';
 import styles from './Styles/PoolStyles';
-//import moment from 'moment';
+import Author from './Author';
 
 type Props = {
 	poolId: number,
@@ -12,13 +12,13 @@ type Props = {
 
 const renderFieldVal = (label, value, unit='') => (
 	<ListItem noIndent style={styles.listItem}>
-	<View style={styles.listItemInner}>
-		<Text style={styles.listItemTitle}>{label}</Text>
-	</View>
-	<View style={styles.listItemInner}>
-		<Text style={styles.listItemText}>{value ? `${value}${unit}` : '-'}</Text>
-	</View>
-</ListItem>
+		<View style={styles.listItemInner}>
+			<Text style={styles.listItemTitle}>{label}</Text>
+		</View>
+		<View style={styles.listItemInner}>
+			<Text style={styles.listItemText}>{value ? `${value}${unit}` : '-'}</Text>
+		</View>
+	</ListItem>
 );
 
 const PoolView = ({pool}) => (
@@ -27,6 +27,12 @@ const PoolView = ({pool}) => (
 		<List>
 			{/* fix странного бага с первым элементом списка с noIndent */}
 			<ListItem noIndent style={styles.listItem}></ListItem>
+			<ListItem noIndent style={styles.listItem}>
+				<View style={styles.listItemInner}>
+					<Text style={styles.listItemTitle}>Pool's holder</Text>
+				</View>
+				<Author author={pool.ownerName} style={{}}/>
+			</ListItem>
 			{ renderFieldVal('Open code of smart-contract of the pool', pool.verifyContractLink) }
 			{ renderFieldVal('Project', 'Project') }
 			{ renderFieldVal('Address of the project', pool.projectAdress) }
@@ -77,6 +83,7 @@ const GET_POOL = gql`
 query Pool($poolId: ID!){
 	getPool(poolId: $poolId) {
 		poolName,
+		ownerName,
 		verifyContractLink,
 		projectName,
 		projectAdress,

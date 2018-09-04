@@ -49,20 +49,6 @@ type State = {
 // 	comissionOfIcoWorld: number
 // }; 
 
-const TEST_DATA = {
-	projectName: 'test project name',
-	projectLink: 'test project link',
-	projectAdress: 'http://test',
-	poolSoftCap: 10.0,
-	poolHardCap: 10.0,
-	minDeposit: 10.0,
-	maxDeposit: 10.0,
-	//endDate: new Date(),
-	comissionOfHolder: 10.0,
-	addressForComissionPayment: 'addressForComissionPayment',
-	comissionOfIcoWorld: 1
-}
-
 export default class PoolAdd extends Component<Props, State> {
 	state = {
 		owner: '5b74fe23d55ae400216bd6ae',
@@ -299,5 +285,5 @@ export default class PoolAdd extends Component<Props, State> {
 
 const ADD_POOL = gql`
 mutation createPool($input: PoolInput!) {
-	createPool(input: $input)
+	createPool(input: $input) 
 }`;

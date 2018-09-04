@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import { Text } from 'react-native';
 import gql from 'graphql-tag';
 import PoolItem from './PoolItem';
+import { Spinner } from 'native-base';
 
 type Props = {
 	poolName: string,
@@ -14,7 +15,7 @@ export default function FilteredPools({poolName, onPress}: Props) {
 		<Query query={SEARCH_POOL} variables={{poolName}}>
 			{({ loading, error, data }) => {
 				if (loading) {
-					return <Text>Loading</Text>;
+					return <Spinner/>;
 				} 
 
 				if (error) {
@@ -29,7 +30,7 @@ export default function FilteredPools({poolName, onPress}: Props) {
 								number: pool.poolName,
 								name: pool.projectName,
 								comiss: 3,
-								author: 'Иван Фёдоров',
+								author: pool.ownerName,
 								date: pool.endDate
 							}} 
 							key={pool.poolId}
@@ -48,6 +49,7 @@ query searchPool($poolName: String!){
 		poolId,
 		poolName,
 		projectName,
+		ownerName,
 		endDate
 	}
 }`;
