@@ -27,9 +27,9 @@ type State = {
 		minDeposit: number,
 		maxDeposit: number,
 		endDate: string,
-		comissionOfHolder: number,
-		addressForComissionPayment: string,
-		comissionOfIcoWorld: number,
+		ownerComission: number,
+		comissionPaymentAddress: string,
+		iwComission: number,
 	}
 }
 
@@ -44,14 +44,14 @@ type State = {
 // 	minDeposit: number,
 // 	maxDeposit: number,
 // 	endDate: string,
-// 	comissionOfHolder: number,
-// 	addressForComissionPayment: string,
-// 	comissionOfIcoWorld: number
+// 	ownerComission: number,
+// 	comissionPaymentAddress: string,
+// 	iwComission: number
 // }; 
 
 export default class PoolAdd extends Component<Props, State> {
 	state = {
-		owner: '5b74fe23d55ae400216bd6ae',
+		owner: '5b975b290124dbdb70e2df5b',
 		projectName: '',
 		projectLink: '',
 		projectAdress: '',
@@ -60,8 +60,8 @@ export default class PoolAdd extends Component<Props, State> {
 		minDeposit: '',
 		maxDeposit: '',
 		endDate: '',
-		comissionOfHolder: '',
-		addressForComissionPayment: '',
+		ownerComission: '',
+		comissionPaymentAddress: '',
 		poolNameError: '',
 		projectNameError: '',
 		projectLinkError: '',
@@ -71,7 +71,7 @@ export default class PoolAdd extends Component<Props, State> {
 		minDepositError: '',
 		maxDepositError: '',
 		endDateError: '',
-		comissionOfHolderError: '',
+		ownerComissionError: '',
 		addressForComissionPaymentError: '',
 		poolNameChecked: false,
 		projectNameChecked: false,
@@ -82,7 +82,7 @@ export default class PoolAdd extends Component<Props, State> {
 		minDepositChecked: false,
 		maxDepositChecked: false,
 		endDateChecked: false,
-		comissionOfHolderChecked: false,
+		ownerComissionChecked: false,
 		addressForComissionPaymentChecked: false
 	};
 	
@@ -126,9 +126,9 @@ export default class PoolAdd extends Component<Props, State> {
 			minDeposit: +this.state.minDeposit,
 			maxDeposit: +this.state.maxDeposit,
 			endDate: this.state.endDate,
-			comissionOfHolder: +this.state.comissionOfHolder,
-			addressForComissionPayment: this.state.addressForComissionPayment,
-			comissionOfIcoWorld: 1,
+			ownerComission: +this.state.ownerComission,
+			comissionPaymentAddress: this.state.comissionPaymentAddress,
+			iwComission: 1,
 		};
 		return input;
 	};
@@ -213,6 +213,26 @@ export default class PoolAdd extends Component<Props, State> {
 							showError={true}
 							returnKeyType={'next'}
 						/>
+						<TextField 
+							style={styles.input}
+							fieldStatus={this.getFieldStatus('ownerComission')}
+							placeholder="Comission of pool's holder"
+							value={this.state.ownerComission.toString()}
+							onChangeText={(val) => this.onFieldChange('ownerComission', val)}
+							error={this.state.ownerComissionError}
+							showError={true}
+							returnKeyType={'next'}
+						/>
+						<TextField 
+							style={styles.input}
+							fieldStatus={this.getFieldStatus('comissionPaymentAddress')}
+							placeholder="address for comission payment"
+							value={this.state.comissionPaymentAddress}
+							onChangeText={(val) => this.onFieldChange('comissionPaymentAddress', val)}
+							error={this.state.addressForComissionPaymentError}
+							showError={true}
+							returnKeyType={'next'}
+						/>
 						<View style={{borderWidth: 1, marginBottom: hp('3.2%'), borderColor: '#D9D5DC'}}>
 							<DatePicker
 								date={this.state.endDate}
@@ -241,26 +261,6 @@ export default class PoolAdd extends Component<Props, State> {
 								onDateChange={(date) => {this.setDate(date)}}
 							/>
 						</View>
-						<TextField 
-							style={styles.input}
-							fieldStatus={this.getFieldStatus('comissionOfHolder')}
-							placeholder="Comission of pool's holder"
-							value={this.state.comissionOfHolder.toString()}
-							onChangeText={(val) => this.onFieldChange('comissionOfHolder', val)}
-							error={this.state.comissionOfHolderError}
-							showError={true}
-							returnKeyType={'next'}
-						/>
-						<TextField 
-							style={styles.input}
-							fieldStatus={this.getFieldStatus('addressForComissionPayment')}
-							placeholder="address for comission payment"
-							value={this.state.addressForComissionPayment}
-							onChangeText={(val) => this.onFieldChange('addressForComissionPayment', val)}
-							error={this.state.addressForComissionPaymentError}
-							showError={true}
-							returnKeyType={'next'}
-						/>
 						<View>
 							<Button 
 								full 
@@ -285,5 +285,8 @@ export default class PoolAdd extends Component<Props, State> {
 
 const ADD_POOL = gql`
 mutation createPool($input: PoolInput!) {
-	createPool(input: $input) 
+	createPool(input: $input) {
+		poolId,
+		poolName
+	}
 }`;

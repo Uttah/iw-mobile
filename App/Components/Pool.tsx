@@ -41,8 +41,8 @@ const PoolView = ({pool}) => (
 			{ renderFieldVal('Min deposit per participant', pool.minDeposit) }
 			{ renderFieldVal('Max deposit per participant', pool.maxDeposit) }
 			{ renderFieldVal('Date of the end', new Date(pool.endDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })) }
-			{ renderFieldVal("Comission of pool's holder", pool.comissionOfHolder, '%') }
-			{ renderFieldVal('Comission of icoWorld', pool.comissionOfIcoWorld, '%') }
+			{ renderFieldVal("Comission of pool's holder", pool.ownerComission, '%') }
+			{ renderFieldVal('Comission of icoWorld', pool.iwComission, '%') }
 		</List>
 	</View>
 );
@@ -83,8 +83,8 @@ const GET_POOL = gql`
 query Pool($poolId: ID!){
 	getPool(poolId: $poolId) {
 		poolName,
+		ownerId,
 		ownerName,
-		verifyContractLink,
 		projectName,
 		projectAdress,
 		poolSoftCap,
@@ -92,7 +92,7 @@ query Pool($poolId: ID!){
 		minDeposit,
 		maxDeposit,
 		endDate,
-		comissionOfHolder,
-		comissionOfIcoWorld
+		ownerComission,
+		iwComission
 	}
 }`;
