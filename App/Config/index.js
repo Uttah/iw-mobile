@@ -10,5 +10,5 @@ if (__DEV__) {
   // it off, but the healthier approach is to fix the warnings.  =)
   console.disableYellowBox = !DebugConfig.yellowBox
   // @ts-ignore
-  //GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest;
+  // GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest;
 }

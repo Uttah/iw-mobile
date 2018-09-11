@@ -13,10 +13,10 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { ProfileTabs } from '../Services/Enums';
 
 class ProfileScreen extends Component {
-	static navigationOptions = {
-		headerTitle: <HeaderLogo/>,
-		headerRight: <View/>
-	};
+	// static navigationOptions = {
+	// 	headerTitle: <HeaderLogo/>,
+	// 	headerRight: <View/>
+	// };
 	
 	state = {
 		activeTab: ProfileTabs.Activity

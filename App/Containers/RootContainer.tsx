@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, StatusBar, Image } from 'react-native';
-import ReduxNavigation from '../Navigation/ReduxNavigation';
 import { connect } from 'react-redux';
 import StartupActions from '../Redux/StartupRedux';
 import ReduxPersist from '../Config/ReduxPersist';
 import { Images } from 'App/Themes';
 import Loading from '../Components/Loading';
 import { getItemsByKeysArr } from 'App/Services/Utils';
+import AppNavigation from '../Navigation/AppNavigation';
 
 // Styles
 import styles from './Styles/RootContainerStyles'
@@ -66,9 +66,9 @@ class RootContainer extends Component {
 		
 		return (
 			<View style={styles.applicationView}>
-			<StatusBar barStyle='light-content' />
-			<ReduxNavigation />
-			{/* {isLoadingVisible ? <Loading/> : null} */}
+				<StatusBar barStyle='light-content' />
+				<AppNavigation />
+				{/* {isLoadingVisible ? <Loading/> : null} */}
 			</View>
 		);
 	}

@@ -11,17 +11,17 @@ type Props = {
 }
 
 export default class PoolViewScreen extends Component<Props> {
-	static navigationOptions = {
-		headerTitle: <HeaderLogo/>,
-		headerRight: <View/>
-	};
+	// static navigationOptions = {
+	// 	headerTitle: <HeaderLogo/>,
+	// 	headerRight: <View/>
+	// };
 	
 	render () {
-		const id = this.props.navigation.state.params.id;
+		const {id} = this.props.navigation.state.params;
 		return (
 			<Container style={{backgroundColor: 'rgba(255, 255, 255, 0.5)'}}>
 				<ScrollView style={styles.mainContainer}>
-					<Pool poolId={id}/>
+					{id && <Pool poolId={id}/>}
 				</ScrollView>
 				<Button 
 					full 

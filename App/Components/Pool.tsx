@@ -66,12 +66,18 @@ export default function Pool({poolId}: Props) {
 					);
 				}
 				
-				if (data) {
+				if (data && data.getPool) {
 					return (
 						<PoolView
 							pool={data.getPool}
 						/>
 					);
+				} else {
+					return (
+						<View>
+							<Text>{`No data for pool with id: '${poolId}'`}</Text>
+						</View>
+					)
 				}
 
 			}}

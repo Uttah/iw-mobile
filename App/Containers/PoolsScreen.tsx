@@ -19,10 +19,10 @@ type Props = {
 }
 
 class PoolsScreen extends Component<Props> {
-	static navigationOptions = {
-		headerTitle: <HeaderLogo/>,
-		headerRight: <View/>
-	};
+	// static navigationOptions = {
+	// 	headerTitle: <HeaderLogo/>,
+	// 	headerRight: <View/>
+	// };
 	
 	state = {
 		filterStr: '',
