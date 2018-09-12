@@ -8,7 +8,6 @@ import PoolItem from '../Components/PoolItem';
 import { Tabs, Tab, TabHeading } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FlatList } from 'react-native';
-import HeaderLogo from '../Components/HeaderLogo';
 import { loadPoolsAsync, loadPoolsFilteredAsync } from '../Redux/PoolsRedux';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './Styles/PoolsScreenStyles';
@@ -19,11 +18,6 @@ type Props = {
 }
 
 class PoolsScreen extends Component<Props> {
-	// static navigationOptions = {
-	// 	headerTitle: <HeaderLogo/>,
-	// 	headerRight: <View/>
-	// };
-	
 	state = {
 		filterStr: '',
 		searchPressed: false

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Text} from 'native-base';
+import { TouchableOpacity, View } from 'react-native';
 import { StackNavigator, SwitchNavigator, DrawerNavigator, withNavigation } from 'react-navigation';
 import LaunchScreen from '../Containers/LaunchScreen';
 import ProfileScreen from '../Containers/ProfileScreen';
@@ -8,33 +8,69 @@ import PoolsScreen from '../Containers/PoolsScreen';
 import styles from './Styles/NavigationStyles';
 import PoolViewScreen from '../Containers/PoolViewScreen';
 import PoolAddScreen from '../Containers/PoolAddScreen';
+import HeaderLogo from '../Components/HeaderLogo';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const DrawerButtonWithNavigation = withNavigation(DrawerButton);
 function DrawerButton({navigation}) {
   return (
-    <Button onPress={() => {
+    <TouchableOpacity onPress={() => {
       navigation.navigate('DrawerOpen');
     }}>
-      <Text>Drawer</Text>
-    </Button>
+      <MaterialIcons name='menu' size={25} style={styles.menuicon}/>
+    </TouchableOpacity>
   );
 }
 
 const DrawerNav = DrawerNavigator({
-  ProfileScreen: { screen: ProfileScreen },
+  ProfileScreen: {
+    screen: StackNavigator({
+      ProfileScreen: {
+        screen: ProfileScreen,
+        navigationOptions: {
+          drawerLabel: () => 'Profile',
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerLeft: <DrawerButtonWithNavigation />,
+          headerRight: <View/>
+        }
+      }
+    })
+  },
   PoolsScreen: { 
     screen: StackNavigator({
-      PoolsScreen: {screen: PoolsScreen},
+      PoolsScreen: {
+        screen: PoolsScreen,
+        navigationOptions: {
+          drawerLabel: () => 'Pools',
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerLeft: <DrawerButtonWithNavigation />,
+          headerRight: <View/>
+        }
+      },
       PoolScreen: {
         screen: PoolViewScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTitle: <HeaderLogo/>,
+          headerTintColor: '#fff',
+          headerRight: <View/>
+        }
       },
+      PoolAddScreen: {
+        screen: PoolAddScreen,
+        navigationOptions: {
+          drawerLabel: () => null,
+          headerStyle: styles.header,
+          headerTitle: <HeaderLogo/>,
+          headerTintColor: '#fff',
+          headerRight: <View/>
+        }
+      }
     }) 
-  },
-  PoolAddScreen: {
-    screen: PoolAddScreen,
-    navigationOptions: {
-      drawerLabel: () => null
-    }
   }
 }, {
   initialRouteName: 'ProfileScreen',
@@ -44,15 +80,7 @@ const AppNavigation = SwitchNavigator({
   LaunchScreen: { screen: LaunchScreen },
   RegisterScreen: { screen: RegisterScreen },
   MainScreen: { 
-    screen: StackNavigator({
-      Drawer: DrawerNav,
-    }, {
-      navigationOptions: {
-        headerStyle: styles.header,
-        headerTintColor: '#fff',
-        headerLeft: <DrawerButtonWithNavigation />
-      }
-    })
+    screen: DrawerNav
   }
 })
 

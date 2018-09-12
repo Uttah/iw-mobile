@@ -4,5 +4,9 @@ import { Colors } from 'App/Themes'
 export default StyleSheet.create({
   header: {
     backgroundColor: Colors.brandPrimary
+  },
+  menuicon: {
+    color: '#fff',
+    paddingLeft: 10
   }
 })
