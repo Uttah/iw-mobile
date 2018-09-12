@@ -38,6 +38,7 @@ class PoolAddScreen extends Component<Props> {
 	}
 
 	render() {
+		const { authUser } = this.props;
 		return (
 			<KeyboardAwareScrollView
 				style={styles.mainContainer}  
@@ -45,10 +46,16 @@ class PoolAddScreen extends Component<Props> {
 				extraScrollHeight={this.getExtraScrollHeight()}
 			>
 				<Text style={styles.headerTitle}>Создать пул</Text>
-				<PoolAdd style={styles.poolAdd}/>
+				<PoolAdd style={styles.poolAdd} authUser={authUser}/>
 			</KeyboardAwareScrollView>
 		);
 	}
 }
 
-export default connect()(PoolAddScreen);
+function mapStateToProps(state) {
+	let obj = {};
+	obj.authUser = state.user.authUser;
+	return obj;
+}
+
+export default connect(mapStateToProps)(PoolAddScreen);

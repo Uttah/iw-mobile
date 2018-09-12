@@ -26,15 +26,12 @@ class LaunchScreen extends Component<Props> {
 	}
 	
 	onForgotPress = () => {
-		this.props.navigation.navigate('MainScreen');
-		//alert('no screen here yet!');
+		alert('no screen here yet!');
 	}
 
-	onSuccess = (name) => {
-		this.props.dispatch(UserActions.loginSuccess(name));
-		//this.props.navigation.navigate('ProfileScreen');
-		//this.props.navigation.navigate('DrawerNavScreen');
-		//this.props.navigation.openDrawer();
+	onSuccess = (userData) => {
+		this.props.dispatch(UserActions.loginSuccess(userData));
+		this.props.navigation.navigate('MainScreen');
 	}
 	
 	onButtonViewLayout = (height) => {

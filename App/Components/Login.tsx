@@ -64,7 +64,7 @@ export default class Login extends Component<Props, State> {
       const {login, password} = this.state;
       try {
         const userData = await api.login(login, password);
-        this.props.onSuccess(userData.name);
+        this.props.onSuccess(userData);
       } catch (err) {
         alert(err);
       }

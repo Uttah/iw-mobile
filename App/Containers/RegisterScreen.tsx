@@ -33,8 +33,8 @@ class RegisterScreen extends Component<Props> {
 		});
 	}
 
-	onSuccess = (name) => {
-		this.props.dispatch(UserActions.registerSuccess(name));
+	onSuccess = (userData) => {
+		this.props.dispatch(UserActions.registerSuccess(userData));
 		this.props.navigation.navigate('ProfileScreen');
 	}
 

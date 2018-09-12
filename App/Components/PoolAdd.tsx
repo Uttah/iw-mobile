@@ -18,40 +18,22 @@ type Props = {
 };
 
 type State = {
-	input: {
-		projectName: string,
-		projectLink: string,
-		projectAdress: string,
-		poolSoftCap: number,
-		poolHardCap: number,
-		minDeposit: number,
-		maxDeposit: number,
-		endDate: string,
-		ownerComission: number,
-		comissionPaymentAddress: string,
-		iwComission: number,
-	}
+	projectName: string,
+	projectLink: string,
+	projectAdress: string,
+	poolSoftCap: number,
+	poolHardCap: number,
+	minDeposit: number,
+	maxDeposit: number,
+	endDate: string,
+	ownerComission: number,
+	comissionPaymentAddress: string,
+	iwComission: number,
 }
-
-// type State = {
-// 	poolName: string,
-// 	owner: string,
-// 	projectName: string,
-// 	projectLink: string,
-// 	projectAdress: string,
-// 	poolSoftCap: number,
-// 	poolHardCap: number,
-// 	minDeposit: number,
-// 	maxDeposit: number,
-// 	endDate: string,
-// 	ownerComission: number,
-// 	comissionPaymentAddress: string,
-// 	iwComission: number
-// }; 
 
 export default class PoolAdd extends Component<Props, State> {
 	state = {
-		owner: '5b975b290124dbdb70e2df5b',
+		owner: this.props.authUser.id,
 		projectName: '',
 		projectLink: '',
 		projectAdress: '',
