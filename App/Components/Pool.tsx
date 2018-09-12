@@ -33,7 +33,7 @@ const PoolView = ({pool}) => (
 				</View>
 				<Author author={pool.ownerName} style={{}}/>
 			</ListItem>
-			{ renderFieldVal('Open code of smart-contract of the pool', pool.verifyContractLink) }
+			{ renderFieldVal('Open code of smart-contract of the pool', pool.status) }
 			{ renderFieldVal('Project', 'Project') }
 			{ renderFieldVal('Address of the project', pool.projectAdress) }
 			{ renderFieldVal('Soft Cap of the pool', pool.poolSoftCap) }
@@ -89,6 +89,7 @@ const GET_POOL = gql`
 query Pool($poolId: ID!){
 	getPool(poolId: $poolId) {
 		poolName,
+		status,
 		ownerId,
 		ownerName,
 		projectName,

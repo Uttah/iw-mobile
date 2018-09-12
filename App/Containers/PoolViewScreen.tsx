@@ -4,18 +4,12 @@ import { Container, Text, Button, Fab } from 'native-base';
 import { NavigationScreenProp } from 'react-navigation';
 import styles from './Styles/PoolViewScreenStyles';
 import Pool from '../Components/Pool';
-import HeaderLogo from '../Components/HeaderLogo';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
 }
 
-export default class PoolViewScreen extends Component<Props> {
-	// static navigationOptions = {
-	// 	headerTitle: <HeaderLogo/>,
-	// 	headerRight: <View/>
-	// };
-	
+export default class PoolViewScreen extends Component<Props> {	
 	render () {
 		const {id} = this.props.navigation.state.params;
 		return (
