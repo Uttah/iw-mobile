@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, View } from 'react-native';
 import { Tabs, Tab, TabHeading, Text, Fab, Button, Container } from 'native-base';
-import HeaderLogo from '../Components/HeaderLogo';
 import ProfileTop from '../Components/ProfileTop';
 import ProfileTab1 from '../Components/ProfileTab1';
 import ProfileTab2 from '../Components/ProfileTab2';
@@ -13,11 +12,6 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { ProfileTabs } from '../Services/Enums';
 
 class ProfileScreen extends Component {
-	// static navigationOptions = {
-	// 	headerTitle: <HeaderLogo/>,
-	// 	headerRight: <View/>
-	// };
-	
 	state = {
 		activeTab: ProfileTabs.Activity
 	}
@@ -98,7 +92,7 @@ class ProfileScreen extends Component {
 
 function mapStateToProps (state) {
 	let obj = {};
-	obj.name = state.user.name;
+	obj.name = state.user.authUser.name;
 	return obj;
 }
 

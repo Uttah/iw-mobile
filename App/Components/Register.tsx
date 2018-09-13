@@ -102,7 +102,7 @@ export default class Register extends Component<Props, State> {
 			const { email, password, name, lastName } = this.state;
 			try {
 				const userData = await api.register(email, password, name, lastName);
-				this.props.onSuccess(userData.name);
+				this.props.onSuccess(userData);
 			} catch (err) {
 				alert(err);
 			}
