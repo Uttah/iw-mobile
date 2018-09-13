@@ -27,8 +27,8 @@ export default class Login extends Component<Props, State> {
   private passwordRef: undefined | {_root: {focus: () => void, blur: () => void}};
   
   state = {
-    login: '',
-    password: '',
+    login: 'smirnovanatalia2008@gmail.com',
+    password: '123456',
     emailError: '',
     passwordError: '',
     emailChecked: false,

@@ -8,6 +8,7 @@ import PoolsScreen from '../Containers/PoolsScreen';
 import styles from './Styles/NavigationStyles';
 import PoolViewScreen from '../Containers/PoolViewScreen';
 import PoolAddScreen from '../Containers/PoolAddScreen';
+import MessagesScreen from '../Containers/MessagesScreen';
 import HeaderLogo from '../Components/HeaderLogo';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -71,6 +72,20 @@ const DrawerNav = DrawerNavigator({
         }
       }
     }) 
+  },
+  MessagesScreen: {
+    screen: StackNavigator({
+      MessagesScreen: {
+        screen: MessagesScreen,
+        navigationOptions: {
+          drawerLabel: () => 'Messages',
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerRight: <View/>
+        }
+      }
+    })
   }
 }, {
   initialRouteName: 'ProfileScreen',

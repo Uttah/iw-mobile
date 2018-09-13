@@ -5,7 +5,6 @@ import { Col, Grid } from 'react-native-easy-grid';
 import { Images } from 'App/Themes';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './Styles/PoolItemStyles';
-//import moment from 'moment';
 
 export default class PoolItem extends Component {
 	render() {

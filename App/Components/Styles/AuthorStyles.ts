@@ -26,5 +26,10 @@ export default StyleSheet.create({
   authorNameCol: {
     justifyContent: 'center', 
     alignItems: 'flex-start'
+  },
+  messagesNum: {
+    position: 'absolute',
+    top: -5,
+    right: -5
   }
 });

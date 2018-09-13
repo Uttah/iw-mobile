@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Tabs, Tab, TabHeading, Text, Fab, Button, Container } from 'native-base';
 import ProfileTop from '../Components/ProfileTop';
 import ProfileTab1 from '../Components/ProfileTab1';
