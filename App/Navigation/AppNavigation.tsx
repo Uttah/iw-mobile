@@ -82,6 +82,7 @@ const DrawerNav = DrawerNavigator({
           headerStyle: styles.header,
           headerTintColor: '#fff',
           headerTitle: <HeaderLogo/>,
+          headerLeft: <DrawerButtonWithNavigation />,
           headerRight: <View/>
         }
       }
