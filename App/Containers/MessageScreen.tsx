@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { Image } from 'react-native';
 import { Container } from 'native-base';
 //import { connect } from 'react-redux';
 import { NavigationScreenProp } from 'react-navigation';
 import styles from './Styles/MessageScreenStyles';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { Images } from 'App/Themes';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
@@ -36,7 +37,17 @@ export default class MessagesScreen extends Component<Props> {
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }))
-  }
+	}
+	
+	renderAvatar = () => {
+		return (
+			<Image
+				source={Images.noAvatar}
+				resizeMode={'contain'}
+				style={styles.avatar}
+			/> 
+		);
+	};
 
 	render() {
 		return (
@@ -47,6 +58,7 @@ export default class MessagesScreen extends Component<Props> {
 					user={{
 						_id: 1,
 					}}
+					renderAvatar={this.renderAvatar}
 				/>
 			</Container>
 		);

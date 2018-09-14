@@ -13,7 +13,7 @@ export default class MessageItem extends Component {
 		return(
 			<Grid style={styles.btns}>
 				<Col style={{ width: hp('10%')}}>
-					<TouchableOpacity style={styles.btn}>
+					<TouchableOpacity style={styles.btn} onPress={this.props.onReplyPress}>
 						<FontAwesome active name='reply' color={'#5A6978'} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Reply</Text>
 					</TouchableOpacity>
@@ -32,7 +32,7 @@ export default class MessageItem extends Component {
 		return(
 			<Grid style={styles.btns}>
 				<Col style={{ width: hp('10%')}}>
-					<TouchableOpacity style={styles.btn}>
+					<TouchableOpacity style={styles.btn} onPress={this.props.onReplyPress}>
 						<FontAwesome active name='reply' color={'#5A6978'} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Reply</Text>
 					</TouchableOpacity>
@@ -48,7 +48,7 @@ export default class MessageItem extends Component {
 	};
 
 	render() {
-		const { id, messagesNum } = this.props.item;
+		const { id, messagesNum, author } = this.props.item;
 		const onPress = this.props.onPress;
 
 		return (
@@ -56,7 +56,7 @@ export default class MessageItem extends Component {
         <View style={styles.inner}>
 					<Author 
 						style={styles.author} 
-						author={'Иван Фёдоров'} 
+						author={author} 
 						date={{}}
 						authorNameStyle={styles.authorName}
 						messagesNum={messagesNum}

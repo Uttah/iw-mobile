@@ -13,14 +13,18 @@ type Props = {
 export default class MessagesScreen extends Component<Props> {
 	renderItem = ({ item }) => {
 		return (
-			<MessageItem item={item} />
+			<MessageItem item={item} onReplyPress={this.onReplyPress}/>
 		);
 	};
 
+	onReplyPress = () => {
+		this.props.navigation.navigate('MessageScreen');
+	}
+ 
 	render() {
 		const items = [
-			{ id: '1', messagesNum: 3 },
-			{ id: '2', messagesNum: 0 }
+			{ id: '1', messagesNum: 3, author: 'Иван Фёдоров' },
+			{ id: '2', messagesNum: 0, author: 'Елена Кукушкина' }
 		];
 		return (
 			<Container>

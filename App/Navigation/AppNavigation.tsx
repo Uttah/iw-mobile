@@ -9,6 +9,7 @@ import styles from './Styles/NavigationStyles';
 import PoolViewScreen from '../Containers/PoolViewScreen';
 import PoolAddScreen from '../Containers/PoolAddScreen';
 import MessagesScreen from '../Containers/MessagesScreen';
+import MessageScreen from '../Containers/MessageScreen';
 import HeaderLogo from '../Components/HeaderLogo';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -83,6 +84,15 @@ const DrawerNav = DrawerNavigator({
           headerTintColor: '#fff',
           headerTitle: <HeaderLogo/>,
           headerLeft: <DrawerButtonWithNavigation />,
+          headerRight: <View/>
+        }
+      },
+      MessageScreen: {
+        screen: MessageScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTitle: <HeaderLogo/>,
+          headerTintColor: '#fff',
           headerRight: <View/>
         }
       }
