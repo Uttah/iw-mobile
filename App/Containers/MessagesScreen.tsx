@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, FlatList } from 'react-native';
-import { Container } from 'native-base';
+import { ScrollView, FlatList, View } from 'react-native';
+import { Container, Text } from 'native-base';
 //import { connect } from 'react-redux';
 import { NavigationScreenProp } from 'react-navigation';
 import styles from './Styles/MessagesScreenStyles';
 import MessageItem from '../Components/MessageItem';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
@@ -20,6 +21,14 @@ export default class MessagesScreen extends Component<Props> {
 	onReplyPress = () => {
 		this.props.navigation.navigate('MessageScreen');
 	}
+
+	listTop = () => {
+		return (
+			<View style={{ borderWidth: 1, borderColor: 'rgba(178, 178, 178, 0.5)', height: hp('9.29%'), flex: 1 }}>
+				<Text style={styles.headerTitle}>Messages</Text>
+			</View>
+		);
+	}
  
 	render() {
 		const items = [
@@ -33,6 +42,7 @@ export default class MessagesScreen extends Component<Props> {
 						data={items}
 						renderItem={this.renderItem}
 						keyExtractor={(item) => item.id}
+						ListHeaderComponent={this.listTop()}
 					/>
 				</ScrollView>
 			</Container>

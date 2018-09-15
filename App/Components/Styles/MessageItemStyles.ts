@@ -41,11 +41,12 @@ export default StyleSheet.create({
 	btn: {
 		flex: 1,
 		flexDirection: 'row',
-		alignItems: 'center'
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	btnicon: {
 		marginRight: hp('0.4%'),
-		width: hp('2.2.5%'),
+		width: hp('2.25%'),
 		height: hp('2.25%')
 	},
 	btntext: {
