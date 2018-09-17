@@ -41,7 +41,6 @@ export default StyleSheet.create({
 	btn: {
 		flex: 1,
 		flexDirection: 'row',
-		alignItems: 'center',
 		justifyContent: 'center'
 	},
 	btnicon: {

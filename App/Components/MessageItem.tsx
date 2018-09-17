@@ -12,13 +12,13 @@ export default class MessageItem extends Component {
 	renderViewMore = (onPress) => {
 		return(
 			<Grid style={styles.btns}>
-				<Col style={{ width: hp('10%')}}>
+				<Col style={{ width: hp('10%'), alignItems: 'flex-start'}}>
 					<TouchableOpacity style={styles.btn} onPress={this.props.onReplyPress}>
 						<FontAwesome active name='reply' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Reply</Text>
 					</TouchableOpacity>
 				</Col>
-				<Col style={{ width: hp('10%')}}>
+				<Col style={{ width: hp('10%'), alignItems: 'flex-start'}}>
 					<TouchableOpacity style={styles.btn} onPress={onPress}>
 						<MaterialCommunityIcons active name='eye' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Read</Text>
@@ -31,15 +31,15 @@ export default class MessageItem extends Component {
 	renderViewLess = (onPress) => {
 		return(
 			<Grid style={styles.btns}>
-				<Col style={{ width: hp('10%')}}>
+				<Col style={{ width: hp('10%'), alignItems: 'flex-start' }}>
 					<TouchableOpacity style={styles.btn} onPress={this.props.onReplyPress}>
-						<FontAwesome active name='reply' color={'#5A6978'} style={styles.btnicon}/>
+						<FontAwesome active name='reply' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Reply</Text>
 					</TouchableOpacity>
 				</Col>
-				<Col style={{ width: hp('10%')}}>
+				<Col style={{ width: hp('10%'), alignItems: 'flex-start' }}>
 					<TouchableOpacity style={styles.btn} onPress={onPress}>
-						<MaterialCommunityIcons active name='eye-off' color={'#5A6978'} style={styles.btnicon}/>
+						<MaterialCommunityIcons active name='eye-off' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Hide</Text>
 					</TouchableOpacity>
 				</Col>
