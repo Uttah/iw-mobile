@@ -26,7 +26,13 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 			//     'Authorization': `Bearer ${response.data.jwt}`
 			// });
 		} else {
-			throw new Error(response.problem);
+			if (response.problem != 'CLIENT_ERROR') {
+				console.log(response.problem);
+				return {
+					name: 'Backend Problems'
+				}
+			}
+			//throw new Error(response.problem);
 		}
 	};
 

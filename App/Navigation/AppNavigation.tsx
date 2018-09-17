@@ -10,6 +10,7 @@ import PoolViewScreen from '../Containers/PoolViewScreen';
 import PoolAddScreen from '../Containers/PoolAddScreen';
 import MessagesScreen from '../Containers/MessagesScreen';
 import MessageScreen from '../Containers/MessageScreen';
+import NotificationsScreen from '../Containers/NotificationsScreen';
 import HeaderLogo from '../Components/HeaderLogo';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -93,6 +94,21 @@ const DrawerNav = DrawerNavigator({
           headerStyle: styles.header,
           headerTitle: <HeaderLogo/>,
           headerTintColor: '#fff',
+          headerRight: <View/>
+        }
+      }
+    })
+  },
+  NotificationsScreen: {
+    screen: StackNavigator({
+      NotificationsScreen: {
+        screen: NotificationsScreen,
+        navigationOptions: {
+          drawerLabel: () => 'Notifications',
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerLeft: <DrawerButtonWithNavigation />,
           headerRight: <View/>
         }
       }
