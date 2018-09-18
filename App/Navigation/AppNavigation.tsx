@@ -13,6 +13,7 @@ import MessageScreen from '../Containers/MessageScreen';
 import NotificationsScreen from '../Containers/NotificationsScreen';
 import HeaderLogo from '../Components/HeaderLogo';
 import { MaterialIcons } from '@expo/vector-icons';
+import DrawerContent from '../Components/DrawerContent';
 
 const DrawerButtonWithNavigation = withNavigation(DrawerButton);
 function DrawerButton({navigation}) {
@@ -31,7 +32,7 @@ const DrawerNav = DrawerNavigator({
       ProfileScreen: {
         screen: ProfileScreen,
         navigationOptions: {
-          drawerLabel: () => 'Profile',
+          //drawerLabel: () => 'Profile',
           headerStyle: styles.header,
           headerTintColor: '#fff',
           headerTitle: <HeaderLogo/>,
@@ -104,7 +105,7 @@ const DrawerNav = DrawerNavigator({
       NotificationsScreen: {
         screen: NotificationsScreen,
         navigationOptions: {
-          drawerLabel: () => 'Notifications',
+          //drawerLabel: () => 'Notifications',
           headerStyle: styles.header,
           headerTintColor: '#fff',
           headerTitle: <HeaderLogo/>,
@@ -116,6 +117,7 @@ const DrawerNav = DrawerNavigator({
   }
 }, {
   initialRouteName: 'ProfileScreen',
+  contentComponent: DrawerContent
 });
 
 const AppNavigation = SwitchNavigator({
