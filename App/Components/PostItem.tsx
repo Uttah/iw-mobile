@@ -10,6 +10,7 @@ import {
 	MenuOption,
 	MenuTrigger,
 } from 'react-native-popup-menu';
+import SocialStats from './SocialStats';
 import { Entypo } from '@expo/vector-icons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -22,7 +23,7 @@ export default class PostItem extends Component {
 		return (
 			<TouchableOpacity style={styles.post} onPress={() => alert('you pressed post!')}>
 				<Grid style={styles.topContainer}>
-					<Col style={{ width: wp('26%')}}>
+					<Col style={{ width: wp('26%'), justifyContent: 'center' }}>
 						<Image
 							source={Images.postImage}
 							resizeMode={'contain'}
@@ -32,8 +33,7 @@ export default class PostItem extends Component {
 					<Col style={styles.textCol}>
 						<Text style={styles.title}>Как предугадать провал ICO-стартапа?</Text>
 						<View style={styles.postStatsContainer}>
-							<Text style={[styles.postStats, styles.postLikes]}>100 лайков</Text>
-							<Text style={styles.postStats}>Без комментариев</Text>
+							<SocialStats likes={1} comments={2} shares={3}/>
 						</View>
 					</Col>
 				</Grid>

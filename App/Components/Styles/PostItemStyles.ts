@@ -28,7 +28,8 @@ export default StyleSheet.create({
   postStatsContainer: {
     flex: 1,
     flexDirection: 'row',
-    marginTop: hp('2%')
+    marginTop: hp('2%'),
+    alignItems: 'center'
   },
   postStats: {
     fontWeight: 'bold',
