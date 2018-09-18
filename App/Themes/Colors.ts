@@ -22,7 +22,8 @@ const colors = {
   border: '#483F53',
   banner: '#5F3E63',
   text: '#3A4551',
-  brandPrimary: '#3f51b5'
+  brandPrimary: '#3f51b5',
+  notifications: '#EF0046'
 }
 
 export default colors
