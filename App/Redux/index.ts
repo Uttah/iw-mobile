@@ -9,7 +9,8 @@ export const reducers = combineReducers({
   github: require('./GithubRedux').reducer,
   search: require('./SearchRedux').reducer,
   user: require('./UserRedux').reducer,
-  pools: require('./PoolsRedux').reducer
+  pools: require('./PoolsRedux').reducer,
+  root: require('./RootRedux').reducer
 })
 
 export default () => {

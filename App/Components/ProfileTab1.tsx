@@ -6,7 +6,7 @@ export default class ProfileTab1 extends Component {
 
 	renderItem = ({ item }) => {
 		return (
-			<PostItem item={item} />
+			<PostItem item={item} onCommentsPress={this.props.onCommentsPress}/>
 		);
 	};
 

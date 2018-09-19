@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { View, StatusBar, Image } from 'react-native';
+import { View, StatusBar, Image, Modal, Alert, TouchableHighlight } from 'react-native';
+import { Text } from 'native-base';
 import { connect } from 'react-redux';
 import StartupActions from '../Redux/StartupRedux';
+import RootActions from '../Redux/RootRedux';
 import ReduxPersist from '../Config/ReduxPersist';
 import { Images } from 'App/Themes';
 import Loading from '../Components/Loading';
 import { getItemsByKeysArr } from 'App/Services/Utils';
 import AppNavigation from '../Navigation/AppNavigation';
+import CommentsModalDialog from '../Components/CommentsModalDialog';
 
 // Styles
 import styles from './Styles/RootContainerStyles'
@@ -43,6 +46,7 @@ class RootContainer extends Component {
 		if (!ReduxPersist.active) {
 			this.props.startup();
 		}
+		//hideCommentsModal
 	}
 	
 	async _loadAssetsAsync() {
@@ -53,7 +57,8 @@ class RootContainer extends Component {
 	}
 	
 	render () {
-		//const { isLoadingVisible } = this.props;
+		const { isCommentsModalVisible } = this.props;
+
 		if (!this.state.isReady) {
 			return (
 				<AppLoading
@@ -69,6 +74,10 @@ class RootContainer extends Component {
 				<StatusBar barStyle='light-content' />
 				<AppNavigation />
 				{/* {isLoadingVisible ? <Loading/> : null} */}
+				{isCommentsModalVisible ? 
+					<CommentsModalDialog/> :
+					null
+				}
 			</View>
 		);
 	}
@@ -79,10 +88,9 @@ const mapDispatchToProps = (dispatch) => ({
 	startup: () => dispatch(StartupActions.startup())
 });
 
-// const mapStateToProps = (state) => ({
-//   isLoadingVisible: state.root.isLoadingVisible
-// });
+const mapStateToProps = (state) => ({
+  isCommentsModalVisible: state.root.isCommentsModalVisible
+});
 
-//export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
-export default connect(null, mapDispatchToProps)(RootContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
 

@@ -33,7 +33,7 @@ export default class PostItem extends Component {
 					<Col style={styles.textCol}>
 						<Text style={styles.title}>Как предугадать провал ICO-стартапа?</Text>
 						<View style={styles.postStatsContainer}>
-							<SocialStats likes={1} comments={2} shares={3}/>
+							<SocialStats likes={1} comments={2} shares={3} onCommentsPress={this.props.onCommentsPress}/>
 						</View>
 					</Col>
 				</Grid>

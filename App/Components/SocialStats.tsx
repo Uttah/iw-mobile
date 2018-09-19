@@ -23,7 +23,7 @@ export default class SocialStats extends Component {
 	}
 
 	render() {
-    const { likes, comments, shares, style } = this.props;
+    const { likes, comments, shares, style, onCommentsPress } = this.props;
 		return (
 			<Grid style={style}>
 				<Col style={{ width: hp('6.1%')}}>
@@ -33,7 +33,7 @@ export default class SocialStats extends Component {
 					</TouchableOpacity>
 				</Col>
 				<Col style={{ width: hp('6.1%')}}>
-					<TouchableOpacity onPress={() => alert('you pressed comments')} style={styles.btn}>
+					<TouchableOpacity onPress={onCommentsPress} style={styles.btn}>
 						<MaterialIcons active name='comment' color={Colors.brandPrimary} size={hp('3%')} style={[styles.icon, styles.iconComment]}/>
 						<Text style={styles.text}>{comments}</Text>
 					</TouchableOpacity>

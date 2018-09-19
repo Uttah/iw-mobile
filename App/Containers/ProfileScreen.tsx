@@ -42,6 +42,10 @@ class ProfileScreen extends Component {
 			alert('you want to edit about me?');
 		}
 	}
+
+	onCommentsPress = () => {
+		this.props.navigation.navigate('CommentsScreen');
+	}
 	
 	render() {
 		const name = this.props.name;
@@ -67,7 +71,7 @@ class ProfileScreen extends Component {
 					<ProfileTop stats={stats} name={name}/>
 					<Tabs onChangeTab={this.onChangeTab}>
 						<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
-							<ProfileTab1 items={items} />
+							<ProfileTab1 items={items} onCommentsPress={this.onCommentsPress}/>
 						</Tab>
 						<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='bar-chart-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Портфолио</Text></TabHeading>}>
 							<ProfileTab2 />
