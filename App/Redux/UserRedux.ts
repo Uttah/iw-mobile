@@ -9,13 +9,6 @@ const { Types, Creators } = createActions({
   clearLogin: []
 });
 
-export const logOut = (callback) => {
-  return dispatch => {
-    dispatch(Creators.clearLogin());
-    callback();
-  };
-}
-
 export const UserTypes = Types;
 export default Creators;
 
