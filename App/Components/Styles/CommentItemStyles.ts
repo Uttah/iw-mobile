@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { ApplicationStyles } from 'App/Themes';
+import { ApplicationStyles, Colors } from 'App/Themes';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default StyleSheet.create({
@@ -13,21 +13,15 @@ export default StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row'
 	},
-	time: {
-    position: 'absolute',
-		right: wp('4.27%'),
-		top: 0
-  },
-  timeText: {
-    color: '#969FAA',
-    fontSize: hp('1.72%')
+	userName: {
+		color: Colors.brandPrimary,
+		fontSize: hp('2.1%')
+	},
+	userLogin: {
+		fontSize: hp('1.95%'),
+		color: '#969FAA'
 	},
 	text: {
-		fontSize: hp('1.95%'),
-		color: '#969FAA',
-		paddingRight: hp('1.65%')
-	},
-	content: {
 		paddingLeft: hp('1.5%'),
 		paddingRight: wp('13.1%'),
 		flex: 1,
@@ -45,5 +39,15 @@ export default StyleSheet.create({
 		width: wp('6.8%'),
 		paddingRight: wp('2.27%'),
 		borderRadius: 4   
-  },
+	},
+	content: {
+		fontSize: hp('2.1%'),
+		color: '#5A6978',
+		marginTop: hp('0.5%')
+	},
+	date: {
+		fontSize: hp('2.1%'),
+		color: '#969FAA',
+		marginTop: hp('1%')
+	}
 });

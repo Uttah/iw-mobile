@@ -7,7 +7,7 @@ import styles from './Styles/CommentItemStyles';
 export default class CommentItem extends Component {
 
 	render() {
-		const { id, author, content, time } = this.props.item;
+		const { id, userName, userLogin, content, date } = this.props.item;
 		const onPress = this.props.onPress;
 
 		return (
@@ -22,10 +22,12 @@ export default class CommentItem extends Component {
 							/> 
 						</View>          
 					</TouchableHighlight>
-					<View style={styles.content}>
-						<Text style={styles.text}>{author} {content}</Text>
+					<View style={styles.text}>
+						<Text style={styles.userName}>{userName}</Text>
+						<Text style={styles.userLogin}>{userLogin}</Text>
+						<Text style={styles.content}>{content}</Text>
+						<Text style={styles.date}>{date}</Text>
 					</View>
-					<View style={styles.time}><Text style={styles.timeText}>{time}</Text></View>
         </View>
 			</TouchableOpacity>
 		);

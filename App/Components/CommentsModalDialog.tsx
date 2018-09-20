@@ -9,7 +9,7 @@ import { TextFieldStatus } from '../Services/Enums';
 
 class CommentsModalDialog extends Component {
 		onPress = () => {
-			alert('ha');
+			console.log('ha');
 		}
 
 		state = {
@@ -52,7 +52,7 @@ class CommentsModalDialog extends Component {
 										<TouchableHighlight style={[styles.btn, styles.btnleft]} onPress = {() => {dispatch(RootActions.hideCommentsModal());}}>                            
 												<Text style = {[styles.text, styles.btntext]}>CANCEL</Text>
 										</TouchableHighlight>
-										<TouchableHighlight style={styles.btn} onPress = {() => {onPress();dispatch(RootActions.hideCommentsModal());}}>              
+										<TouchableHighlight style={styles.btn} onPress = {() => {this.onPress();dispatch(RootActions.hideCommentsModal());}}>              
 												<Text style = {[styles.text, styles.btntext, styles.btnright]}>COMMENT</Text>
 										</TouchableHighlight>
 									</View>

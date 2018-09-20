@@ -35,27 +35,31 @@ class CommentsScreen extends Component<Props> {
 		const items = [
 			{ 
 				id: '1', 
-				author: 'Stella Johnson', 
-				content: 'has recently posted an album', 
-				time: '6:19 PM'
+				userName: 'Stella Johnson', 
+				userLogin: '@hotchick',
+				content: 'This will be the first answer', 
+				date: '27 October, 14:56'
 			},
 			{ 
 				id: '2', 
-				author: 'Alex Brown', 
-				content: "has shared Martin Guptil's post", 
-				time: '8:44 AM'
+				userName: 'Alex Brown', 
+				userLogin: '@youdontknow',
+				content: 'This will be the first answer', 
+				date: '27 October, 14:56'
 			},
 			{ 
 				id: '3', 
-				author: 'Domnic Brown', 
-				content: "has sent you a group invitation for Global Health", 
-				time: '2:23 PM'
+				userName: 'Domnic Brown', 
+				userLogin: '@hotguy',
+				content: 'This will be the first answer', 
+				date: '27 October, 14:56'
 			},
 			{ 
 				id: '4', 
-				author: 'John Smith', 
-				content: "has birthday today", 
-				time: '5:55 AM'
+				userName: 'John Smith', 
+				userLogin: '@johnny',
+				content: 'This will be the first answer', 
+				date: '27 October, 14:56'
 			}
 		];
 		return (
