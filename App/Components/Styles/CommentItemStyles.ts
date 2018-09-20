@@ -25,7 +25,8 @@ export default StyleSheet.create({
 		paddingLeft: hp('1.5%'),
 		paddingRight: wp('13.1%'),
 		flex: 1,
-		alignItems: 'flex-start'
+		alignItems: 'flex-start',
+		marginTop: -2
 	},
 	avatarWrap: {
 		height: wp('6.8%') + 2,
@@ -46,7 +47,7 @@ export default StyleSheet.create({
 		marginTop: hp('0.5%')
 	},
 	date: {
-		fontSize: hp('2.1%'),
+		fontSize: hp('1.95%'),
 		color: '#969FAA',
 		marginTop: hp('1%')
 	}

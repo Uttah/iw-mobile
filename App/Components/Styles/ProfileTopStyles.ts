@@ -4,7 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 export default StyleSheet.create({
 	outer: {
 		flex: 1,
-		paddingBottom: hp('0.6%'),
+		paddingBottom: hp('1.5%'),
 		borderBottomWidth: 1,
 		borderBottomColor: '#D2DAE6'
 	},
@@ -40,7 +40,6 @@ export default StyleSheet.create({
 	nickname: {
 		fontSize: hp('1.72%'),
 		marginLeft: wp('4.27%'),
-		marginTop: hp('0.7%'),
 		color: '#969FAA',
 		flex: 1 
 	}
