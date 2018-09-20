@@ -3,11 +3,14 @@ import { NavigationActions } from 'react-navigation';
 import { Text, View, Image } from 'react-native';
 import styles from './Styles/DrawerContentStyles';
 import { Images } from 'App/Themes';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import NotificationsCircle from './NotificationsCircle';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import api from '../Services/MyApi';
+import { logOut } from '../Redux/UserRedux';
+import { connect } from 'react-redux';
 
-export default class DrawerContent extends Component {
+class DrawerContent extends Component {
 	
 	navigateToScreen = (route) => (() => {
 		const navigateAction = NavigationActions.navigate({
@@ -15,6 +18,15 @@ export default class DrawerContent extends Component {
 		});
 		this.props.navigation.dispatch(navigateAction);
 	});
+
+	logOut = () => {
+		const dispatch = this.props.dispatch;
+
+		api.logOut().then((response) => {
+			console.log(response);
+			dispatch(logOut(this.navigateToScreen('LaunchScreen')));
+		});
+	}
 		
 	render() {
 		return (
@@ -55,8 +67,16 @@ export default class DrawerContent extends Component {
 						</View>
 						<Text onPress={this.navigateToScreen('NotificationsScreen')}>Notifications</Text>
 					</View>
+					<View style={styles.screenStyle}>
+						<View style={styles.iconWrap}>
+							<MaterialCommunityIcons active name='logout-variant' color={'#474747'} size={hp('3.6%')} style={styles.iconLogout}/>
+						</View>
+						<Text onPress={this.logOut}>Log out</Text>
+					</View>
 				</View>
 			</View>
 		);
 	}
 }
+
+export default connect()(DrawerContent);

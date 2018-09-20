@@ -55,6 +55,10 @@ export default StyleSheet.create({
 		height: hp('3.6%'),
 		width: hp('3.6%')	
 	},
+	iconLogout: {
+		height: hp('3.6%'),
+		width: hp('3.6%')*(80/38)
+	},
 	hasNew: {
 		position: 'absolute',
 		left: hp('3.6%') - hp('1%'),

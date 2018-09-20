@@ -56,6 +56,12 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 		}
 	};
 
+	const logOut = async(identifier) => {
+		return api.get('/logout', {
+			email: identifier
+		});
+	}
+
 	const findPools = async(filterStr) => {
 		return fakeFindPools(filterStr);
 	};
@@ -66,6 +72,7 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 
 	return {
 		login,
+		logOut,
 		register,
 		findPools,
 		getPools

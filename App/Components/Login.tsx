@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Keyboard } from 'react-native';
 import styles from './Styles/LoginStyles';
-import { Button, Text, Input } from 'native-base';
+import { Button, Text } from 'native-base';
+import { connect } from 'react-redux';
 import TextField from './TextField';
 import validate from '../Services/Validator';
 import api from '../Services/MyApi';
@@ -23,7 +24,7 @@ type State = {
   passwordChecked: boolean
 }; 
 
-export default class Login extends Component<Props, State> {
+class Login extends Component<Props, State> {
   private passwordRef: undefined | {_root: {focus: () => void, blur: () => void}};
   
   state = {
@@ -34,6 +35,12 @@ export default class Login extends Component<Props, State> {
     emailChecked: false,
     passwordChecked: false
   };
+
+  componentDidMount() {
+    this.setState({
+      login: this.props.login
+    });
+  }
   
   onLoginChange = (val) => {
     this.setState({
@@ -164,3 +171,13 @@ export default class Login extends Component<Props, State> {
     );
   }
 }
+
+
+function mapStateToProps (state) {
+	let obj = {
+    login: state.user.login == null ? '' : state.user.login
+  };
+	return obj;
+}
+
+export default connect(mapStateToProps)(Login);
