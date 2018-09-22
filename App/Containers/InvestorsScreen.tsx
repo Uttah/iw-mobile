@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
-import { ScrollView, View } from 'react-native';
-import { Container, Text } from 'native-base';
+import { ScrollView} from 'react-native';
+import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationScreenProp } from 'react-navigation';
-import styles from './Styles/MessagesScreenStyles';
-import Messages from '../Components/Messages';
+import styles from './Styles/InvestorsScreenStyles';
+import Investors from '../Components/Investors';
+import UserActions from '../Redux/UserRedux';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
+	userId: string
 }
 
-class MessagesScreen extends Component<Props> {
-	onReplyPress = () => {
-		this.props.navigation.navigate('MessageScreen');
+class InvestorsScreen extends Component<Props> {
+	onProfilePress = (id) => {
+		const { dispatch } = this.props;
+		dispatch(UserActions.setProfileId(id));
+		this.props.navigation.navigate('ProfileScreen');
 	}
  
 	render() {
@@ -24,9 +28,9 @@ class MessagesScreen extends Component<Props> {
 		return (
 			<Container>
 				<ScrollView style={styles.mainContainer}>
-					<Messages 
+					<Investors 
 						userId={userId} 
-						onReplyPress={this.onReplyPress}
+						onProfilePress={this.onProfilePress}
 						fakeItems={items}
 					/>
 				</ScrollView>
@@ -42,4 +46,4 @@ function mapStateToProps (state) {
 	return obj;
 }
 
-export default connect(mapStateToProps)(MessagesScreen);
+export default connect(mapStateToProps)(InvestorsScreen);

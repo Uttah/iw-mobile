@@ -48,7 +48,7 @@ class ProfileScreen extends Component {
 	}
 	
 	render() {
-		const name = this.props.name;
+		const { id } = this.props;
 		//нужна библиотека которая склоняет
 		const stats = [
 			{ text: 'подписчиков', number: 150 },
@@ -68,7 +68,7 @@ class ProfileScreen extends Component {
 		return (
 			<Container>
 				<ScrollView style={styles.mainContainer}>
-					<ProfileTop stats={stats} name={name}/>
+					<ProfileTop stats={stats} name={id}/>
 					<Tabs onChangeTab={this.onChangeTab}>
 						<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
 							<ProfileTab1 items={items} onCommentsPress={this.onCommentsPress}/>
@@ -96,7 +96,8 @@ class ProfileScreen extends Component {
 
 function mapStateToProps (state) {
 	let obj = {};
-	obj.name = state.user.authUser.name;
+	let userId = state.user.profileUserId;
+	obj.id = userId != null && userId.length > 0 ? userId : state.user.authUser.id;
 	return obj;
 }
 

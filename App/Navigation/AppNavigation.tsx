@@ -12,6 +12,7 @@ import MessagesScreen from '../Containers/MessagesScreen';
 import MessageScreen from '../Containers/MessageScreen';
 import NotificationsScreen from '../Containers/NotificationsScreen';
 import CommentsScreen from '../Containers/CommentsScreen';
+import InvestorsScreen from '../Containers/InvestorsScreen';
 import HeaderLogo from '../Components/HeaderLogo';
 import { MaterialIcons } from '@expo/vector-icons';
 import DrawerContent from '../Components/DrawerContent';
@@ -114,6 +115,21 @@ const DrawerNav = DrawerNavigator({
     screen: StackNavigator({
       NotificationsScreen: {
         screen: NotificationsScreen,
+        navigationOptions: {
+          //drawerLabel: () => 'Notifications',
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerLeft: <DrawerButtonWithNavigation />,
+          headerRight: <View/>
+        }
+      }
+    })
+  },
+  InvestorsScreen: {
+    screen: StackNavigator({
+      InvestorsScreen: {
+        screen: InvestorsScreen,
         navigationOptions: {
           //drawerLabel: () => 'Notifications',
           headerStyle: styles.header,

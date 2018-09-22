@@ -26,6 +26,12 @@ class DrawerContent extends Component {
 		dispatch(UserActions.clearLogin());
 		this.navigateToScreen('LaunchScreen')();
 	}
+
+	openProfile = () => {
+		const { dispatch } = this.props;
+		dispatch(UserActions.setProfileId(''));
+		this.navigateToScreen('ProfileScreen')
+	}
 		
 	render() {
 		return (
@@ -44,7 +50,7 @@ class DrawerContent extends Component {
 						<View style={styles.iconWrap}>
 							<FontAwesome active name='user' color={'#474747'} size={hp('3.6%')} style={styles.iconUser}/>
 						</View>
-						<Text onPress={this.navigateToScreen('ProfileScreen')}>Profile</Text>
+						<Text onPress={this.openProfile}>Profile</Text>
 					</View>
 					<View style={styles.screenStyle}>
 						<View style={styles.iconWrap}>
@@ -58,6 +64,12 @@ class DrawerContent extends Component {
 							<NotificationsCircle style={styles.hasNew}/>
 						</View>
 						<Text onPress={this.navigateToScreen('MessagesScreen')}>Messages</Text>
+					</View>
+					<View style={styles.screenStyle}>
+						<View style={styles.iconWrap}>
+							<MaterialIcons active name='people' color={'#474747'} size={hp('3.6%')} style={styles.iconNotificationsActive}/>
+						</View>
+						<Text onPress={this.navigateToScreen('InvestorsScreen')}>Investors</Text>
 					</View>
 					<View style={styles.screenStyle}>
 						<View style={styles.iconWrap}>
