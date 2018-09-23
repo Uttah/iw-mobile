@@ -26,12 +26,6 @@ class DrawerContent extends Component {
 		dispatch(UserActions.clearLogin());
 		this.navigateToScreen('LaunchScreen')();
 	}
-
-	openProfile = () => {
-		const { dispatch } = this.props;
-		dispatch(UserActions.setProfileId(''));
-		this.navigateToScreen('ProfileScreen')
-	}
 		
 	render() {
 		return (
@@ -50,7 +44,7 @@ class DrawerContent extends Component {
 						<View style={styles.iconWrap}>
 							<FontAwesome active name='user' color={'#474747'} size={hp('3.6%')} style={styles.iconUser}/>
 						</View>
-						<Text onPress={this.openProfile}>Profile</Text>
+						<Text onPress={this.navigateToScreen('ProfileScreen')}>Profile</Text>
 					</View>
 					<View style={styles.screenStyle}>
 						<View style={styles.iconWrap}>

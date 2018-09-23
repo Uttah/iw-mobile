@@ -6,6 +6,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import styles from './Styles/InvestorsScreenStyles';
 import Investors from '../Components/Investors';
 import UserActions from '../Redux/UserRedux';
+import { NavigationActions } from 'react-navigation';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
@@ -14,9 +15,14 @@ type Props = {
 
 class InvestorsScreen extends Component<Props> {
 	onProfilePress = (id) => {
-		const { dispatch } = this.props;
-		dispatch(UserActions.setProfileId(id));
-		this.props.navigation.navigate('ProfileScreen');
+		//const { dispatch } = this.props;
+		//dispatch(UserActions.setProfileId(id));
+		const navigateAction = NavigationActions.navigate({
+			routeName: 'ProfileScreen',
+			params: {},
+			action: NavigationActions.navigate({ routeName: 'ProfileScreen', params: { id: id } }),
+		});
+		this.props.navigation.dispatch(navigateAction);
 	}
  
 	render() {
