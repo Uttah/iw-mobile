@@ -15,8 +15,6 @@ type Props = {
 
 class InvestorsScreen extends Component<Props> {
 	onProfilePress = (id) => {
-		//const { dispatch } = this.props;
-		//dispatch(UserActions.setProfileId(id));
 		const navigateAction = NavigationActions.navigate({
 			routeName: 'ProfileScreen',
 			params: {},
