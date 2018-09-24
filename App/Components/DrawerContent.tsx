@@ -61,6 +61,12 @@ class DrawerContent extends Component {
 					</View>
 					<View style={styles.screenStyle}>
 						<View style={styles.iconWrap}>
+							<MaterialIcons active name='people' color={'#474747'} size={hp('3.6%')} style={styles.iconNotificationsActive}/>
+						</View>
+						<Text onPress={this.navigateToScreen('InvestorsScreen')}>Investors</Text>
+					</View>
+					<View style={styles.screenStyle}>
+						<View style={styles.iconWrap}>
 							<MaterialIcons active name='notifications-active' color={'#474747'} size={hp('3.6%')} style={styles.iconNotificationsActive}/>
 							<NotificationsCircle style={styles.hasNew}/>
 						</View>

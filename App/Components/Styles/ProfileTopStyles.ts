@@ -42,5 +42,29 @@ export default StyleSheet.create({
 		marginLeft: wp('4.27%'),
 		color: '#969FAA',
 		flex: 1 
+	},
+	btn: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'center'
+	},
+	btnicon: {
+		marginRight: hp('0.4%'),
+		width: hp('2.25%'),
+		height: hp('2.25%')
+	},
+	btntext: {
+		fontSize: hp('1.95%'),
+		color: '#5A6978'
+	},
+	avatarRight: {
+		flex: 1, 
+		flexDirection: 'column', 
+		justifyContent: 'flex-start', 
+		marginTop: hp('2.55%')
+	},
+	btns: {
+		flex: 1,
+		flexDirection: 'row'
 	}
 });

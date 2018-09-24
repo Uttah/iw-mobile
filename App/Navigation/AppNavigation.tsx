@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { StackNavigator, SwitchNavigator, DrawerNavigator, withNavigation } from 'react-navigation';
+import { createStackNavigator, createSwitchNavigator, createDrawerNavigator, withNavigation } from 'react-navigation';
 import LaunchScreen from '../Containers/LaunchScreen';
 import ProfileScreen from '../Containers/ProfileScreen';
 import RegisterScreen from '../Containers/RegisterScreen';
@@ -12,6 +12,7 @@ import MessagesScreen from '../Containers/MessagesScreen';
 import MessageScreen from '../Containers/MessageScreen';
 import NotificationsScreen from '../Containers/NotificationsScreen';
 import CommentsScreen from '../Containers/CommentsScreen';
+import InvestorsScreen from '../Containers/InvestorsScreen';
 import HeaderLogo from '../Components/HeaderLogo';
 import { MaterialIcons } from '@expo/vector-icons';
 import DrawerContent from '../Components/DrawerContent';
@@ -20,16 +21,16 @@ const DrawerButtonWithNavigation = withNavigation(DrawerButton);
 function DrawerButton({navigation}) {
   return (
     <TouchableOpacity onPress={() => {
-      navigation.navigate('DrawerOpen');
+      navigation.openDrawer();
     }}>
       <MaterialIcons name='menu' size={25} style={styles.menuicon}/>
     </TouchableOpacity>
   );
 }
 
-const DrawerNav = DrawerNavigator({
+const DrawerNav =  createDrawerNavigator({
   ProfileScreen: {
-    screen: StackNavigator({
+    screen: createStackNavigator({
       ProfileScreen: {
         screen: ProfileScreen,
         navigationOptions: {
@@ -53,7 +54,7 @@ const DrawerNav = DrawerNavigator({
     })
   },
   PoolsScreen: { 
-    screen: StackNavigator({
+    screen: createStackNavigator({
       PoolsScreen: {
         screen: PoolsScreen,
         navigationOptions: {
@@ -87,7 +88,7 @@ const DrawerNav = DrawerNavigator({
     }) 
   },
   MessagesScreen: {
-    screen: StackNavigator({
+    screen: createStackNavigator({
       MessagesScreen: {
         screen: MessagesScreen,
         navigationOptions: {
@@ -111,9 +112,24 @@ const DrawerNav = DrawerNavigator({
     })
   },
   NotificationsScreen: {
-    screen: StackNavigator({
+    screen: createStackNavigator({
       NotificationsScreen: {
         screen: NotificationsScreen,
+        navigationOptions: {
+          //drawerLabel: () => 'Notifications',
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerLeft: <DrawerButtonWithNavigation />,
+          headerRight: <View/>
+        }
+      }
+    })
+  },
+  InvestorsScreen: {
+    screen: createStackNavigator({
+      InvestorsScreen: {
+        screen: InvestorsScreen,
         navigationOptions: {
           //drawerLabel: () => 'Notifications',
           headerStyle: styles.header,
@@ -130,7 +146,7 @@ const DrawerNav = DrawerNavigator({
   contentComponent: DrawerContent
 });
 
-const AppNavigation = SwitchNavigator({
+const AppNavigation = createSwitchNavigator({
   LaunchScreen: { screen: LaunchScreen },
   RegisterScreen: { screen: RegisterScreen },
   MainScreen: { 
