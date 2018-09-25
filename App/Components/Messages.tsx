@@ -29,7 +29,7 @@ const Chats = ({ items, onPress }) => (
 				<MessageItem item={item} onReplyPress={onPress}/>
 			);
 		}}
-		keyExtractor={(item) => item.id}
+		keyExtractor={(item) => item.chatId}
 		ListHeaderComponent={listTop()}
 	/>
 );

@@ -48,20 +48,21 @@ export default class MessageItem extends Component {
 	};
 
 	render() {
-		const { id, messagesNum, author } = this.props.item;
+		const { id, lastMessage, parnter } = this.props.item;
 		const onPress = this.props.onPress;
+		const date = new Date(lastMessage.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
 
 		return (
 			<TouchableOpacity style={styles.container} onPress={() => onPress(id)}>
         <View style={styles.inner}>
 					<Author 
 						style={styles.author} 
-						author={author} 
+						author={parnter.name} 
 						date={{}}
 						authorNameStyle={styles.authorName}
-						messagesNum={messagesNum}
+						messagesNum={0}
 					/>
-					<View style={styles.time}><Text style={styles.timeText}>6:19 PM</Text></View>
+					<View style={styles.time}><Text style={styles.timeText}>{date}</Text></View>
 					<View style={styles.viewmore}>
 						<ViewMoreText
 							numberOfLines={1}
@@ -69,7 +70,7 @@ export default class MessageItem extends Component {
 							renderViewLess={this.renderViewLess}
 						>
 							<Text style={styles.text}>
-								Lorem ipsum dolor sit amet, in quo dolorum ponderum, nam veri molestie constituto eu. Eum enim tantas sadipscing ne, ut omnes malorum nostrum cum. Errem populo qui ne, ea ipsum antiopam definitionem eos.
+								{lastMessage.content}
 							</Text>
 						</ViewMoreText>
 					</View>
