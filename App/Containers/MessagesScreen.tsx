@@ -11,8 +11,8 @@ type Props = {
 }
 
 class MessagesScreen extends Component<Props> {
-	onReplyPress = () => {
-		this.props.navigation.navigate('MessageScreen');
+	onMessagePress = (chatId, partnerId) => {
+		this.props.navigation.navigate('MessageScreen', { chatId, partnerId });
 	}
  
 	render() {
@@ -26,7 +26,7 @@ class MessagesScreen extends Component<Props> {
 				<ScrollView style={styles.mainContainer}>
 					<Messages 
 						userId={userId} 
-						onReplyPress={this.onReplyPress}
+						onMessagePress={this.onMessagePress}
 						fakeItems={items}
 					/>
 				</ScrollView>

@@ -10,7 +10,8 @@ export const reducers = combineReducers({
   search: require('./SearchRedux').reducer,
   user: require('./UserRedux').reducer,
   pools: require('./PoolsRedux').reducer,
-  root: require('./RootRedux').reducer
+  root: require('./RootRedux').reducer,
+  chat: require('./ChatRedux').reducer
 })
 
 export default () => {

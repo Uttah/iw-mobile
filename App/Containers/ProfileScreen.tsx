@@ -12,41 +12,17 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { ProfileTabs } from '../Services/Enums';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-
-const GET_USER = gql`
-	query getUser($userId: ID!) {
-		getUser(userId: $userId) {
-			id
-			name
-			login
-			email
-			phone
-			country
-			city
-			educations {
-				name
-				from
-				to
-			}
-			jobs {
-				name
-				from
-				to
-			}
-			wallets {
-				id
-				kind
-				address
-			}
-			notifications
-			language
-		}
-	}
-`;
+import { GET_USER } from '../Services/Graphql';
+import socket from '../Services/Socket';
+import ChatActions from '../Redux/ChatRedux';
 
 class ProfileScreen extends Component {
 	state = {
 		activeTab: ProfileTabs.Activity
+	}
+	//нельзя просто так тут подписывать сокет. а то будут сообщения двоиться
+	onChatPress = (id) => {
+		//socket.sendMessage('Hello', id);
 	}
 	
 	onChangeTab = ({ i }) => {
@@ -124,7 +100,7 @@ class ProfileScreen extends Component {
 						return (
 							<Container>
 								<ScrollView style={styles.mainContainer}>
-									<ProfileTop stats={stats} user={data.getUser} ownPage={ownPage}/>
+									<ProfileTop stats={stats} user={data.getUser} ownPage={ownPage} onChatPress={() => this.onChatPress(id)}/>
 									<Tabs onChangeTab={this.onChangeTab}>
 										<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
 											<ProfileTab1 items={items} onCommentsPress={this.onCommentsPress}/>

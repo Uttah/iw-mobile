@@ -13,7 +13,7 @@ export default class MessageItem extends Component {
 		return(
 			<Grid style={styles.btns}>
 				<Col style={{ width: hp('10%'), alignItems: 'flex-start'}}>
-					<TouchableOpacity style={styles.btn} onPress={this.props.onReplyPress}>
+					<TouchableOpacity style={styles.btn} onPress={this.props.onMessagePress}>
 						<FontAwesome active name='reply' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Reply</Text>
 					</TouchableOpacity>
@@ -32,7 +32,7 @@ export default class MessageItem extends Component {
 		return(
 			<Grid style={styles.btns}>
 				<Col style={{ width: hp('10%'), alignItems: 'flex-start' }}>
-					<TouchableOpacity style={styles.btn} onPress={this.props.onReplyPress}>
+					<TouchableOpacity style={styles.btn} onPress={this.props.onMessagePress}>
 						<FontAwesome active name='reply' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Reply</Text>
 					</TouchableOpacity>
@@ -49,7 +49,7 @@ export default class MessageItem extends Component {
 
 	render() {
 		const { id, lastMessage, parnter } = this.props.item;
-		const onPress = this.props.onPress;
+		const onPress = this.props.onMessagePress;
 		const date = new Date(lastMessage.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
 
 		return (

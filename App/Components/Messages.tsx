@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 import styles from './Styles/MessagesStyles';
 import MessageItem from '../Components/MessageItem';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { GET_CHATS } from '../Services/Graphql';
 
 type Props = {
 	userId: number,
@@ -21,20 +22,22 @@ const listTop = () => {
 	);
 }
 
-const Chats = ({ items, onPress }) => (
-	<FlatList
-		data={items}
-		renderItem={({item}) => {
-			return (
-				<MessageItem item={item} onReplyPress={onPress}/>
-			);
-		}}
-		keyExtractor={(item) => item.chatId}
-		ListHeaderComponent={listTop()}
-	/>
-);
+const Chats = ({ items, onMessagePress }) => {
+	return (
+		<FlatList
+			data={items}
+			renderItem={({item}) => {
+				return (
+					<MessageItem item={item} onMessagePress={() => onMessagePress(item.chatId, item.parnter.id)}/>
+				);
+			}}
+			keyExtractor={(item) => item.chatId}
+			ListHeaderComponent={listTop()}
+		/>
+	);
+};
 
-export default function Messages({userId, fakeItems, onReplyPress}: Props) {
+export default function Messages({userId, fakeItems, onMessagePress}: Props) {
 	return (
 		<Query query={GET_CHATS} variables={{userId}}>
 			{({ loading, error, data }) => {
@@ -48,11 +51,11 @@ export default function Messages({userId, fakeItems, onReplyPress}: Props) {
 				
 				if (data && data.getChats) {
 					return (
-						<Chats items={data.getChats} onPress={onReplyPress} />
+						<Chats items={data.getChats} onMessagePress={onMessagePress} />
 					);
 				} else {
 					return (
-						<Chats items={fakeItems} onPress={onReplyPress} />
+						<Chats items={fakeItems} onMessagePress={onMessagePress} />
 					)
 				}
 
@@ -60,23 +63,3 @@ export default function Messages({userId, fakeItems, onReplyPress}: Props) {
 		</Query>
 	)
 }
-
-const GET_CHATS = gql`
-query getChats($userId: ID!){
-	getChats(userId: $userId) {
-		chatId,
-		parnter {
-			id,
-			name
-		},
-		lastMessage {
-			id,
-			author {
-				id,
-				name
-			},
-			content,
-			date
-		}
-	}
-}`;

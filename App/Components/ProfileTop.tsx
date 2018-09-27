@@ -8,12 +8,9 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 
 export default class ProfileTop extends Component {
-	onChatPress = () => {
-		alert('you user with id ' )
-	}
 
 	render() {
-		const { stats, user, ownPage } = this.props;
+		const { stats, user, ownPage, onChatPress } = this.props;
 		return (
 			<View style={styles.outer}>
 				<View style={styles.container}>
@@ -34,7 +31,7 @@ export default class ProfileTop extends Component {
 							</TouchableOpacity>
 							:
 							<View style={styles.btns}>
-								<TouchableOpacity style={styles.btn} onPress={() => {}}>
+								<TouchableOpacity style={styles.btn} onPress={onChatPress}>
 									<Entypo active name='chat' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
 									<Text style={styles.btntext}>Message</Text>
 								</TouchableOpacity>
