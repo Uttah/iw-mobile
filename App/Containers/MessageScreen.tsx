@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, KeyboardAvoidingView } from 'react-native';
 import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationScreenProp } from 'react-navigation';
@@ -109,11 +109,6 @@ class MessageScreen extends Component<Props> {
 
 	render() {
 		const { partnerId } = this.props.navigation.state.params;
-		if ('chatId' in this.props.navigation.state.params) {
-			this.setState({
-				chatId: this.props.navigation.state.params.chatId
-			});
-		}
 		let messages = this.getChatMessages(this.props.chatMessages, this.state.chatId);
 		
 		return (
@@ -126,6 +121,7 @@ class MessageScreen extends Component<Props> {
 					}}
 					renderAvatar={this.renderAvatar}
 				/>
+				<KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={80}/>
 			</Container>
 		);
 	}
