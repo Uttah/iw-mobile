@@ -30,13 +30,25 @@ const fetchMessages = async (client:any, chatId:any) => {
 };
 
 class MessageScreen extends Component<Props> {
+	state = {
+		chatId: null
+	}
+
 	subscribeToChatCb = (data) => {
-		console.log('new chat');
+		const { dispatch } = this.props;
+		this.setState({
+			chatId: data.chatId
+		});
+		//надо конечно у себя добавлять сначала оптимистично
+		const chatMessages = {
+			id: data.chatId,
+			messages: [data.lastMessage]
+		};
+		dispatch(ChatActions.setMessages(chatMessages));
 	}
 	
 	subscribeToMessageCb = (message) => {
 		const { dispatch } = this.props;
-		console.log('callback to message id ' + message.id);
 		dispatch(ChatActions.addMessage(message));
 	}
 	
@@ -44,12 +56,15 @@ class MessageScreen extends Component<Props> {
 		socket.subscribeToChat((data: any) => this.subscribeToChatCb(data));
 		socket.subscribeToMessage((message:any) => this.subscribeToMessageCb(message));
 
-		const { dispatch } = this.props;
-		const chatId = this.props.navigation.state.params.chatId;
-		if (!(chatId in this.props.chatMessages)) {
-			fetchMessages(this.props.client, chatId).then((data) => {
-				dispatch(ChatActions.setMessages(data));
-			});
+		if ('chatId' in this.props.navigation.state.params) {
+			const { dispatch } = this.props;
+			const chatId = this.props.navigation.state.params.chatId;
+			this.setState({ chatId });
+			if (!(chatId in this.props.chatMessages)) {
+				fetchMessages(this.props.client, chatId).then((data) => {
+					dispatch(ChatActions.setMessages(data));
+				});
+			}
 		}
 	}
 
@@ -74,7 +89,7 @@ class MessageScreen extends Component<Props> {
 	};
 
 	getChatMessages = (chatMessages:any, chatId:string) => {
-		if (!(chatId in chatMessages) || chatMessages.length == 0) {
+		if (chatId == null || !(chatId in chatMessages) || chatMessages.length == 0) {
 			return [];
 		}
 		const messages = chatMessages[chatId];
@@ -93,8 +108,13 @@ class MessageScreen extends Component<Props> {
 	}
 
 	render() {
-		const { chatId, partnerId } = this.props.navigation.state.params;
-		let messages = this.getChatMessages(this.props.chatMessages, chatId);
+		const { partnerId } = this.props.navigation.state.params;
+		if ('chatId' in this.props.navigation.state.params) {
+			this.setState({
+				chatId: this.props.navigation.state.params.chatId
+			});
+		}
+		let messages = this.getChatMessages(this.props.chatMessages, this.state.chatId);
 		
 		return (
 			<Container>

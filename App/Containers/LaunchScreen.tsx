@@ -7,7 +7,6 @@ import { NavigationScreenProp } from 'react-navigation';
 import Login from 'App/Components/Login';
 import styles from './Styles/LaunchScreenStyles';
 import UserActions from '../Redux/UserRedux';
-import socket from '../Services/Socket';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
@@ -21,10 +20,6 @@ class LaunchScreen extends Component<Props> {
 	state = {
 		extraScrollHeight: 0
 	};
-
-	componentDidMount() {
-		socket.sendMessage();
-	}
 	
 	onRegisterPress = () => {
 		this.props.navigation.navigate('RegisterScreen');

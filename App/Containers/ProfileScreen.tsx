@@ -13,16 +13,14 @@ import { ProfileTabs } from '../Services/Enums';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { GET_USER } from '../Services/Graphql';
-import socket from '../Services/Socket';
-import ChatActions from '../Redux/ChatRedux';
 
 class ProfileScreen extends Component {
 	state = {
 		activeTab: ProfileTabs.Activity
 	}
-	//нельзя просто так тут подписывать сокет. а то будут сообщения двоиться
+
 	onChatPress = (id) => {
-		//socket.sendMessage('Hello', id);
+		this.props.navigation.navigate('MessageScreen', { partnerId: id });
 	}
 	
 	onChangeTab = ({ i }) => {
