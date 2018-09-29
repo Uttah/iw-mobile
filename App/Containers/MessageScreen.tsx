@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, KeyboardAvoidingView } from 'react-native';
+import { Platform, Image, KeyboardAvoidingView } from 'react-native';
 import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationScreenProp } from 'react-navigation';
@@ -14,6 +14,8 @@ import socket from '../Services/Socket';
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
 }
+
+const platform = Platform.OS;
 
 const fetchMessages = async (client:any, chatId:any) => {
 	const result = await client.query({
@@ -148,7 +150,7 @@ class MessageScreen extends Component<Props> {
 					}}
 					renderAvatar={this.renderAvatar}
 				/>
-				<KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={80}/>
+				{Platform.OS !== 'ios' && <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={80}/>}
 			</Container>
 		);
 	}
