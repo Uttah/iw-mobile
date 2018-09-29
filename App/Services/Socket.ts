@@ -8,7 +8,6 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 	})
 	
 	const sendMessage = (text, partnerId) => {
-		debugger;
 		socket.emit('newMessage', { text, partnerId });
 	}
 
@@ -17,14 +16,12 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 	}
 
 	const subscribeToChat = (callback) => {
-		debugger;
 		socket.on('newChat', (data: any) => {
 			callback(data);
 		});
 	}
 
 	const subscribeToMessage = (callback) => {
-		debugger;
 		socket.on('newMessage', (data:any) => {
 			const message = {
 				id: data.messageId,

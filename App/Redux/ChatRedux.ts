@@ -1,11 +1,15 @@
 import { createReducer, createActions } from 'reduxsauce';
+import { objWithoutKey } from '../Services/Utils';
 
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
   setMessages: ['chatMessages'],
   addMessage: ['message'],
-  chatUnmount: []
+  chatUnmount: [],
+  addContact: ['contact'],
+  setContacts: ['contacts'],
+  updateContact: ['contact']
 });
 
 export const ChatTypes = Types;
@@ -39,12 +43,41 @@ export const addMessage = (state, action) => {
   };
 }
 
+export const addContact = (state, action) => {
+  const { contact } = action;
+  return {
+    ...state,
+    contactsList: state.contactsList.concat(contact)
+  }
+}
+
+export const setContacts = (state, action) => {
+  const { contacts } = action;
+  return {
+    ...state,
+    contactsList: contacts
+  }
+}
+
+export const updateContact = (state, action) => {
+  const { contact } = action;
+  const i = state.contactsList.findIndex((_contact) => _contact.chatId === contact.chatId);
+  const newContactsList = objWithoutKey(state.contactsList, i);
+  newContactsList[i] = contact;
+  return {
+    ...state,
+    contactsList: newContactsList
+  }
+}
+
 export const chatUnmount = (state, action) => {
-  return INITIAL_STATE;
+  return {...state, chatMessages: {}};
 }
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_MESSAGES]: setMessages,
   [Types.ADD_MESSAGE]: addMessage,
+  [Types.SET_CONTACTS]: setContacts,
+  [Types.UPDATE_CONTACT]: updateContact,
   [Types.CHAT_UNMOUNT]: chatUnmount
 });

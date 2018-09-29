@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import { View, FlatList } from 'react-native';
 import { Text, Spinner } from 'native-base';
 import gql from 'graphql-tag';
-import styles from './Styles/MessagesStyles';
+import styles from './Styles/InvestorsStyles';
 import InvestorItem from '../Components/InvestorItem';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 

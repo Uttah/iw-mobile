@@ -36,26 +36,51 @@ class MessageScreen extends Component<Props> {
 
 	subscribeToChatCb = (data) => {
 		const { dispatch } = this.props;
-		this.setState({
+		const { partnerId } = this.props.navigation.state.params;
+		const setChatId = this.state.chatId === null;
+		//const setChatId = this.state.chatId === null && data.lastMessage.
+		setChatId && this.setState({
 			chatId: data.chatId
 		});
-		//надо конечно у себя добавлять сначала оптимистично
 		const chatMessages = {
 			id: data.chatId,
 			messages: [data.lastMessage]
 		};
 		dispatch(ChatActions.setMessages(chatMessages));
+		dispatch(ChatActions.addContact(data));
 	}
 	
 	subscribeToMessageCb = (message) => {
 		const { dispatch } = this.props;
 		dispatch(ChatActions.addMessage(message));
+		const contact = {
+			chatId: message.chatId,
+			lastMessage: {
+				content: message.content,
+				date: message.date,
+				id: message.id,
+				author: {
+					id: message.author.id,
+					name: message.author.name
+				}
+			}
+		};
+		if (this.state.chatId == message.chatId) {
+			const { partnerId, partnerName } = this.props.navigation.state.params;
+			contact.parnter = {
+				id: partnerId,
+				name: partnerName
+			};
+		} else {
+			contact.parnter = {
+				id: message.author.id,
+				name: message.author.name
+			}
+		}
+		dispatch(ChatActions.updateContact(contact));
 	}
 	
 	async componentDidMount() {
-		socket.subscribeToChat((data: any) => this.subscribeToChatCb(data));
-		socket.subscribeToMessage((message:any) => this.subscribeToMessageCb(message));
-
 		if ('chatId' in this.props.navigation.state.params) {
 			const { dispatch } = this.props;
 			const chatId = this.props.navigation.state.params.chatId;
@@ -66,6 +91,8 @@ class MessageScreen extends Component<Props> {
 				});
 			}
 		}
+		socket.subscribeToChat((data: any) => this.subscribeToChatCb(data));
+		socket.subscribeToMessage((message:any) => this.subscribeToMessageCb(message));
 	}
 
 	componentWillUnmount() {
@@ -108,7 +135,7 @@ class MessageScreen extends Component<Props> {
 	}
 
 	render() {
-		const { partnerId } = this.props.navigation.state.params;
+		const { partnerId, partnerName } = this.props.navigation.state.params;
 		let messages = this.getChatMessages(this.props.chatMessages, this.state.chatId);
 		
 		return (

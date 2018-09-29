@@ -34,7 +34,6 @@ const DrawerNav =  createDrawerNavigator({
       ProfileScreen: {
         screen: ProfileScreen,
         navigationOptions: {
-          //drawerLabel: () => 'Profile',
           headerStyle: styles.header,
           headerTintColor: '#fff',
           headerTitle: <HeaderLogo/>,
@@ -116,7 +115,6 @@ const DrawerNav =  createDrawerNavigator({
       NotificationsScreen: {
         screen: NotificationsScreen,
         navigationOptions: {
-          //drawerLabel: () => 'Notifications',
           headerStyle: styles.header,
           headerTintColor: '#fff',
           headerTitle: <HeaderLogo/>,
@@ -131,12 +129,29 @@ const DrawerNav =  createDrawerNavigator({
       InvestorsScreen: {
         screen: InvestorsScreen,
         navigationOptions: {
-          //drawerLabel: () => 'Notifications',
           headerStyle: styles.header,
           headerTintColor: '#fff',
           headerTitle: <HeaderLogo/>,
           headerLeft: <DrawerButtonWithNavigation />,
           headerRight: <View/>
+        }
+      },
+      ProfileScreen: {
+        screen: ProfileScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerRight: <View/>
+        }
+      },
+      MessageScreen: {
+        screen: MessageScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerRight: <View/>          
         }
       }
     })

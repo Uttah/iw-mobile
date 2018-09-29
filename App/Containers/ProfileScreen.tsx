@@ -57,6 +57,7 @@ class ProfileScreen extends Component {
 	render() {
 		let ownPage:boolean;
 		let id:string;
+		let name:string;
 
 		if (typeof(this.props.navigation.state.params) !== 'undefined') {
 			ownPage = false;

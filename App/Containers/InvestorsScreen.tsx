@@ -17,8 +17,7 @@ class InvestorsScreen extends Component<Props> {
 	onProfilePress = (id) => {
 		const navigateAction = NavigationActions.navigate({
 			routeName: 'ProfileScreen',
-			params: {},
-			action: NavigationActions.navigate({ routeName: 'ProfileScreen', params: { id: id } }),
+			params: { id }
 		});
 		this.props.navigation.dispatch(navigateAction);
 	}
