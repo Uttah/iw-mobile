@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from 'native-base';
-import Author from '../Components/Author';
-import ViewMoreText from 'react-native-view-more-text';
+import Author from './Author';
+import ViewMoreText from './ViewMoreText';
 import { Col, Grid } from 'react-native-easy-grid';
 import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -47,6 +47,21 @@ export default class MessageItem extends Component {
 		)
 	};
 
+	renderDefault = () => {
+		return(
+			<Grid style={styles.btns}>
+				<Col style={{ width: hp('10%'), alignItems: 'flex-start' }}>
+					<TouchableOpacity style={styles.btn} onPress={this.props.onMessagePress}>
+						<FontAwesome active name='reply' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
+						<Text style={styles.btntext}>Reply</Text>
+					</TouchableOpacity>
+				</Col>
+				<Col style={{ width: hp('10%'), alignItems: 'flex-start' }}>
+				</Col>
+		</Grid>
+		)
+	};
+
 	render() {
 		const { id, lastMessage, parnter } = this.props.item;
 		const onPress = this.props.onMessagePress;
@@ -68,6 +83,7 @@ export default class MessageItem extends Component {
 							numberOfLines={1}
 							renderViewMore={this.renderViewMore}
 							renderViewLess={this.renderViewLess}
+							renderDefault={this.renderDefault}
 						>
 							<Text style={styles.text}>
 								{lastMessage.content}
