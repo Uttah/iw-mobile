@@ -107,14 +107,15 @@ class MessageScreen extends Component<Props> {
 		if ('chatId' in this.props.navigation.state.params) {
 			chatId = this.props.navigation.state.params.chatId;
 			this.setState({ chatId });
+
+			if (!(chatId in this.props.chatMessages)) {
+				const { dispatch } = this.props;
+				fetchMessages(this.props.client, chatId).then((data) => {
+					dispatch(ChatActions.setMessages(data));
+				});
+			}
 		} 
 		
-		if (!(chatId in this.props.chatMessages)) {
-			const { dispatch } = this.props;
-			fetchMessages(this.props.client, chatId).then((data) => {
-				dispatch(ChatActions.setMessages(data));
-			});
-		}
 		socket.subscribeToChat((data: any) => this.subscribeToChatCb(data));
 		socket.subscribeToMessage((message:any) => this.subscribeToMessageCb(message));
 	}
