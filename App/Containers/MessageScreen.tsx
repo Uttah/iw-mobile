@@ -40,11 +40,20 @@ class MessageScreen extends Component<Props> {
 	subscribeToChatCb = (data) => {
 		const { dispatch } = this.props;
 		const { partnerId } = this.props.navigation.state.params;
-		const setChatId = this.state.chatId === null;
-		//const setChatId = this.state.chatId === null && data.lastMessage.
+		const isMyMessageSent = data.parnter.id === partnerId && data.lastMessage.author.id === this.props.user.id;
+		const isMyMessageReceived = data.parnter.id === partnerId && data.lastMessage.author.id === partnerId;
+		const isCurrChat = isMyMessageSent || isMyMessageReceived;
+		const setChatId = this.state.chatId === null && isCurrChat;
+
 		setChatId && this.setState({
 			chatId: data.chatId
 		});
+		if (isMyMessageSent) {
+			this.setState({
+				isLoading: false
+			});
+		}
+		//для всех чатов
 		const chatMessages = {
 			id: data.chatId,
 			messages: [data.lastMessage]
@@ -110,10 +119,10 @@ class MessageScreen extends Component<Props> {
 	}
 	
 	onSend(messages = [], partnerId) {
-		socket.sendMessage(messages[0].text, partnerId);
 		this.setState({
 			isLoading: true
 		});
+		socket.sendMessage(messages[0].text, partnerId);
 	}
 	
 	renderAvatar = () => {
@@ -147,13 +156,13 @@ class MessageScreen extends Component<Props> {
 
 	render() {
 		const { partnerId } = this.props.navigation.state.params;
-		let messages = this.getChatMessages(this.props.chatMessages, this.state.chatId);
+		const messages = this.getChatMessages(this.props.chatMessages, this.state.chatId);
 		
 		return (
 			<Container>
 				<GiftedChat
 					messages={messages}
-					onSend={messages => this.onSend(messages, partnerId)}
+					onSend={newMessages => this.onSend(newMessages, partnerId)}
 					user={{
 						_id: this.props.user.id
 					}}
