@@ -10,17 +10,29 @@ import styles from './Styles/ProfileScreenStyles';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ProfileTabs } from '../Services/Enums';
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { GET_USER } from '../Services/Graphql';
+import { withApollo } from 'react-apollo';
+import { GET_USER, GET_CHATS } from '../Services/Graphql';
 
 class ProfileScreen extends Component {
 	state = {
 		activeTab: ProfileTabs.Activity
 	}
 
-	onChatPress = (id) => {
-		this.props.navigation.navigate('MessageScreen', { partnerId: id });
+	onChatPress = async(userId, partnerId) => {
+		const result = await this.props.client.query({
+			query: GET_CHATS,
+			variables: {userId: userId},
+			fetchPolicy: 'network-only'
+		});
+		const contacts = result.data.getChats.slice().reverse();
+		const filtered = contacts.filter((contact) => contact.parnter.id === partnerId);
+		
+		let params = { partnerId };
+		if (filtered.length) {
+			params.chatId = filtered[0].chatId;
+		}
+		this.props.navigation.navigate('MessageScreen', params);
 	}
 	
 	onChangeTab = ({ i }) => {
@@ -99,7 +111,7 @@ class ProfileScreen extends Component {
 						return (
 							<Container>
 								<ScrollView style={styles.mainContainer}>
-									<ProfileTop stats={stats} user={data.getUser} ownPage={ownPage} onChatPress={() => this.onChatPress(id)}/>
+									<ProfileTop stats={stats} user={data.getUser} ownPage={ownPage} onChatPress={() => this.onChatPress(this.props.authUser.id, this.props.navigation.state.params.id)}/>
 									<Tabs onChangeTab={this.onChangeTab}>
 										<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
 											<ProfileTab1 items={items} onCommentsPress={this.onCommentsPress}/>
@@ -133,10 +145,10 @@ class ProfileScreen extends Component {
 	}
 }
 
-function mapStateToProps (state) {
-	let obj = {};
-	obj.authUser = state.user.authUser;
-	return obj;
+function mapStateToProps ({user}:any) {
+	return {
+		authUser: user.authUser
+	}
 }
 
-export default connect(mapStateToProps)(ProfileScreen);
+export default connect(mapStateToProps)(withApollo(ProfileScreen));

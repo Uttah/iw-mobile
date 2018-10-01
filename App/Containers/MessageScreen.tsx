@@ -18,16 +18,21 @@ type Props = {
 const platform = Platform.OS;
 
 const fetchMessages = async (client:any, chatId:any) => {
-	const result = await client.query({
-		query: GET_CHAT_MESSAGES,
-		variables: { input: { chatId: chatId, skip: 0 } },
-		fetchPolicy: 'network-only'
-	});
-	const messages = result.data.getChatMessages;
-	const chatMessages = {
-		id: chatId,
-		messages: messages
-	};
+	let chatMessages = {};
+	try {
+		const result = await client.query({
+			query: GET_CHAT_MESSAGES,
+			variables: { input: { chatId: chatId, skip: 0 } },
+			fetchPolicy: 'network-only'
+		});
+		const messages = result.data.getChatMessages;
+		chatMessages = {
+			id: chatId,
+			messages: messages
+		};
+  } catch(err) {
+    alert(err); 
+	}
 	return chatMessages;
 };
 
@@ -98,15 +103,17 @@ class MessageScreen extends Component<Props> {
 	}
 	
 	async componentDidMount() {
+		let chatId:string;
 		if ('chatId' in this.props.navigation.state.params) {
-			const { dispatch } = this.props;
-			const chatId = this.props.navigation.state.params.chatId;
+			chatId = this.props.navigation.state.params.chatId;
 			this.setState({ chatId });
-			if (!(chatId in this.props.chatMessages)) {
-				fetchMessages(this.props.client, chatId).then((data) => {
-					dispatch(ChatActions.setMessages(data));
-				});
-			}
+		} 
+		
+		if (!(chatId in this.props.chatMessages)) {
+			const { dispatch } = this.props;
+			fetchMessages(this.props.client, chatId).then((data) => {
+				dispatch(ChatActions.setMessages(data));
+			});
 		}
 		socket.subscribeToChat((data: any) => this.subscribeToChatCb(data));
 		socket.subscribeToMessage((message:any) => this.subscribeToMessageCb(message));
@@ -175,10 +182,11 @@ class MessageScreen extends Component<Props> {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({chat, user}:any) => {
 	return {
-		chatMessages: state.chat.chatMessages || {},
-		user: state.user.authUser
+		chatMessages: chat.chatMessages || {},
+		user: user.authUser,
+		contactsList: chat.contactsList
 	}
 };
 
