@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, Image, KeyboardAvoidingView } from 'react-native';
-import { Container } from 'native-base';
+import { Container, Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationScreenProp } from 'react-navigation';
 import styles from './Styles/MessageScreenStyles';
@@ -33,7 +33,8 @@ const fetchMessages = async (client:any, chatId:any) => {
 
 class MessageScreen extends Component<Props> {
 	state = {
-		chatId: null
+		chatId: null,
+		isLoading: false
 	}
 
 	subscribeToChatCb = (data) => {
@@ -73,6 +74,11 @@ class MessageScreen extends Component<Props> {
 				id: partnerId,
 				name: partnerName
 			};
+			if (message.author.id == this.props.user.id) {
+				this.setState({
+					isLoading: false
+				});
+			}
 		} else {
 			contact.parnter = {
 				id: message.author.id,
@@ -105,6 +111,9 @@ class MessageScreen extends Component<Props> {
 	
 	onSend(messages = [], partnerId) {
 		socket.sendMessage(messages[0].text, partnerId);
+		this.setState({
+			isLoading: true
+		});
 	}
 	
 	renderAvatar = () => {
@@ -137,7 +146,7 @@ class MessageScreen extends Component<Props> {
 	}
 
 	render() {
-		const { partnerId, partnerName } = this.props.navigation.state.params;
+		const { partnerId } = this.props.navigation.state.params;
 		let messages = this.getChatMessages(this.props.chatMessages, this.state.chatId);
 		
 		return (
@@ -149,6 +158,7 @@ class MessageScreen extends Component<Props> {
 						_id: this.props.user.id
 					}}
 					renderAvatar={this.renderAvatar}
+					isLoading={this.state.isLoading}
 				/>
 				{Platform.OS !== 'ios' && <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={80}/>}
 			</Container>
