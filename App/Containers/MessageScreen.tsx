@@ -152,7 +152,7 @@ class MessageScreen extends Component<Props> {
 			{
 				_id: message.id,
 				text: message.content,
-				createdAt: message.date,
+				createdAt: (new Date(message.date)).toISOString(),
 				user: {
 					_id: message.author.id,
 					name: message.author.name,
