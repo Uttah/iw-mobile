@@ -1,20 +1,35 @@
 import io from 'socket.io-client';
 
+const guid = ()  =>{
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
 const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
+	const socket = io(baseURL, { transports: ['websocket'], forceNew: true});
+	const logs = [];
+	
 	const logEvent = (event) => {
 		const timeNow = new Date();
-		console.log(timeNow.toLocaleDateString() + timeNow.toLocaleTimeString() + ': ' + event);
+		const logTime = timeNow.toLocaleDateString() + ' ' + timeNow.toLocaleTimeString();
+		logs.push({id: guid(), time: logTime, text: event});
 	}
-	
-	const socket = io(baseURL, { transports: ['websocket'], forceNew: true});
+
 	logEvent('socket created');
 
 	// on reconnection, reset the transports option, as the Websocket
 	// connection may have failed (caused by proxy, firewall, browser, ...)
 	socket.on('reconnect_attempt', () => {
-		const timeNow = new Date();
 		logEvent('reconnect_attempt');
 		//socket.io.opts.transports = ['polling', 'websocket'];
+	});
+
+	socket.on('connect', () => {
+		logEvent('socket connected');
 	});
 
 	socket.on('connect_error', (error) => {
@@ -68,6 +83,7 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 	
 	const sendMessage = (text, partnerId) => {
 		socket.emit('newMessage', { text, partnerId });
+		logEvent('newMessage, text: ' + text + ', partnerId: ' + partnerId);
 	}
 
 	const sendTest = () => {
@@ -77,6 +93,7 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 	const subscribeToChat = (callback) => {
 		socket.on('newChat', (data: any) => {
 			callback(data);
+			logEvent('newChat, data: ' + JSON.stringify(data));
 		});
 	}
 
@@ -90,13 +107,16 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 				date: data.date
 			};
 			callback(message);
+			logEvent('newMessage, data: ' + JSON.stringify(data));
 		});
 	}
 
 	const unmount = () => {
 		socket.removeAllListeners();
-		// socket.off('newChat');
-		// socket.off('newMessage');
+	}
+
+	const getLogs = () => {
+		return logs;
 	}
 
 	return {
@@ -104,7 +124,8 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
 		sendMessage,
 		sendTest,
 		subscribeToMessage,
-		unmount
+		unmount,
+		getLogs
 	};
 };
 

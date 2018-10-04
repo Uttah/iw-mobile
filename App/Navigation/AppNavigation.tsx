@@ -13,6 +13,7 @@ import MessageScreen from '../Containers/MessageScreen';
 import NotificationsScreen from '../Containers/NotificationsScreen';
 import CommentsScreen from '../Containers/CommentsScreen';
 import InvestorsScreen from '../Containers/InvestorsScreen';
+import ChatLogsScreen from '../Containers/ChatLogsScreen';
 import HeaderLogo from '../Components/HeaderLogo';
 import { MaterialIcons } from '@expo/vector-icons';
 import DrawerContent from '../Components/DrawerContent';
@@ -155,7 +156,21 @@ const DrawerNav =  createDrawerNavigator({
         }
       }
     })
-  }
+  },
+  ChatLogsScreen: {
+    screen: createStackNavigator({
+      ChatLogsScreen: {
+        screen: ChatLogsScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerLeft: <DrawerButtonWithNavigation />,
+          headerRight: <View/>
+        }
+      }
+    })
+  },
 }, {
   initialRouteName: 'ProfileScreen',
   contentComponent: DrawerContent
