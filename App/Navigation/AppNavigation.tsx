@@ -15,6 +15,7 @@ import CommentsScreen from '../Containers/CommentsScreen';
 import InvestorsScreen from '../Containers/InvestorsScreen';
 import ChatLogsScreen from '../Containers/ChatLogsScreen';
 import HeaderLogo from '../Components/HeaderLogo';
+import AddExperienceScreen from '../Containers/AddExperienceScreen';
 import { MaterialIcons } from '@expo/vector-icons';
 import DrawerContent from '../Components/DrawerContent';
 
@@ -181,7 +182,8 @@ const AppNavigation = createSwitchNavigator({
   RegisterScreen: { screen: RegisterScreen },
   MainScreen: { 
     screen: DrawerNav
-  }
+  },
+  AddExperienceScreen: { screen: AddExperienceScreen }
 })
 
 export default AppNavigation;

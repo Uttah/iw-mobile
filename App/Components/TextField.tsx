@@ -4,7 +4,6 @@ import { Item, Input, Label } from 'native-base';
 import { TextFieldStatus } from '../Services/Enums';
 import styles from './Styles/TextFieldStyles';
 
-
 type Props = {
 	style: any,
 	placeholder: string,

@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist'
 import configureStore from './CreateStore'
 import rootSaga from '../Sagas/'
 import ReduxPersist from '../Config/ReduxPersist'
+import { reducer as formReducer } from 'redux-form'
 
 /* ------------- Assemble The Reducers ------------- */
 export const reducers = combineReducers({
@@ -11,7 +12,8 @@ export const reducers = combineReducers({
   user: require('./UserRedux').reducer,
   pools: require('./PoolsRedux').reducer,
   root: require('./RootRedux').reducer,
-  chat: require('./ChatRedux').reducer
+  chat: require('./ChatRedux').reducer,
+  form: formReducer
 })
 
 export default () => {

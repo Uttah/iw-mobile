@@ -7,8 +7,7 @@ import TextField from './TextField';
 import validate from '../Services/Validator';
 import api from '../Services/MyApi';
 import { TextFieldStatus } from '../Services/Enums';
-
-const platform = Platform.OS;
+import { Field, reduxForm } from 'redux-form';
 
 type Props = {
 	style: any,

@@ -14,10 +14,6 @@ type Props = {
 }
 
 class RegisterScreen extends Component<Props> {
-	static navigationOptions = {
-		headerTitle: <HeaderLogo/>,
-		headerRight: <View/>
-	};
 
 	state = {
 		extraScrollHeight: 0
