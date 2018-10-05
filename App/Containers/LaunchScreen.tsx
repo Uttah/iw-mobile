@@ -7,6 +7,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import Login from 'App/Components/Login';
 import styles from './Styles/LaunchScreenStyles';
 import UserActions from '../Redux/UserRedux';
+import socket from '../Services/Socket';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
@@ -32,6 +33,8 @@ class LaunchScreen extends Component<Props> {
 	onSuccess = (userData) => {
 		this.props.dispatch(UserActions.loginSuccess(userData));
 		this.props.navigation.navigate('MainScreen');
+		socket.close();
+		socket.connect();
 	}
 	
 	onButtonViewLayout = (height) => {
