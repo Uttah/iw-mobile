@@ -17,12 +17,12 @@ type Props = {
 
 const platform = Platform.OS;
 
-const fetchMessages = async (client:any, chatId:any) => {
+const fetchMessages = async (client:any, chatId:any, skip:number) => {
 	let chatMessages = {};
 	try {
 		const result = await client.query({
 			query: GET_CHAT_MESSAGES,
-			variables: { input: { chatId: chatId, skip: 0 } },
+			variables: { input: { chatId, skip } },
 			fetchPolicy: 'network-only'
 		});
 		const messages = result.data.getChatMessages;
@@ -36,10 +36,15 @@ const fetchMessages = async (client:any, chatId:any) => {
 	return chatMessages;
 };
 
+const skipStep = 10;
+
 class MessageScreen extends Component<Props> {
 	state = {
 		chatId: null,
-		isLoading: false
+		isLoading: false,
+		isLoadingEarlier: false,
+		loadEarlier: false,
+		skip: 0
 	}
 
 	subscribeToChatCb = (data) => {
@@ -104,14 +109,25 @@ class MessageScreen extends Component<Props> {
 	
 	async componentDidMount() {
 		let chatId:string;
+		let skip:number;
+
 		if ('chatId' in this.props.navigation.state.params) {
 			chatId = this.props.navigation.state.params.chatId;
 			this.setState({ chatId });
 
-			if (!(chatId in this.props.chatMessages)) {
+			const noMessages = !(chatId in this.props.chatMessages);
+			const notEnough = !noMessages && this.props.chatMessages[chatId].length < skipVal;
+
+			if (noMessages || notEnough) {
 				const { dispatch } = this.props;
-				fetchMessages(this.props.client, chatId).then((data) => {
+				skip = noMessages ? 0 : skipStep;
+				//вот здесь бы узнавать сколько сообщений всего
+				fetchMessages(this.props.client, chatId, skip).then((data) => {
 					dispatch(ChatActions.setMessages(data));
+					this.setState({
+						skip: skip + skipStep,
+						loadEarlier: data.messages.length === skipStep
+					})
 				});
 			}
 		} 
@@ -131,6 +147,35 @@ class MessageScreen extends Component<Props> {
 			isLoading: true
 		});
 		socket.sendMessage(messages[0].text, partnerId);
+	}
+
+	loadEarlierMessages = async() => {
+		const { dispatch } = this.props;
+		const skip = this.state.skip;
+		let loadEarlier = this.state.loadEarlier;
+
+		if (!loadEarlier) {
+			return;
+		}
+		this.setState({
+			isLoadingEarlier: true
+		});
+		const data = await fetchMessages(this.props.client, this.state.chatId, skip);
+		if (data.messages.length > 0) {
+			const messages = data.messages.slice().reverse();
+			const fetchedMessages = {
+				chatId: this.state.chatId,
+				messages: messages
+			};
+			dispatch(ChatActions.addOlderMessages(fetchedMessages));
+		} else {
+			loadEarlier = false;
+		}
+		this.setState({
+			isLoadingEarlier: false,
+			skip: skip + skipStep,
+			loadEarlier: loadEarlier
+		});
 	}
 	
 	renderAvatar = () => {
@@ -175,7 +220,9 @@ class MessageScreen extends Component<Props> {
 						_id: this.props.user.id
 					}}
 					renderAvatar={this.renderAvatar}
-					isLoading={this.state.isLoading}
+					isLoadingEarlier={this.state.isLoadingEarlier}
+					loadEarlier={this.state.loadEarlier}
+					onLoadEarlier={this.loadEarlierMessages}
 				/>
 				{Platform.OS !== 'ios' && <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={80}/>}
 			</Container>

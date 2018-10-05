@@ -6,6 +6,7 @@ import { objWithoutKey } from '../Services/Utils';
 const { Types, Creators } = createActions({
   setMessages: ['chatMessages'],
   addMessage: ['message'],
+  addOlderMessages: ['messages'],
   chatUnmount: [],
   addContact: ['contact'],
   setContacts: ['contacts'],
@@ -39,6 +40,17 @@ export const addMessage = (state, action) => {
     chatMessages: {
       ...state.chatMessages,
       [action.message.chatId]: newMessages
+    }
+  };
+}
+
+export const addOlderMessages = (state, action) => {
+  const { messages } = action;
+  return {
+    ...state,
+    chatMessages: {
+      ...state.chatMessages,
+      [action.messages.chatId]: [...state.chatMessages[action.messages.chatId], ...action.messages.messages.reverse()]
     }
   };
 }
@@ -77,6 +89,7 @@ export const chatUnmount = (state, action) => {
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_MESSAGES]: setMessages,
   [Types.ADD_MESSAGE]: addMessage,
+  [Types.ADD_OLDER_MESSAGES]: addOlderMessages,
   [Types.SET_CONTACTS]: setContacts,
   [Types.UPDATE_CONTACT]: updateContact,
   [Types.CHAT_UNMOUNT]: chatUnmount
