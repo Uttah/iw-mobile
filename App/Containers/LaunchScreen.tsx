@@ -33,8 +33,7 @@ class LaunchScreen extends Component<Props> {
 	onSuccess = (userData) => {
 		this.props.dispatch(UserActions.loginSuccess(userData));
 		this.props.navigation.navigate('MainScreen');
-		socket.close();
-		socket.connect();
+		socket.init();
 	}
 	
 	onButtonViewLayout = (height) => {
