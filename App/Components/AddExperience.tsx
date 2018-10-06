@@ -6,6 +6,7 @@ import { Button } from 'native-base';
 import { Field, reduxForm } from 'redux-form';
 import InputField from './InputField';
 import _validate from '../Services/Validator';
+import DateInputField from './DateInputField';
 
 const validate = values => {
 	const error = {};
@@ -22,21 +23,26 @@ class AddExperience extends Component<Props> {
 		return (
 			<View style={styles.container}>
 				<Field 
-					name='email'
+					name='name'
 					component={InputField} 
 					style={styles.input}
-					placeholder='email'
+					placeholder='Your education'
 					showError={true}
 				/>
 				<Field 
-					name='name' 
-					component={InputField} 
+					name='from' 
+					component={DateInputField} 
 					style={styles.input}
-					placeholder='name'
-					showError={true}
+					placeholder='From'
+				/>
+				<Field 
+					name='to' 
+					component={DateInputField} 
+					style={styles.input}
+					placeholder='To'
 				/>
 				<Button block primary onPress= {() => {}}>
-					<Text>Submit</Text>
+					<Text>Save</Text>
 				</Button>
 			</View>
 		);
