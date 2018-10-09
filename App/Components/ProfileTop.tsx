@@ -10,7 +10,7 @@ import { MaterialIcons, Entypo } from '@expo/vector-icons';
 export default class ProfileTop extends Component {
 
 	render() {
-		const { stats, user, ownPage, onChatPress } = this.props;
+		const { stats, user, ownPage, onChatPress, onEditPress } = this.props;
 		return (
 			<View style={styles.outer}>
 				<View style={styles.container}>
@@ -25,7 +25,7 @@ export default class ProfileTop extends Component {
 						<StatsNumbers style={styles.numbers} stats={stats}/>
 						{
 							ownPage ?
-							<TouchableOpacity style={styles.btn} onPress={() => {}}>
+							<TouchableOpacity style={styles.btn} onPress={onEditPress}>
 								<MaterialIcons active name='edit' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
 								<Text style={styles.btntext}>Edit profile</Text>
 							</TouchableOpacity>

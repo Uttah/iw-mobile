@@ -65,6 +65,10 @@ class ProfileScreen extends Component {
 	onCommentsPress = () => {
 		this.props.navigation.navigate('CommentsScreen');
 	}
+
+	onEditPress = () => {
+		this.props.navigation.navigate('EditProfileScreen');
+	}
 	
 	render() {
 		let ownPage:boolean;
@@ -111,7 +115,7 @@ class ProfileScreen extends Component {
 						return (
 							<Container>
 								<ScrollView style={styles.mainContainer}>
-									<ProfileTop stats={stats} user={data.getUser} ownPage={ownPage} onChatPress={() => this.onChatPress(this.props.authUser.id, this.props.navigation.state.params.id)}/>
+									<ProfileTop stats={stats} user={data.getUser} ownPage={ownPage} onEditPress={this.onEditPress} onChatPress={() => this.onChatPress(this.props.authUser.id, this.props.navigation.state.params.id)}/>
 									<Tabs onChangeTab={this.onChangeTab}>
 										<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
 											<ProfileTab1 items={items} onCommentsPress={this.onCommentsPress}/>
