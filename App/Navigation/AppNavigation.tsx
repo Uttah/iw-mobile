@@ -16,6 +16,7 @@ import InvestorsScreen from '../Containers/InvestorsScreen';
 import ChatLogsScreen from '../Containers/ChatLogsScreen';
 import HeaderLogo from '../Components/HeaderLogo';
 import AddExperienceScreen from '../Containers/AddExperienceScreen';
+import AddEducationScreen from '../Containers/AddEducationScreen';
 import EditProfileScreen from '../Containers/EditProfileScreen';
 import { MaterialIcons } from '@expo/vector-icons';
 import DrawerContent from '../Components/DrawerContent';
@@ -61,6 +62,24 @@ const DrawerNav =  createDrawerNavigator({
           headerTitle: <HeaderLogo/>,
           headerRight: <View/>          
         }
+      },
+      AddExperienceScreen: {
+        screen: AddExperienceScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerRight: <View/>          
+        }            
+      },
+      AddEducationScreen: {
+        screen: AddEducationScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerRight: <View/>          
+        }        
       }
     })
   },
@@ -192,8 +211,7 @@ const AppNavigation = createSwitchNavigator({
   RegisterScreen: { screen: RegisterScreen },
   MainScreen: { 
     screen: DrawerNav
-  },
-  AddExperienceScreen: { screen: AddExperienceScreen }
+  }
 })
 
 export default AppNavigation;

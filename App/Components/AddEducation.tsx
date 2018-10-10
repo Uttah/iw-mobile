@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text } from 'native-base';
 import { View } from 'react-native';
-import styles from './Styles/AddExperienceStyles';
+import styles from './Styles/AddEducationStyles';
 import { Button } from 'native-base';
 import { Field, reduxForm } from 'redux-form';
 import InputField from './InputField';
@@ -17,7 +17,7 @@ const validate = values => {
 
 type Props = any;
 
-class AddExperience extends Component<Props> {
+class AddEducation extends Component<Props> {
 
 	render() {
 		return (
@@ -26,7 +26,7 @@ class AddExperience extends Component<Props> {
 					name='name'
 					component={InputField} 
 					style={styles.input}
-					placeholder='Your experience'
+					placeholder='Your education'
 					showError={true}
 				/>
 				<Field 
@@ -50,6 +50,6 @@ class AddExperience extends Component<Props> {
 }
 
 export default reduxForm({
-  form: 'add_experience',
+  form: 'add_education',
   validate
-})(AddExperience);
+})(AddEducation);

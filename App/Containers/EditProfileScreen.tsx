@@ -18,12 +18,24 @@ type Props = {
 	navigation: NavigationScreenProp<any, any>,
 }
 
+const jobs = [
+	{ id: guid(), name: 'IPU RAS', from: '2009', to: '2010' },
+	{ id: guid(), name: 'Google', from: '2010', to: '2018' },
+];
+
 const educations = [
 	{ id: guid(), name: 'Cambridge', from: '2001', to: '2002' },
 	{ id: guid(), name: 'Oxford', from: '2010', to: '2012' },
 ];
 
 export default class EditProfileScreen extends Component<Props> {
+	onAddEducationPress = () => {
+		this.props.navigation.navigate('AddEducationScreen');
+	}
+
+	onAddExperiencePress = () => {
+		this.props.navigation.navigate('AddExperienceScreen');
+	}
 
 	render() {
 		return (
@@ -31,7 +43,12 @@ export default class EditProfileScreen extends Component<Props> {
 				style={styles.mainContainer}  
 			>
 				<Text style={styles.headerTitle}>Edit profile</Text>
-				<EditProfile educations={educations}/>
+				<EditProfile 
+					educations={educations} 
+					jobs={jobs}
+					onAddEducationPress={this.onAddEducationPress}
+					onAddExperiencePress={this.onAddExperiencePress}
+				/>
 			</KeyboardAwareScrollView>
 		);
 	}
