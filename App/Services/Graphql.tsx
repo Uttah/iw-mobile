@@ -3,13 +3,16 @@ import gql from 'graphql-tag';
 export const GET_CHAT_MESSAGES = gql`
 	query getChatMessages($input: ChatInput!) {
 		getChatMessages(input: $input) {
-			id
-			author {
+			nextMessages, 
+			messages {
 				id
-				name
+				author {
+					id
+					name
+				}
+				content
+				date
 			}
-			content
-			date
 		}
 	}
 `;
