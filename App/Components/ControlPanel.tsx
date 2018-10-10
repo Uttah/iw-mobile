@@ -41,7 +41,9 @@ export default class ControlPanel extends Component {
 					style={styles.inputField}
 					onChangeText = {onSearchStrChange}
 					onKeyPress={this.onPressInput}
-					onSubmitEditing={searchSubmit}/>
+					onSubmitEditing={searchSubmit}
+					returnKeyType={'done'}
+				/>
 				{this.state.showInput && <TouchableOpacity style={styles.close} onPress={this.onPressClose}>
 					<EvilIcons active name='close' size={20} color={'#999'} style={styles.closeIcon}/>
 				</TouchableOpacity>}
