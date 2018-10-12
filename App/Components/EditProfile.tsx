@@ -67,6 +67,21 @@ const editProfileItemsList = (items) => {
 };
 
 class EditProfile extends Component<Props> {
+	componentDidMount() {
+		const { name, login, about, country, city, site } = this.props;
+		const { fb, linkedin, twitter } = this.props.clinks;
+		this.props.initialize({  
+			name: (!!name ? name : ''), 
+			login: (!!login ? login : ''), 
+			about: (!!about ? about : ''), 
+			fb: (!!fb ? fb : ''), 
+			twitter: (!!twitter ? twitter : ''), 
+			linkedin: (!linkedin ? linkedin : ''),
+			country: (!!country ? country : ''),
+			city: (!!city ? city : ''),
+			site: (!!site ? site : '')
+		});
+	}
 
 	renderHeader(title, expanded) {
     return (
@@ -104,7 +119,7 @@ class EditProfile extends Component<Props> {
 						placeholder='Site'
 					/>
 					<Field 
-						name='facebook' 
+						name='fb' 
 						component={AccordInputField} 
 						style={styles.input}
 						placeholder='Facebook'
@@ -147,7 +162,7 @@ class EditProfile extends Component<Props> {
 	}
 
 	render() {
-		const { jobs, educations, onAddExperiencePress, onAddEducationPress } = this.props;
+		const { jobs, educations, onAddExperiencePress, onAddEducationPress, handleSave } = this.props;
 		const dataArray = [
 			{ title: 'Contacts', content: { type: 'contacts' } },
 			{ title: 'Experience', content: { type: 'experience', items: jobs, onPress: onAddExperiencePress } },
@@ -181,7 +196,7 @@ class EditProfile extends Component<Props> {
 					renderHeader={this.renderHeader}
 					style={styles.accordion}
 				/>
-				<Button block primary onPress= {() => {}}>
+				<Button block primary onPress= {handleSave}>
 					<Text>Save</Text>
 				</Button>
 			</View>
@@ -190,6 +205,6 @@ class EditProfile extends Component<Props> {
 }
 
 export default reduxForm({
-  form: 'add_experience',
+	form: 'edit_profile',
   validate
 })(EditProfile);

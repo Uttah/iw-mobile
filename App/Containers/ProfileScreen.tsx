@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView , View } from 'react-native';
-import { Tabs, Tab, TabHeading, Text, Fab, Container, Spinner } from 'native-base';
+import { Tabs, Tab, TabHeading, Text, Fab, Container, Spinner, Toast, Button } from 'native-base';
 import ProfileTop from '../Components/ProfileTop';
 import ProfileTab1 from '../Components/ProfileTab1';
 import ProfileTab2 from '../Components/ProfileTab2';
@@ -14,10 +14,59 @@ import { Query } from 'react-apollo';
 import { withApollo } from 'react-apollo';
 import { GET_USER, GET_CHATS } from '../Services/Graphql';
 
+const fetchUser = async(client:any, id:number) => {
+	try {
+		const result = await client.query({
+			query: GET_USER,
+			variables: { userId: id },
+			fetchPolicy: 'network-only'
+		});
+		return result.data.getUser;
+  } catch(err) {
+    alert(err); 
+	}
+}
+
 class ProfileScreen extends Component {
 	state = {
-		activeTab: ProfileTabs.Activity
+		activeTab: ProfileTabs.Activity,
+		isSubmitting: false,
+		isSubmitMessageVisible: false,
+		user: {}
 	}
+
+	componentDidMount() {
+		let id:string;
+		let ownPage:boolean;
+		let user = {};
+
+		if (typeof(this.props.navigation.state.params) !== 'undefined') {
+			ownPage = false;
+			id = this.props.navigation.state.params.id;
+		}
+		else {
+			ownPage = true;
+			id = this.props.authUser.id;
+		}
+		if (ownPage) {
+			this.setState({
+				user: this.props.authUser
+			});
+		} else {
+			fetchUser(this.props.client, id).then((data) => {
+				this.setState({
+					user: data
+				});
+			});
+		}
+	}
+
+	onSubmitSuccess = (user) => {
+		const newUser = {...this.state.user, ...user};
+    this.setState({
+			user: newUser
+		});
+  };
 
 	onChatPress = async(userId, partnerId) => {
 		const result = await this.props.client.query({
@@ -67,13 +116,61 @@ class ProfileScreen extends Component {
 	}
 
 	onEditPress = () => {
-		this.props.navigation.navigate('EditProfileScreen');
+		this.props.navigation.navigate('EditProfileScreen', { onSubmitSuccess: this.onSubmitSuccess });
+	}
+
+	profileView = (user, ownPage, id, authUserId, stats, items) => {
+		const emptyUser = Object.keys(user).length == 0;
+		if (emptyUser) {
+			return (<View><Spinner></Spinner></View>);
+		} else {
+			return (
+				<Container>
+						{/* <Button onPress={() => Toast.show({
+							text: 'Discard changes',
+							buttonText: 'Undo',
+							duration: 3000,
+							//onClose: this.onClose.bind(this)
+						})}><Text>Press</Text></Button> */}
+					<ScrollView style={styles.mainContainer}>
+						<ProfileTop 
+							stats={stats} 
+							user={user} 
+							ownPage={ownPage} 
+							onEditPress={this.onEditPress} 
+							onChatPress={ownPage ? () => this.onChatPress(authUserId, id) : null }
+						/>
+						<Tabs onChangeTab={this.onChangeTab}>
+							<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
+								<ProfileTab1 items={items} onCommentsPress={this.onCommentsPress}/>
+							</Tab>
+							<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='bar-chart-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Портфолио</Text></TabHeading>}>
+								<ProfileTab2 />
+							</Tab>
+							<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='question-circle-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Обо мне</Text></TabHeading>}>
+								<ProfileTab3 about={user.about} clinks={user.clinks} educations={user.educations} jobs={user.jobs}/>
+							</Tab>
+						</Tabs>
+					</ScrollView>
+					{ownPage && <Fab
+						direction='up'
+						containerStyle={{ width: hp('8%'), height: hp('8%') }}
+						style={{ backgroundColor: '#3f51b5', width: hp('8%'), height: hp('8%') }}
+						position='bottomRight'
+						onPress={this.onFabPress}>
+						{this.state.activeTab == ProfileTabs.About ? <MaterialIcons name='edit' /> : <MaterialIcons name='add' />}
+					</Fab>}
+				</Container>
+			);			
+		}
 	}
 	
 	render() {
 		let ownPage:boolean;
 		let id:string;
 		let name:string;
+		const user = this.state.user;
+		const authUserId = this.props.authUser.id;
 
 		if (typeof(this.props.navigation.state.params) !== 'undefined') {
 			ownPage = false;
@@ -99,59 +196,13 @@ class ProfileScreen extends Component {
 				name: 'second'
 			}
 		];
-		return (
-			<Query query={GET_USER} variables={{userId: id}}>
-				{({ loading, error, data }) => {
-					if (loading) {
-						return (<View><Spinner/></View>);
-					} 
-					if (error) {
-						console.log(JSON.stringify(error));
-						return (
-							<View><Text>{error}</Text></View>
-						);
-					}
-					if (data && data.getUser) {
-						return (
-							<Container>
-								<ScrollView style={styles.mainContainer}>
-									<ProfileTop stats={stats} user={data.getUser} ownPage={ownPage} onEditPress={this.onEditPress} onChatPress={() => this.onChatPress(this.props.authUser.id, this.props.navigation.state.params.id)}/>
-									<Tabs onChangeTab={this.onChangeTab}>
-										<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
-											<ProfileTab1 items={items} onCommentsPress={this.onCommentsPress}/>
-										</Tab>
-										<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='bar-chart-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Портфолио</Text></TabHeading>}>
-											<ProfileTab2 />
-										</Tab>
-										<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='question-circle-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Обо мне</Text></TabHeading>}>
-											<ProfileTab3 />
-										</Tab>
-									</Tabs>
-								</ScrollView>
-								{ownPage && <Fab
-									direction='up'
-									containerStyle={{ width: hp('8%'), height: hp('8%') }}
-									style={{ backgroundColor: '#3f51b5', width: hp('8%'), height: hp('8%') }}
-									position='bottomRight'
-									onPress={this.onFabPress}>
-									{this.state.activeTab == ProfileTabs.About ? <MaterialIcons name='edit' /> : <MaterialIcons name='add' />}
-								</Fab>}
-						</Container>
-						);
-					} else {
-						return (
-							<View><Text>{`No data for user with id: '${id}'`}</Text></View>
-						);
-					}
-				}}
-			</Query>
-		);
+		return (this.profileView(user, ownPage, id, authUserId, stats, items));
 	}
 }
 
-function mapStateToProps ({user}:any) {
+function mapStateToProps ({user, root}:any) {
 	return {
-		authUser: user.authUser
+		authUser: user.authUser || {}
 	}
 }
 

@@ -5,7 +5,7 @@ import Immutable from 'seamless-immutable';
 
 const { Types, Creators } = createActions({
 	showCommentsModal: [],
-	hideCommentsModal: []
+  hideCommentsModal: []
 });
 
 export const RootTypes = Types;

@@ -24,8 +24,12 @@ export default StyleSheet.create({
   listItemFollow: {
     marginTop: 0
   },
+  socBtn: {
+    marginRight: hp('2%')
+  },
   socIcon: {
-    marginRight: hp('2.35%')
+    width: hp('3.97%'),
+    height: hp('3.97%')*35/30
   },
   socIcons: {
     marginTop: hp('0.97%')

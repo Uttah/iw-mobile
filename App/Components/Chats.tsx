@@ -29,8 +29,6 @@ export default class Chats extends Component {
 		this.setState({
 			searchPressed: true
 		});
-		const dispatch = this.props.dispatch;
-		//dispatch(loadPoolsFilteredAsync(this.state.filterStr));
 	}
 	
 	listTop = () => {
