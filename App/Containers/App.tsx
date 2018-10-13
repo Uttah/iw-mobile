@@ -12,6 +12,7 @@ import RootContainer from './RootContainer';
 import createStore from '../Redux';
 import getTheme from '../native-base-theme/components';
 import platform from '../native-base-theme/variables/platform';
+import { Toast } from 'react-native-redux-toast';
 
 // create our store
 const store = createStore();
@@ -37,9 +38,10 @@ class App extends Component {
 			<ApolloProvider client={client}>
 				<StyleProvider style={getTheme(platform)}>
 					<Provider store={store}>
-							<MenuProvider>
-								<RootContainer />
-							</MenuProvider>
+						<MenuProvider>
+							<RootContainer />
+							<Toast messageStyle={{ color: 'white' }} containerStyle={{backgroundColor: 'green'}} />
+						</MenuProvider>
 					</Provider>
 				</StyleProvider>			
 			</ApolloProvider>

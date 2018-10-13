@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView , View } from 'react-native';
-import { Tabs, Tab, TabHeading, Text, Fab, Container, Spinner, Toast, Button } from 'native-base';
+import { ScrollView, View } from 'react-native';
+import { Tabs, Tab, TabHeading, Text, Fab, Container, Spinner } from 'native-base';
 import ProfileTop from '../Components/ProfileTop';
 import ProfileTab1 from '../Components/ProfileTab1';
 import ProfileTab2 from '../Components/ProfileTab2';
@@ -10,9 +10,9 @@ import styles from './Styles/ProfileScreenStyles';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ProfileTabs } from '../Services/Enums';
-import { Query } from 'react-apollo';
 import { withApollo } from 'react-apollo';
 import { GET_USER, GET_CHATS } from '../Services/Graphql';
+import { ToastActionsCreators } from 'react-native-redux-toast';
 
 const fetchUser = async(client:any, id:number) => {
 	try {
@@ -31,29 +31,28 @@ class ProfileScreen extends Component {
 	state = {
 		activeTab: ProfileTabs.Activity,
 		isSubmitting: false,
-		isSubmitMessageVisible: false,
 		user: {}
 	}
 
 	componentDidMount() {
-		let id:string;
+		let profileId:string;
 		let ownPage:boolean;
 		let user = {};
 
 		if (typeof(this.props.navigation.state.params) !== 'undefined') {
 			ownPage = false;
-			id = this.props.navigation.state.params.id;
+			profileId = this.props.navigation.state.params.profileId;
 		}
 		else {
 			ownPage = true;
-			id = this.props.authUser.id;
+			profileId = this.props.authUser.id;
 		}
 		if (ownPage) {
 			this.setState({
 				user: this.props.authUser
 			});
 		} else {
-			fetchUser(this.props.client, id).then((data) => {
+			fetchUser(this.props.client, profileId).then((data) => {
 				this.setState({
 					user: data
 				});
@@ -61,11 +60,9 @@ class ProfileScreen extends Component {
 		}
 	}
 
-	onSubmitSuccess = (user) => {
-		const newUser = {...this.state.user, ...user};
-    this.setState({
-			user: newUser
-		});
+	onSubmitSuccess = () => {
+		const dispatch = this.props.dispatch;
+		dispatch(ToastActionsCreators.displayInfo('Edited successfully!'));
   };
 
 	onChatPress = async(userId, partnerId) => {
@@ -119,26 +116,20 @@ class ProfileScreen extends Component {
 		this.props.navigation.navigate('EditProfileScreen', { onSubmitSuccess: this.onSubmitSuccess });
 	}
 
-	profileView = (user, ownPage, id, authUserId, stats, items) => {
-		const emptyUser = Object.keys(user).length == 0;
+	profileView = (profileUser, ownPage, profileId, authUserId, stats, items) => {
+		const emptyUser = Object.keys(profileUser).length == 0;
 		if (emptyUser) {
 			return (<View><Spinner></Spinner></View>);
 		} else {
 			return (
 				<Container>
-						{/* <Button onPress={() => Toast.show({
-							text: 'Discard changes',
-							buttonText: 'Undo',
-							duration: 3000,
-							//onClose: this.onClose.bind(this)
-						})}><Text>Press</Text></Button> */}
 					<ScrollView style={styles.mainContainer}>
 						<ProfileTop 
 							stats={stats} 
-							user={user} 
+							user={profileUser} 
 							ownPage={ownPage} 
 							onEditPress={this.onEditPress} 
-							onChatPress={ownPage ? () => this.onChatPress(authUserId, id) : null }
+							onChatPress={ownPage ? () => this.onChatPress(authUserId, profileId) : null }
 						/>
 						<Tabs onChangeTab={this.onChangeTab}>
 							<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
@@ -148,7 +139,7 @@ class ProfileScreen extends Component {
 								<ProfileTab2 />
 							</Tab>
 							<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='question-circle-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Обо мне</Text></TabHeading>}>
-								<ProfileTab3 about={user.about} clinks={user.clinks} educations={user.educations} jobs={user.jobs}/>
+								<ProfileTab3 about={profileUser.about} clinks={profileUser.clinks} educations={profileUser.educations} jobs={profileUser.jobs}/>
 							</Tab>
 						</Tabs>
 					</ScrollView>
@@ -167,18 +158,19 @@ class ProfileScreen extends Component {
 	
 	render() {
 		let ownPage:boolean;
-		let id:string;
-		let name:string;
-		const user = this.state.user;
-		const authUserId = this.props.authUser.id;
+		let profileId:string;
+		let profileUser:any;
+		const authUser = this.props.authUser;
 
 		if (typeof(this.props.navigation.state.params) !== 'undefined') {
 			ownPage = false;
-			id = this.props.navigation.state.params.id;
+			profileId = this.props.navigation.state.params.id;
+			profileUser = this.state.user;
 		}
 		else {
 			ownPage = true;
-			id = this.props.authUser.id;
+			profileId = authUser.id;
+			profileUser = authUser;
 		}
 		//нужна библиотека которая склоняет
 		const stats = [
@@ -196,7 +188,7 @@ class ProfileScreen extends Component {
 				name: 'second'
 			}
 		];
-		return (this.profileView(user, ownPage, id, authUserId, stats, items));
+		return (this.profileView(profileUser, ownPage, profileId, authUser.id, stats, items));
 	}
 }
 

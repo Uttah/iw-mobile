@@ -1,9 +1,10 @@
-import { combineReducers } from 'redux'
-import { persistReducer } from 'redux-persist'
-import configureStore from './CreateStore'
-import rootSaga from '../Sagas/'
-import ReduxPersist from '../Config/ReduxPersist'
-import { reducer as formReducer } from 'redux-form'
+import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import configureStore from './CreateStore';
+import rootSaga from '../Sagas/';
+import ReduxPersist from '../Config/ReduxPersist';
+import { reducer as formReducer } from 'redux-form';
+import { toastReducer as toast } from 'react-native-redux-toast';
 
 /* ------------- Assemble The Reducers ------------- */
 export const reducers = combineReducers({
@@ -13,7 +14,8 @@ export const reducers = combineReducers({
   pools: require('./PoolsRedux').reducer,
   root: require('./RootRedux').reducer,
   chat: require('./ChatRedux').reducer,
-  form: formReducer
+  form: formReducer,
+  toast: toast
 })
 
 export default () => {

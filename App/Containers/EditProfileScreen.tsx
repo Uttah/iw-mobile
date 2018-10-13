@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavigationScreenProp } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, Toast } from 'native-base';
+import { Text } from 'native-base';
 import styles from './Styles/EditProfileScreenStyles';
 import EditProfile from '../Components/EditProfile';
 import { connect } from 'react-redux';
@@ -15,7 +15,7 @@ import {
 	UPDATE_EDUCATION
 } from '../Services/Graphql';
 import { withApollo } from 'react-apollo';
-import RootActions from '../Redux/RootRedux';
+import UserActions from '../Redux/UserRedux';
 
 const guid = ()  =>{
   function s4() {
@@ -52,6 +52,7 @@ class EditProfileScreen extends Component<Props> {
 
 	handleSave = (id, form) => {
 		const { name, login, country, city, site, about, fb, linkedin, twitter } = form.values;
+		const dispatch = this.props.dispatch;
 
 		this.props.client.mutate({
 			mutation: UPDATE_USER,
@@ -71,9 +72,10 @@ class EditProfileScreen extends Component<Props> {
 			}},
 		})
 		.then((result:any) => {
+			dispatch(UserActions.updateUser(result.data.updateUser));
 			const { navigation } = this.props;
 			navigation.goBack();
-			navigation.state.params.onSubmitSuccess(result.data.updateUser);
+			navigation.state.params.onSubmitSuccess();
 		});
 	}
 
