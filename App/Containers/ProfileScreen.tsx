@@ -41,7 +41,7 @@ class ProfileScreen extends Component {
 
 		if (typeof(this.props.navigation.state.params) !== 'undefined') {
 			ownPage = false;
-			profileId = this.props.navigation.state.params.profileId;
+			profileId = this.props.navigation.state.params.id;
 		}
 		else {
 			ownPage = true;
@@ -129,7 +129,7 @@ class ProfileScreen extends Component {
 							user={profileUser} 
 							ownPage={ownPage} 
 							onEditPress={this.onEditPress} 
-							onChatPress={ownPage ? () => this.onChatPress(authUserId, profileId) : null }
+							onChatPress={ownPage ? null : () => this.onChatPress(authUserId, profileId) }
 						/>
 						<Tabs onChangeTab={this.onChangeTab}>
 							<Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>

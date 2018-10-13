@@ -10,7 +10,7 @@ import { MaterialIcons, Entypo } from '@expo/vector-icons';
 export default class ProfileTop extends Component {
 
 	render() {
-		const { stats, user, ownPage, onChatPress, onEditPress } = this.props;
+		const { stats, user, ownPage, onEditPress, onChatPress } = this.props;
 		return (
 			<View style={styles.outer}>
 				<View style={styles.container}>
