@@ -45,11 +45,11 @@ export default class ProfileTab3 extends Component {
 						<Text style={styles.listItemText}>{about}</Text>
 					</View>
 				</ListItem>
-				{(clinks.fb.length > 0 || clinks.linkedin.length > 0 || clinks.twitter.length > 0) && <ListItem noIndent style={styles.listItem}>
+				<ListItem noIndent style={styles.listItem}>
 					<View style={styles.listItemInner}>
 						<Text style={styles.listItemTitle}>Соцсети</Text>
 					</View>
-					<View style={[styles.listItemInner, styles.socIcons]}>
+					{(clinks.fb.length > 0 || clinks.linkedin.length > 0 || clinks.twitter.length > 0) && <View style={[styles.listItemInner, styles.socIcons]}>
 						{clinks.fb.length > 0 && <TouchableOpacity key={guid()} style={styles.socBtn} onPress={() => Linking.openURL('https://facebook.com/' + clinks.fb)}>
 							<FontAwesome name='facebook-square' size={hp('3.97%')} style={styles.socIcon}/>
 						</TouchableOpacity>}
@@ -59,21 +59,20 @@ export default class ProfileTab3 extends Component {
 						{clinks.twitter.length > 0 && <TouchableOpacity key={guid()} onPress={() => Linking.openURL('https://twitter.com/' + clinks.twitter)}>
 							<FontAwesome name='twitter-square' size={hp('3.97%')} style={styles.socIcon}/>
 						</TouchableOpacity>}
-					</View>
-				</ListItem>}
-				{educations.length > 0 && <ListItem noIndent style={styles.listItem}>
+					</View>}
+				</ListItem>
+				<ListItem noIndent style={styles.listItem}>
 					<View style={styles.listItemInner}>
 						<Text style={styles.listItemTitle}>Образование</Text>
 					</View>
-					{educations.map((education) => engagementView(education))}
-				</ListItem>}
-				{jobs.length > 0 && 
+					{educations.length > 0 && educations.map((education) => engagementView(education))}
+				</ListItem>
 				<ListItem noIndent style={styles.listItem}>
 					<View style={styles.listItemInner}>
 						<Text style={styles.listItemTitle}>Опыт работы</Text>
 					</View>
-					{jobs.map((job) => engagementView(job))}
-				</ListItem>}
+					{jobs.length > 0 && jobs.map((job) => engagementView(job))}
+				</ListItem>
 				<ListItem noIndent style={styles.listItem}>
 					<View style={styles.listItemInner}>
 						<Text style={styles.listItemTitle}>Язык</Text>
