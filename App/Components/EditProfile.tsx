@@ -26,21 +26,17 @@ const validate = values => {
 
 type Props = any;
 
-const onMenuPress = (value, id) => {
-	if (value == 2) {
-		Alert.alert(
-			'Delete',
-			'Are you sure you want to delete?',
-			[
-				{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-				{text: 'OK', onPress: () => console.log('OK Pressed')},
-			],
-			{ cancelable: false }
-		)
-	} else {
-		alert('you pressed edit');
-	}
-}
+const editProfileItemsList = (items, onDelete) => {
+	return (
+		<FlatList
+			data={items.map(function(item) {
+				return { ...item, onDelete: onDelete }
+			})}
+			renderItem={renderItem}
+			keyExtractor={(item) => item._id}
+		/>
+	);
+};
 
 const renderItem = ({ item }) => {
 	let { from, to } = item;
@@ -55,7 +51,7 @@ const renderItem = ({ item }) => {
 			<View style={styles.editProfileItemTextWrap}>
 				<Text style={styles.editProfileItemText}>{from}-{to}</Text>
 			</View>
-			<Menu onSelect={value => onMenuPress(value, 1)} style={styles.button}>
+			<Menu onSelect={value => onMenuPress(value, item._id, item.onDelete)} style={styles.button}>
 				<MenuTrigger>
 					<Entypo name='dots-three-vertical' style={styles.dots} size={hp('2.4%')} color={'#ccc'}/>
 				</MenuTrigger>
@@ -72,15 +68,21 @@ const renderItem = ({ item }) => {
 	);
 };
 
-const editProfileItemsList = (items) => {
-	return (
-		<FlatList
-			data={items}
-			renderItem={renderItem}
-			keyExtractor={(item) => item._id}
-		/>
-	);
-};
+const onMenuPress = (value, id, onDelete) => {
+	if (value == 2) {
+		Alert.alert(
+			'Delete',
+			'Are you sure you want to delete?',
+			[
+				{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+				{text: 'OK', onPress: () => onDelete(id)},
+			],
+			{ cancelable: false }
+		)
+	} else {
+		alert('you pressed edit');
+	}
+}
 
 class EditProfile extends Component<Props> {
 	componentDidMount() {
@@ -161,7 +163,7 @@ class EditProfile extends Component<Props> {
 						<MaterialIcons active name='add-circle-outline' color={'#5A6978'} size={hp('2.4%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Add education</Text>
 					</TouchableOpacity>
-					{content.items.length > 0 && editProfileItemsList(content.items)}
+					{content.items.length > 0 && editProfileItemsList(content.items, content.onDelete)}
 				</View>
 			);
 		} else if (content.type === 'experience') {
@@ -171,18 +173,45 @@ class EditProfile extends Component<Props> {
 						<MaterialIcons active name='add-circle-outline' color={'#5A6978'} size={hp('2.4%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Add experience</Text>
 					</TouchableOpacity>
-					{content.items.length > 0 && editProfileItemsList(content.items)}
+					{content.items.length > 0 && editProfileItemsList(content.items, content.onDelete)}
 				</View>
 			);
 		}
 	}
 
 	render() {
-		const { jobs, educations, onAddExperiencePress, onAddEducationPress, handleSave } = this.props;
+		const { 
+			jobs, 
+			educations, 
+			onAddExperiencePress, 
+			onAddEducationPress, 
+			onExperienceDelete, 
+			onEducationDelete, 
+			handleSave 
+		} = this.props;
+
 		const dataArray = [
-			{ title: 'Contacts', content: { type: 'contacts' } },
-			{ title: 'Experience', content: { type: 'experience', items: jobs, onPress: onAddExperiencePress } },
-			{ title: 'Education', content: { type: 'education', items: educations, onPress: onAddEducationPress  } }
+			{ 
+				title: 'Contacts', 
+				content: { type: 'contacts' } },
+			{ 
+				title: 'Experience', 
+				content: { 
+					type: 'experience', 
+					items: jobs, 
+					onPress: onAddExperiencePress,
+					onDelete: onExperienceDelete
+				} 
+			},
+			{ 
+				title: 'Education', 
+				content: { 
+					type: 'education', 
+					items: educations, 
+					onPress: onAddEducationPress,
+					onDelete: onEducationDelete
+				} 
+			}
 		];
 
 		return (

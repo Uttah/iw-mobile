@@ -9,7 +9,8 @@ const { Types, Creators } = createActions({
   clearLogin: [],
   updateUser: ['userData'],
   addUserEducations: ['educations'],
-  addUserJobs: ['jobs']
+  addUserJobs: ['jobs'],
+  removeUserEducations: ['educations']
 });
 
 export const UserTypes = Types;
@@ -44,6 +45,17 @@ export const addUserEducations = (state, action) => {
   return state.updateIn(['authUser', 'educations'], educationsList => educationsList.concat(educations));
 };
 
+export const removeUserEducations = (state, action) => {
+  const { educations } = action;
+  const ids = educations.map(e => e.id);
+  return state.updateIn(
+    ['authUser', 'educations'], 
+    educationsList => educationsList.filter(
+      e => !(ids.includes(e.id))
+    )
+  );
+};
+
 export const addUserJobs = (state, action) => {
   const { jobs } = action;
   return state.updateIn(['authUser', 'jobs'], jobsList => jobsList.concat(jobs));
@@ -55,5 +67,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.CLEAR_LOGIN]: clearLogin,
   [Types.UPDATE_USER]: updateUser,
   [Types.ADD_USER_EDUCATIONS]: addUserEducations,
-  [Types.ADD_USER_JOBS]: addUserJobs
+  [Types.ADD_USER_JOBS]: addUserJobs,
+  [Types.REMOVE_USER_EDUCATIONS]: removeUserEducations
 });
