@@ -11,7 +11,8 @@ const { Types, Creators } = createActions({
 	addUserEducations: ['educations'],
 	reset: [],
 	deleteEducation: ['id'],
-	deleteExperience: ['id']
+	deleteExperience: ['id'],
+	editEducation: ['education']
 });
 
 export const EditUserTypes = Types;
@@ -49,6 +50,38 @@ export const addEducation = (state, action) => {
 	return {
 		...state,
 		educationsAdded: state.educationsAdded.concat([{ ...education, _id: uuid() }])
+	}
+};
+
+export const editEducation = (state, action) => {
+	const { education } = action;
+
+	return {
+		...state,
+		educationsAdded: state.educationsAdded.map(function(e) {
+			if (e._id != education.id) {
+				return e;
+			} else {
+				return {
+					...education,
+					_id: education.id,
+					edited: true,
+					deleted: false,
+				};
+			}
+		}),
+		educations: state.educations.map(function(e) {
+			if (e._id != education.id) {
+				return e;
+			} else {
+				return {
+					...education,
+					_id: education.id,
+					edited: true,
+					deleted: false,
+				};
+			}
+		})
 	}
 };
 
@@ -98,5 +131,6 @@ export const reducer = createReducer(INITIAL_STATE, {
 	[Types.SET_EDUCATIONS]: setEducations,
 	[Types.RESET]: reset,
 	[Types.DELETE_EDUCATION]: deleteEducation,
-	[Types.DELETE_EXPERIENCE]: deleteExperience
+	[Types.DELETE_EXPERIENCE]: deleteExperience,
+	[Types.EDIT_EDUCATION]: editEducation
 });

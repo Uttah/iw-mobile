@@ -17,6 +17,7 @@ import {
 import { withApollo } from 'react-apollo';
 import UserActions from '../Redux/UserRedux';
 import EditUserActions from '../Redux/EditUserRedux';
+import { any } from 'prop-types';
 
 const guid = ()  =>{
   function s4() {
@@ -157,6 +158,23 @@ class EditProfileScreen extends Component<Props> {
 		dispatch(EditUserActions.deleteExperience(id));
 	}
 
+	onEducationEdit = (id) => {
+		const { navigation, educations, educationsAdded } = this.props;
+		const isAdded = educationsAdded.filter((e) => e._id == id).length > 0;
+		let education:any;
+		if (isAdded) {
+			education = educationsAdded.filter(e => e._id == id)[0];
+		} else {
+			education = educations.filter(e => e._id == id)[0];
+		}
+
+		navigation.navigate('EditEducationScreen', { id, education });
+	}
+
+	onExperienceEdit = (id) => {
+		alert('you want to edit id ' + id);
+	}
+
 	render() {
 		const { authUser, form, educations, educationsAdded, jobs, jobsAdded } = this.props;
 		return (
@@ -179,6 +197,8 @@ class EditProfileScreen extends Component<Props> {
 					handleSave={() => this.handleSave(authUser.id, form)}
 					onEducationDelete={this.onEducationDelete}
 					onExperienceDelete={this.onExperienceDelete}
+					onEducationEdit={this.onEducationEdit}
+					onExperienceEdit={this.onExperienceEdit}
 				/>
 			</KeyboardAwareScrollView>
 		);

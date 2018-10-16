@@ -17,6 +17,7 @@ import ChatLogsScreen from '../Containers/ChatLogsScreen';
 import HeaderLogo from '../Components/HeaderLogo';
 import AddExperienceScreen from '../Containers/AddExperienceScreen';
 import AddEducationScreen from '../Containers/AddEducationScreen';
+import EditEducationScreen from '../Containers/EditEducationScreen';
 import EditProfileScreen from '../Containers/EditProfileScreen';
 import { MaterialIcons } from '@expo/vector-icons';
 import DrawerContent from '../Components/DrawerContent';
@@ -74,6 +75,15 @@ const DrawerNav =  createDrawerNavigator({
       },
       AddEducationScreen: {
         screen: AddEducationScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerRight: <View/>          
+        }        
+      },
+      EditEducationScreen: {
+        screen: EditEducationScreen,
         navigationOptions: {
           headerStyle: styles.header,
           headerTintColor: '#fff',

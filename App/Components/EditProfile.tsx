@@ -26,11 +26,11 @@ const validate = values => {
 
 type Props = any;
 
-const editProfileItemsList = (items, onDelete) => {
+const editProfileItemsList = (items, onDelete, onEdit) => {
 	return (
 		<FlatList
 			data={items.map(function(item) {
-				return { ...item, onDelete: onDelete }
+				return { ...item, onDelete, onEdit }
 			})}
 			renderItem={renderItem}
 			keyExtractor={(item) => item._id}
@@ -51,7 +51,7 @@ const renderItem = ({ item }) => {
 			<View style={styles.editProfileItemTextWrap}>
 				<Text style={styles.editProfileItemText}>{from}-{to}</Text>
 			</View>
-			<Menu onSelect={value => onMenuPress(value, item._id, item.onDelete)} style={styles.button}>
+			<Menu onSelect={value => onMenuPress(value, item._id, item.onDelete, item.onEdit)} style={styles.button}>
 				<MenuTrigger>
 					<Entypo name='dots-three-vertical' style={styles.dots} size={hp('2.4%')} color={'#ccc'}/>
 				</MenuTrigger>
@@ -68,7 +68,7 @@ const renderItem = ({ item }) => {
 	);
 };
 
-const onMenuPress = (value, id, onDelete) => {
+const onMenuPress = (value, id, onDelete, onEdit) => {
 	if (value == 2) {
 		Alert.alert(
 			'Delete',
@@ -80,7 +80,7 @@ const onMenuPress = (value, id, onDelete) => {
 			{ cancelable: false }
 		)
 	} else {
-		alert('you pressed edit');
+		onEdit(id);
 	}
 }
 
@@ -163,7 +163,7 @@ class EditProfile extends Component<Props> {
 						<MaterialIcons active name='add-circle-outline' color={'#5A6978'} size={hp('2.4%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Add education</Text>
 					</TouchableOpacity>
-					{content.items.length > 0 && editProfileItemsList(content.items, content.onDelete)}
+					{content.items.length > 0 && editProfileItemsList(content.items, content.onDelete, content.onEdit)}
 				</View>
 			);
 		} else if (content.type === 'experience') {
@@ -173,7 +173,7 @@ class EditProfile extends Component<Props> {
 						<MaterialIcons active name='add-circle-outline' color={'#5A6978'} size={hp('2.4%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Add experience</Text>
 					</TouchableOpacity>
-					{content.items.length > 0 && editProfileItemsList(content.items, content.onDelete)}
+					{content.items.length > 0 && editProfileItemsList(content.items, content.onDelete, content.onEdit)}
 				</View>
 			);
 		}
@@ -187,6 +187,8 @@ class EditProfile extends Component<Props> {
 			onAddEducationPress, 
 			onExperienceDelete, 
 			onEducationDelete, 
+			onExperienceEdit,
+			onEducationEdit,
 			handleSave 
 		} = this.props;
 
@@ -200,7 +202,8 @@ class EditProfile extends Component<Props> {
 					type: 'experience', 
 					items: jobs, 
 					onPress: onAddExperiencePress,
-					onDelete: onExperienceDelete
+					onDelete: onExperienceDelete,
+					onEdit: onExperienceEdit
 				} 
 			},
 			{ 
@@ -209,7 +212,8 @@ class EditProfile extends Component<Props> {
 					type: 'education', 
 					items: educations, 
 					onPress: onAddEducationPress,
-					onDelete: onEducationDelete
+					onDelete: onEducationDelete,
+					onEdit: onEducationEdit
 				} 
 			}
 		];

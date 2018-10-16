@@ -18,6 +18,21 @@ const validate = values => {
 type Props = any;
 
 class AddEducation extends Component<Props> {
+	static defaultProps: {
+		edit: false
+	};
+
+	componentDidMount() {
+		const { edit } = this.props;
+		if (edit) {
+			const { name, from, to } = this.props.education;
+			this.props.initialize({  
+				name: (!!name ? name : ''), 
+				from: (!!from ? new Date(from) : ''), 
+				to: (!!to ? new Date(to) : ''), 
+			});
+		}
+	}
 
 	render() {
 		const { onSave } = this.props;
