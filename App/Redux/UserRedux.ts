@@ -7,7 +7,8 @@ const { Types, Creators } = createActions({
   loginSuccess: ['userData'],
   registerSuccess: ['userData'],
   clearLogin: [],
-  updateUser: ['userData']
+  updateUser: ['userData'],
+  addUserEducations: ['educations']
 });
 
 export const UserTypes = Types;
@@ -37,9 +38,15 @@ export const updateUser = (state, action) => {
   return state.merge({ authUser: userData });
 };
 
+export const addUserEducations = (state, action) => {
+  const { educations } = action;
+  return state.updateIn(['authUser', 'educations'], educationsList => educationsList.concat(educations));
+};
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.REGISTER_SUCCESS]: registerSuccess,
   [Types.LOGIN_SUCCESS]: loginSuccess,
   [Types.CLEAR_LOGIN]: clearLogin,
   [Types.UPDATE_USER]: updateUser,
+  [Types.ADD_USER_EDUCATIONS]: addUserEducations
 });

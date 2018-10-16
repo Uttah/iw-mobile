@@ -16,6 +16,7 @@ import {
 } from '../Services/Graphql';
 import { withApollo } from 'react-apollo';
 import UserActions from '../Redux/UserRedux';
+import EditUserActions from '../Redux/EditUserRedux';
 
 const guid = ()  =>{
   function s4() {
@@ -35,12 +36,12 @@ const jobs = [
 	{ id: guid(), name: 'Google', from: '2010', to: '2018' },
 ];
 
-const educations = [
-	{ id: guid(), name: 'Cambridge', from: '2001', to: '2002' },
-	{ id: guid(), name: 'Oxford', from: '2010', to: '2012' },
-];
-
 class EditProfileScreen extends Component<Props> {
+	componentDidMount(){
+		const { dispatch, authUser, navigation } = this.props;
+		dispatch(EditUserActions.setJobs(authUser.jobs));
+		dispatch(EditUserActions.setEducations(authUser.educations));
+	}
 
 	onAddEducationPress = () => {
 		this.props.navigation.navigate('AddEducationScreen');
@@ -50,11 +51,33 @@ class EditProfileScreen extends Component<Props> {
 		this.props.navigation.navigate('AddExperienceScreen');
 	}
 
-	handleSave = (id, form) => {
-		const { name, login, country, city, site, about, fb, linkedin, twitter } = form.values;
-		const dispatch = this.props.dispatch;
+	addEducation = async(id, education) => {
+		const data = await this.props.client.mutate({
+			mutation: ADD_EDUCATION,
+			variables: { 
+				userId: id,
+				input: {
+					name: education.name,
+					from: education.from,
+					to: education.to
+				}
+			}
+		});
+		return {
+			...education,
+			id: data.addEducation
+		}
+	}
 
-		this.props.client.mutate({
+	addEducations = async(id, educations) => {
+		return Promise.all(educations.map((education) => this.addEducation(id, education)));
+	}
+
+	handleSave = async(id, form) => {
+		const { name, login, country, city, site, about, fb, linkedin, twitter } = form.values;
+		const { dispatch, jobsAdded, educationsAdded } = this.props;
+
+		const userResult = await this.props.client.mutate({
 			mutation: UPDATE_USER,
 			variables: {input: {
 				id: id,
@@ -70,24 +93,27 @@ class EditProfileScreen extends Component<Props> {
 				},
 				about: about
 			}},
-		})
-		.then((result:any) => {
-			dispatch(UserActions.updateUser(result.data.updateUser));
-			const { navigation } = this.props;
-			navigation.goBack();
-			navigation.state.params.onSubmitSuccess();
 		});
+		dispatch(UserActions.updateUser(userResult.data.updateUser));
+
+		const educationsAddedResult = await this.addEducations(id, educationsAdded);
+		dispatch(UserActions.addUserEducations(educationsAddedResult));
+
+		dispatch(EditUserActions.reset());
+
+		const { navigation } = this.props;
+		navigation.goBack();
 	}
 
 	render() {
-		const { authUser, form } = this.props;
+		const { authUser, form, educations, educationsAdded } = this.props;
 		return (
 			<KeyboardAwareScrollView
 				style={styles.mainContainer}  
 			>
 				<Text style={styles.headerTitle}>Edit profile</Text>
 				<EditProfile 
-					educations={educations} 
+					educations={educations.concat(educationsAdded)} 
 					jobs={jobs}
 					onAddEducationPress={this.onAddEducationPress}
 					onAddExperiencePress={this.onAddExperiencePress}
@@ -105,10 +131,14 @@ class EditProfileScreen extends Component<Props> {
 	}
 }
 
-function mapStateToProps({user, form}:any) {
+function mapStateToProps({user, edituser, form}:any) {
 	return {
 		authUser: user.authUser,
-		form: form.edit_profile
+		form: form.edit_profile,
+		jobsAdded: edituser.jobsAdded || [],
+		jobs: edituser.jobs || [],
+		educationsAdded: edituser.educationsAdded || [],
+		educations: edituser.educations || []
 	};
 }
 

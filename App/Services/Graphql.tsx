@@ -77,8 +77,8 @@ query getChats($userId: ID!){
 }`;
 
 export const ADD_JOB = gql`
-	mutation addJob($input: ExpirienceInput!,) {
-		addJob(input: $input)
+	mutation addJob($userId: ID!, $input: ExpirienceInput!) {
+		addJob(userId: $userId, input: $input)
 	}
 `;
 
@@ -95,8 +95,8 @@ export const REMOVE_JOB = gql`
 `;
 
 export const ADD_EDUCATION = gql`
-	mutation addEducation($input: ExpirienceInput!) {
-		addEducation(input: $input)
+	mutation addEducation($userId: ID!, $input: ExpirienceInput!) {
+		addEducation(userId: $userId, input: $input)
 	}
 `;
 

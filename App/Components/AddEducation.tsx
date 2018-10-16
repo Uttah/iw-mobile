@@ -11,7 +11,7 @@ import DateInputField from './DateInputField';
 const validate = values => {
 	const error = {};
   error.email = _validate('email', values.email);
-  error.name = _validate('name', values.name);
+	error.name = _validate('name', values.name);
 	return error;
 };
 
@@ -20,6 +20,7 @@ type Props = any;
 class AddEducation extends Component<Props> {
 
 	render() {
+		const { onSave } = this.props;
 		return (
 			<View style={styles.container}>
 				<Field 
@@ -34,14 +35,16 @@ class AddEducation extends Component<Props> {
 					component={DateInputField} 
 					style={styles.input}
 					placeholder='From'
+					showError={true}
 				/>
 				<Field 
 					name='to' 
 					component={DateInputField} 
 					style={styles.input}
 					placeholder='To'
+					showError={true}
 				/>
-				<Button block primary onPress= {() => {}}>
+				<Button block primary onPress= {onSave}>
 					<Text>Save</Text>
 				</Button>
 			</View>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, Accordion } from 'native-base';
-import { View, TouchableOpacity, FlatList } from 'react-native';
+import { View, TouchableOpacity, FlatList, Alert } from 'react-native';
 import styles from './Styles/EditProfileStyles';
 import { Button } from 'native-base';
 import { Field, reduxForm } from 'redux-form';
@@ -27,17 +27,32 @@ const validate = values => {
 type Props = any;
 
 const onMenuPress = (value, id) => {
-	alert('you pressed ' + (value == 1 ? 'edit' : 'delete'));
+	if (value == 2) {
+		Alert.alert(
+			'Delete',
+			'Are you sure you want to delete?',
+			[
+				{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+				{text: 'OK', onPress: () => console.log('OK Pressed')},
+			],
+			{ cancelable: false }
+		)
+	} else {
+		alert('you pressed edit');
+	}
 }
 
 const renderItem = ({ item }) => {
+	let { from, to } = item;
+	from = (new Date(from)).getFullYear();
+	to = (new Date(to)).getFullYear();
 	return (
 		<View key={item.id} style={styles.editProfileItem}>
 			<View style={[styles.editProfileItemTextWrap, styles.editProfileItemTextWrapFirst]}>
 				<Text style={styles.editProfileItemText}>{item.name}</Text>
 			</View>
 			<View style={styles.editProfileItemTextWrap}>
-				<Text style={styles.editProfileItemText}>{item.from}-{item.to}</Text>
+				<Text style={styles.editProfileItemText}>{from}-{to}</Text>
 			</View>
 			<Menu onSelect={value => onMenuPress(value, 1)} style={styles.button}>
 				<MenuTrigger>
@@ -145,7 +160,7 @@ class EditProfile extends Component<Props> {
 						<MaterialIcons active name='add-circle-outline' color={'#5A6978'} size={hp('2.4%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Add education</Text>
 					</TouchableOpacity>
-					{editProfileItemsList(content.items)}
+					{content.items.length > 0 && editProfileItemsList(content.items)}
 				</View>
 			);
 		} else if (content.type === 'experience') {
@@ -155,7 +170,7 @@ class EditProfile extends Component<Props> {
 						<MaterialIcons active name='add-circle-outline' color={'#5A6978'} size={hp('2.4%')} style={styles.btnicon}/>
 						<Text style={styles.btntext}>Add experience</Text>
 					</TouchableOpacity>
-					{editProfileItemsList(content.items)}
+					{content.items.length > 0 && editProfileItemsList(content.items)}
 				</View>
 			);
 		}

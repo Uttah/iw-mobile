@@ -15,7 +15,8 @@ export const reducers = combineReducers({
   root: require('./RootRedux').reducer,
   chat: require('./ChatRedux').reducer,
   form: formReducer,
-  toast: toast
+  toast: toast,
+  edituser: require('./EditUserRedux').reducer,
 })
 
 export default () => {
