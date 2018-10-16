@@ -46,8 +46,9 @@ const renderItem = ({ item }) => {
 	let { from, to } = item;
 	from = (new Date(from)).getFullYear();
 	to = (new Date(to)).getFullYear();
+
 	return (
-		<View key={item.id} style={styles.editProfileItem}>
+		<View style={styles.editProfileItem}>
 			<View style={[styles.editProfileItemTextWrap, styles.editProfileItemTextWrapFirst]}>
 				<Text style={styles.editProfileItemText}>{item.name}</Text>
 			</View>
@@ -76,7 +77,7 @@ const editProfileItemsList = (items) => {
 		<FlatList
 			data={items}
 			renderItem={renderItem}
-			keyExtractor={(item) => item.id}
+			keyExtractor={(item) => item._id}
 		/>
 	);
 };
@@ -211,7 +212,7 @@ class EditProfile extends Component<Props> {
 					renderHeader={this.renderHeader}
 					style={styles.accordion}
 				/>
-				<Button block primary onPress= {handleSave}>
+				<Button block primary onPress={handleSave}>
 					<Text>Save</Text>
 				</Button>
 			</View>
