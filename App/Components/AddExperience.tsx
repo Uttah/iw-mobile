@@ -20,6 +20,7 @@ type Props = any;
 class AddExperience extends Component<Props> {
 
 	render() {
+		const { onSave } = this.props;
 		return (
 			<View style={styles.container}>
 				<Field 
@@ -41,7 +42,7 @@ class AddExperience extends Component<Props> {
 					style={styles.input}
 					placeholder='To'
 				/>
-				<Button block primary onPress= {() => {}}>
+				<Button block primary onPress= {onSave}>
 					<Text>Save</Text>
 				</Button>
 			</View>

@@ -8,7 +8,8 @@ const { Types, Creators } = createActions({
   registerSuccess: ['userData'],
   clearLogin: [],
   updateUser: ['userData'],
-  addUserEducations: ['educations']
+  addUserEducations: ['educations'],
+  addUserJobs: ['jobs']
 });
 
 export const UserTypes = Types;
@@ -43,10 +44,16 @@ export const addUserEducations = (state, action) => {
   return state.updateIn(['authUser', 'educations'], educationsList => educationsList.concat(educations));
 };
 
+export const addUserJobs = (state, action) => {
+  const { jobs } = action;
+  return state.updateIn(['authUser', 'jobs'], jobsList => jobsList.concat(jobs));
+};
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.REGISTER_SUCCESS]: registerSuccess,
   [Types.LOGIN_SUCCESS]: loginSuccess,
   [Types.CLEAR_LOGIN]: clearLogin,
   [Types.UPDATE_USER]: updateUser,
-  [Types.ADD_USER_EDUCATIONS]: addUserEducations
+  [Types.ADD_USER_EDUCATIONS]: addUserEducations,
+  [Types.ADD_USER_JOBS]: addUserJobs
 });

@@ -73,6 +73,29 @@ class EditProfileScreen extends Component<Props> {
 		return Promise.all(educations.map((education) => this.addEducation(id, education)));
 	}
 
+	addJob = async(id, job) => {
+		const data = await this.props.client.mutate({
+			mutation: ADD_JOB,
+			variables: { 
+				userId: id,
+				input: {
+					name: job.name,
+					from: job.from,
+					to: job.to
+				}
+			}
+		});
+		return {
+			...job,
+			id: data.addJob
+		}
+	}
+
+	addJobs = async(id, jobs) => {
+		return Promise.all(jobs.map((job) => this.addJob(id, job)));
+	}
+
+
 	handleSave = async(id, form) => {
 		const { name, login, country, city, site, about, fb, linkedin, twitter } = form.values;
 		const { dispatch, jobsAdded, educationsAdded } = this.props;
@@ -99,6 +122,9 @@ class EditProfileScreen extends Component<Props> {
 		const educationsAddedResult = await this.addEducations(id, educationsAdded);
 		dispatch(UserActions.addUserEducations(educationsAddedResult));
 
+		const jobsAddedResult = await this.addJobs(id, jobsAdded);
+		dispatch(UserActions.addUserJobs(jobsAddedResult));
+
 		dispatch(EditUserActions.reset());
 
 		const { navigation } = this.props;
@@ -106,7 +132,7 @@ class EditProfileScreen extends Component<Props> {
 	}
 
 	render() {
-		const { authUser, form, educations, educationsAdded } = this.props;
+		const { authUser, form, educations, educationsAdded, jobs, jobsAdded } = this.props;
 		return (
 			<KeyboardAwareScrollView
 				style={styles.mainContainer}  
@@ -114,7 +140,7 @@ class EditProfileScreen extends Component<Props> {
 				<Text style={styles.headerTitle}>Edit profile</Text>
 				<EditProfile 
 					educations={educations.concat(educationsAdded)} 
-					jobs={jobs}
+					jobs={jobs.concat(jobsAdded)}
 					onAddEducationPress={this.onAddEducationPress}
 					onAddExperiencePress={this.onAddExperiencePress}
 					name={authUser.name}
