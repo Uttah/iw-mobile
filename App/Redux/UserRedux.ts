@@ -75,12 +75,12 @@ export const editUserEducations = (state, action) => {
     ['authUser', 'educations'], 
     educationsList => educationsList.map(function(e) {
       const id = e.id;
-			if (ids.includes(id)) {
-				return educations.filter(e => e.id == id)[0];
-			} else {
-				return e;
-			}
-		})
+      if (ids.includes(id)) {
+        return educations.filter(e => e.id == id)[0];
+      } else {
+        return e;
+      }
+    })
   );
 };
 
@@ -91,12 +91,12 @@ export const editUserExperiences = (state, action) => {
     ['authUser', 'jobs'], 
     jobsList => jobsList.map(function(e) {
       const id = e.id;
-			if (ids.includes(id)) {
-				return jobs.filter(e => e.id == id)[0];
-			} else {
-				return e;
-			}
-		})
+      if (ids.includes(id)) {
+        return jobs.filter(e => e.id == id)[0];
+      } else {
+        return e;
+      }
+    })
   );
 };
 
