@@ -11,6 +11,7 @@ export const reducers = combineReducers({
   github: require('./GithubRedux').reducer,
   search: require('./SearchRedux').reducer,
   user: require('./UserRedux').reducer,
+  login: require('./LoginRedux').reducer,
   pools: require('./PoolsRedux').reducer,
   root: require('./RootRedux').reducer,
   chat: require('./ChatRedux').reducer,

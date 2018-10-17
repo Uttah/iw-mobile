@@ -9,7 +9,7 @@ const REDUX_PERSIST = {
     key: 'primary',
     storage: AsyncStorage,
     //blacklist and whitelist work only one level deep
-    blacklist: ['authUser', 'edituser'],
+    blacklist: ['user', 'edituser'],
     transforms: [immutablePersistenceTransform]
   }
 }

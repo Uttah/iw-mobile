@@ -173,9 +173,9 @@ class Login extends Component<Props, State> {
 }
 
 
-function mapStateToProps (state) {
+function mapStateToProps ({login}:any) {
 	let obj = {
-    login: state.user.login == null ? '' : state.user.login
+    login: login.login == null ? '' : login.login
   };
 	return obj;
 }

@@ -49,7 +49,7 @@ export const addEducation = (state, action) => {
 	const { education } = action;
 	return {
 		...state,
-		educationsAdded: state.educationsAdded.concat([{ ...education, _id: uuid() }])
+		educationsAdded: state.educationsAdded.concat([{ ...education, id: uuid() }])
 	}
 };
 
@@ -59,24 +59,22 @@ export const editEducation = (state, action) => {
 	return {
 		...state,
 		educationsAdded: state.educationsAdded.map(function(e) {
-			if (e._id != education.id) {
+			if (e.id != education.id) {
 				return e;
 			} else {
 				return {
 					...education,
-					_id: education.id,
 					edited: true,
 					deleted: false,
 				};
 			}
 		}),
 		educations: state.educations.map(function(e) {
-			if (e._id != education.id) {
+			if (e.id != education.id) {
 				return e;
 			} else {
 				return {
 					...education,
-					_id: education.id,
 					edited: true,
 					deleted: false,
 				};
@@ -89,7 +87,7 @@ export const addJob = (state, action) => {
 	const { job } = action;
 	return {
 		...state,
-		jobsAdded: state.jobsAdded.concat([{ ...job, _id: uuid() }])
+		jobsAdded: state.jobsAdded.concat([{ ...job, id: uuid() }])
 	}
 };
 
@@ -99,10 +97,10 @@ export const deleteEducation = (state, action) => {
 	return {
 		...state,
 		educationsAdded: state.educationsAdded.map(function(e) {
-			return { ...e, deleted: e._id == id ? true : e.deleted }
+			return { ...e, deleted: e.id == id ? true : e.deleted }
 		}),
 		educations: state.educations.map(function(e) {
-			return { ...e, deleted: e._id == id ? true : e.deleted }
+			return { ...e, deleted: e.id == id ? true : e.deleted }
 		})
 	}
 };
@@ -112,10 +110,10 @@ export const deleteExperience = (state, action) => {
 	return {
 		...state,
 		jobsAdded: state.jobsAdded.map(function(e) {
-			return { ...e, deleted: e._id == id ? true : e.deleted }
+			return { ...e, deleted: e.id == id ? true : e.deleted }
 		}),
 		jobs: state.jobs.map(function(e) {
-			return { ...e, deleted: e._id == id ? true : e.deleted }
+			return { ...e, deleted: e.id == id ? true : e.deleted }
 		})
 	}
 };

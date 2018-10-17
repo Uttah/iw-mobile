@@ -7,7 +7,7 @@ import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector
 import NotificationsCircle from './NotificationsCircle';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import api from '../Services/MyApi';
-import UserActions from '../Redux/UserRedux';
+import LoginActions from '../Redux/LoginRedux';
 import { connect } from 'react-redux';
 
 class DrawerContent extends Component {
@@ -23,7 +23,7 @@ class DrawerContent extends Component {
 		const { dispatch } = this.props;
 		const response = await api.logOut();
 		console.log(response);
-		dispatch(UserActions.clearLogin());
+		dispatch(LoginActions.clearLogin());
 		this.navigateToScreen('LaunchScreen')();
 	}
 		

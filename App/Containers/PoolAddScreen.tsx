@@ -33,8 +33,6 @@ class PoolAddScreen extends Component<Props> {
 	}
 
 	onSuccess = (name) => {
-		//this.props.dispatch(UserActions.registerSuccess(name));
-		//this.props.navigation.navigate('ProfileScreen');
 	}
 
 	render() {

@@ -10,7 +10,6 @@ const engagementView = (engagement) => {
 	from = (new Date(from)).getFullYear();
 	to = (new Date(to)).getFullYear();
 
-	//wtf _id
 	return (
 		<View key={engagement._id}>
 			<View style={styles.listItemInner}>

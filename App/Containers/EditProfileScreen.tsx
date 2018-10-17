@@ -17,7 +17,6 @@ import {
 import { withApollo } from 'react-apollo';
 import UserActions from '../Redux/UserRedux';
 import EditUserActions from '../Redux/EditUserRedux';
-import { any } from 'prop-types';
 
 const guid = ()  =>{
   function s4() {
@@ -35,8 +34,10 @@ type Props = {
 class EditProfileScreen extends Component<Props> {
 	componentDidMount(){
 		const { dispatch, authUser, navigation } = this.props;
-		dispatch(EditUserActions.setJobs(authUser.jobs));
-		dispatch(EditUserActions.setEducations(authUser.educations));
+		const jobs = authUser.jobs.map((job) => ({...job, id: job._id}));
+		const educations = authUser.educations.map((education) => ({...education, id: education._id}));
+		dispatch(EditUserActions.setJobs(jobs));
+		dispatch(EditUserActions.setEducations(educations));
 	}
 
 	onAddEducationPress = () => {
@@ -45,6 +46,34 @@ class EditProfileScreen extends Component<Props> {
 
 	onAddExperiencePress = () => {
 		this.props.navigation.navigate('AddExperienceScreen');
+	}
+
+	onEducationEdit = (id) => {
+		const { navigation, educations, educationsAdded } = this.props;
+		const isAdded = educationsAdded.filter((e) => e.id == id).length > 0;
+		let education:any;
+		
+		if (isAdded) {
+			education = educationsAdded.filter(e => e.id == id)[0];
+		} else {
+			education = educations.filter(e => e.id == id)[0];
+		}
+
+		navigation.navigate('EditEducationScreen', { id, education });
+	}
+
+	onExperienceEdit = (id) => {
+		alert('you want to edit id ' + id);
+	}
+
+	onEducationDelete = (id) => {
+		const { dispatch } = this.props;
+		dispatch(EditUserActions.deleteEducation(id));
+	}
+
+	onExperienceDelete = (id) => {
+		const { dispatch } = this.props;
+		dispatch(EditUserActions.deleteExperience(id));
 	}
 
 	addEducation = async(id, education) => {
@@ -91,24 +120,44 @@ class EditProfileScreen extends Component<Props> {
 		return Promise.all(jobs.map((job) => this.addJob(id, job)));
 	}
 
-	removeEducations = async(id, educations) => {
-		return Promise.all(educations.map((education) => this.removeEducation(id, education)));
-	}
-
 	removeEducation = async(id, education) => {
 		const data = 	await this.props.client.mutate({
 			mutation: REMOVE_EDUCATION,
 			variables: {
 				userId: id,
-				id: education._id
+				id: education.id
 			}
 		});
 		return {
-			id: education._id,
+			id: education.id,
 			removed: data.data.removeEducation
 		}
 	}
 
+	removeEducations = async(id, educations) => {
+		return Promise.all(educations.map((education) => this.removeEducation(id, education)));
+	}
+
+	editEducation = async(id, education) => {
+		const data = await this.props.client.mutate({
+			mutation: UPDATE_EDUCATION,
+			variables: {
+				userId: id,
+				id: education.id,
+				input: {
+					name: education.name,
+					from: education.from,
+					to: education.to
+				}
+			}
+		});
+
+		return {...education, updated: data.data.updateEducation};
+	}
+
+	editEducations = async(id, educations) => {
+		return Promise.all(educations.map((education) => this.editEducation(id, education)));
+	}
 
 	handleSave = async(id, form) => {
 		const { name, login, country, city, site, about, fb, linkedin, twitter } = form.values;
@@ -142,37 +191,13 @@ class EditProfileScreen extends Component<Props> {
 		const educationsRemovedResult = await this.removeEducations(id, educations.filter(e => e.deleted));
 		dispatch(UserActions.removeUserEducations(educationsRemovedResult.filter(e => e.removed == true)));
 
+		const educationsEditedResult = await this.editEducations(id, educations.filter(e => e.edited));
+		dispatch(UserActions.editUserEducations(educationsEditedResult.filter(e => e.updated == true)));
+
 		dispatch(EditUserActions.reset());
 
 		const { navigation } = this.props;
 		navigation.goBack();
-	}
-
-	onEducationDelete = (id) => {
-		const { dispatch } = this.props;
-		dispatch(EditUserActions.deleteEducation(id));
-	}
-
-	onExperienceDelete = (id) => {
-		const { dispatch } = this.props;
-		dispatch(EditUserActions.deleteExperience(id));
-	}
-
-	onEducationEdit = (id) => {
-		const { navigation, educations, educationsAdded } = this.props;
-		const isAdded = educationsAdded.filter((e) => e._id == id).length > 0;
-		let education:any;
-		if (isAdded) {
-			education = educationsAdded.filter(e => e._id == id)[0];
-		} else {
-			education = educations.filter(e => e._id == id)[0];
-		}
-
-		navigation.navigate('EditEducationScreen', { id, education });
-	}
-
-	onExperienceEdit = (id) => {
-		alert('you want to edit id ' + id);
 	}
 
 	render() {

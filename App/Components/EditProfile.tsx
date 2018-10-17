@@ -33,7 +33,7 @@ const editProfileItemsList = (items, onDelete, onEdit) => {
 				return { ...item, onDelete, onEdit }
 			})}
 			renderItem={renderItem}
-			keyExtractor={(item) => item._id}
+			keyExtractor={(item) => item.id}
 		/>
 	);
 };
@@ -51,7 +51,7 @@ const renderItem = ({ item }) => {
 			<View style={styles.editProfileItemTextWrap}>
 				<Text style={styles.editProfileItemText}>{from}-{to}</Text>
 			</View>
-			<Menu onSelect={value => onMenuPress(value, item._id, item.onDelete, item.onEdit)} style={styles.button}>
+			<Menu onSelect={value => onMenuPress(value, item.id, item.onDelete, item.onEdit)} style={styles.button}>
 				<MenuTrigger>
 					<Entypo name='dots-three-vertical' style={styles.dots} size={hp('2.4%')} color={'#ccc'}/>
 				</MenuTrigger>

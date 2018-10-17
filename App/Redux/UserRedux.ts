@@ -4,36 +4,26 @@ import Immutable from 'seamless-immutable';
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  loginSuccess: ['userData'],
+  setUser: ['userData'],
   registerSuccess: ['userData'],
-  clearLogin: [],
   updateUser: ['userData'],
   addUserEducations: ['educations'],
   addUserJobs: ['jobs'],
-  removeUserEducations: ['educations']
+  removeUserEducations: ['educations'],
+  editUserEducations: ['educations']
 });
 
 export const UserTypes = Types;
 export default Creators;
 
 export const INITIAL_STATE = Immutable({
-  authUser: null,
-  login: null
+  authUser: null
 });
 
-export const registerSuccess = (state, action) => {
+export const setUser = (state, action) => {
   const { userData } = action;
-  return state.merge({ authUser: userData, login: userData.email });
+  return state.merge({ authUser: userData });
 };
-
-export const loginSuccess = (state, action) => {
-  const { userData } = action;
-  return state.merge({ authUser: userData, login: userData.email });
-};
-
-export const clearLogin = (state, action) => {
-  return state.merge({ login: '' });
-}
 
 export const updateUser = (state, action) => {
   const { userData } = action;
@@ -43,6 +33,11 @@ export const updateUser = (state, action) => {
 export const addUserEducations = (state, action) => {
   const { educations } = action;
   return state.updateIn(['authUser', 'educations'], educationsList => educationsList.concat(educations));
+};
+
+export const addUserJobs = (state, action) => {
+  const { jobs } = action;
+  return state.updateIn(['authUser', 'jobs'], jobsList => jobsList.concat(jobs));
 };
 
 export const removeUserEducations = (state, action) => {
@@ -56,17 +51,27 @@ export const removeUserEducations = (state, action) => {
   );
 };
 
-export const addUserJobs = (state, action) => {
-  const { jobs } = action;
-  return state.updateIn(['authUser', 'jobs'], jobsList => jobsList.concat(jobs));
+export const editUserEducations = (state, action) => {
+  const { educations } = action;
+  const ids = educations.map(e => e.id);
+  return state.updateIn(
+    ['authUser', 'educations'], 
+    educationsList => educationsList.map(function(e) {
+      const id = e.id;
+			if (ids.includes(id)) {
+				return educations.filter(e => e.id == id)[0];
+			} else {
+				return e;
+			}
+		})
+  );
 };
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.REGISTER_SUCCESS]: registerSuccess,
-  [Types.LOGIN_SUCCESS]: loginSuccess,
-  [Types.CLEAR_LOGIN]: clearLogin,
+  [Types.SET_USER]: setUser,
   [Types.UPDATE_USER]: updateUser,
   [Types.ADD_USER_EDUCATIONS]: addUserEducations,
   [Types.ADD_USER_JOBS]: addUserJobs,
-  [Types.REMOVE_USER_EDUCATIONS]: removeUserEducations
+  [Types.REMOVE_USER_EDUCATIONS]: removeUserEducations,
+  [Types.EDIT_USER_EDUCATIONS]: editUserEducations
 });

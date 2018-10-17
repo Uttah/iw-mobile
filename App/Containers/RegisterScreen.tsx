@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavigationScreenProp } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { View, PixelRatio } from 'react-native';
+import { PixelRatio } from 'react-native';
 import { Text } from 'native-base';
 import Register from '../Components/Register';
 import styles from './Styles/RegisterScreenStyles';
-import HeaderLogo from '../Components/HeaderLogo';
 import UserActions from '../Redux/UserRedux';
+import LoginActions from '../Redux/LoginRedux';
 
 type Props = {
 	navigation: NavigationScreenProp<any, any>,
@@ -30,8 +30,10 @@ class RegisterScreen extends Component<Props> {
 	}
 
 	onSuccess = (userData) => {
-		this.props.dispatch(UserActions.registerSuccess(userData));
-		this.props.navigation.navigate('ProfileScreen');
+		const { dispatch, navigation } = this.props;
+		dispatch(UserActions.setUser(userData));
+		dispatch(LoginActions.setLogin(userData.email));
+		navigation.navigate('ProfileScreen');
 	}
 
 	render() {
