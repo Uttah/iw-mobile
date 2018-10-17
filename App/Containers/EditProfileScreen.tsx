@@ -98,7 +98,7 @@ class EditProfileScreen extends Component<Props> {
 		});
 		return {
 			...education,
-			id: data.addEducation
+			id: data.data.addEducation
 		}
 	}
 
@@ -120,7 +120,7 @@ class EditProfileScreen extends Component<Props> {
 		});
 		return {
 			...job,
-			id: data.addJob
+			id: data.data.addJob
 		}
 	}
 

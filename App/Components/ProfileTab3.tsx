@@ -10,6 +10,8 @@ const engagementView = (engagement) => {
 	from = (new Date(from)).getFullYear();
 	to = (new Date(to)).getFullYear();
 
+	//у нового почему-то id undefined
+
 	return (
 		<View key={engagement.id}>
 			<View style={styles.listItemInner}>
