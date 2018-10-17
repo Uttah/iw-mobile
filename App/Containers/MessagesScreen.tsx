@@ -24,27 +24,40 @@ class MessagesScreen extends Component<Props> {
 		const contacts = result.data.getChats.slice().reverse();
 		dispatch(ChatActions.setContacts(contacts));
 	}
-
+  
 	onMessagePress = (chatId, partnerId, partnerName) => {
 		this.props.navigation.navigate('MessageScreen', { chatId, partnerId, partnerName });
 	}
- 
+  
 	render() {
-		const { contactsList } = this.props;
-		return (
-			<Container>
-				<ScrollView style={styles.mainContainer}>
-					<Chats items={contactsList} onMessagePress={this.onMessagePress} />
-				</ScrollView>
-			</Container>
-		);
-	}
+		const { contactsList, chatMessages, user } = this.props;
+		const updatedContacts = contactsList.map((contact:any) => {
+			let count = 0;
+			chatMessages[contact.chatId] && chatMessages[contact.chatId].forEach((message:any) => {
+				if (!message.read && message.author.id !== user.id) ++count;
+			});
+			return {
+        ...contact,
+        lastMessage: chatMessages[contact.chatId] ? chatMessages[contact.chatId][chatMessages[contact.chatId].length-1] : contact.messages[contact.messages.length-1],
+        newMessages: count
+      }
+    });
+        
+    return (
+      <Container>
+      <ScrollView style={styles.mainContainer}>
+      <Chats items={updatedContacts} onMessagePress={this.onMessagePress} />
+      </ScrollView>
+      </Container>
+    );
+  }
 }
-
+      
 function mapStateToProps({user, chat}:any) {
-	return {
-		user: user.authUser,
-		contactsList: chat.contactsList
+  return {
+    user: user.authUser,
+    contactsList: chat.contactsList,
+    chatMessages: chat.chatMessages
   };
 }
 
