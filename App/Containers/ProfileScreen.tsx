@@ -143,14 +143,6 @@ class ProfileScreen extends Component {
 							</Tab>
 						</Tabs>
 					</ScrollView>
-					{ownPage && <Fab
-						direction='up'
-						containerStyle={{ width: hp('8%'), height: hp('8%') }}
-						style={{ backgroundColor: '#3f51b5', width: hp('8%'), height: hp('8%') }}
-						position='bottomRight'
-						onPress={this.onFabPress}>
-						{this.state.activeTab == ProfileTabs.About ? <MaterialIcons name='edit' /> : <MaterialIcons name='add' />}
-					</Fab>}
 				</Container>
 			);			
 		}

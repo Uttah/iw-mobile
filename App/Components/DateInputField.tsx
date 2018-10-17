@@ -18,8 +18,8 @@ export default class InputField extends Component<Props> {
 						mode='date'
 						placeholder={placeholder}
 						format='DD MMM YYYY'
-						minDate='2018-09-03'
-						maxDate='2020-06-01'
+						minDate='1900-01-01'
+						maxDate='2099-01-01'
 						confirmBtnText='Confirm'
 						cancelBtnText='Cancel'
 						customStyles={{
