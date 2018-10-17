@@ -1,18 +1,18 @@
 export enum TextFieldStatus {
-	NotChecked,
-	CheckedCorrect,
-	CheckedWrong
+  NotChecked,
+  CheckedCorrect,
+  CheckedWrong
 };
 
 export enum ProfileTabs {
-	Activity,
-	Portfolio,
-	About
+  Activity,
+  Portfolio,
+  About
 }
 
 export enum Notifications {
-	Like,
-	Comment,
-	Join,
-	Reply
+  Like,
+  Comment,
+  Join,
+  Reply
 }

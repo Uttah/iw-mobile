@@ -5,11 +5,11 @@ export const getItemsByKeysArr = (keysArr, items) => {
 };
 
 export const objWithoutKey = (obj, key) => {
-	const newObj = cloneDeep(obj);
+  const newObj = cloneDeep(obj);
 
-	if (Object.keys(newObj).includes(key)) {
-		delete newObj[key];
-	}
-	
-	return newObj;
+  if (Object.keys(newObj).includes(key)) {
+    delete newObj[key];
+  }
+
+  return newObj;
 };
