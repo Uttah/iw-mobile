@@ -8,9 +8,11 @@ const { Types, Creators } = createActions({
   registerSuccess: ['userData'],
   updateUser: ['userData'],
   addUserEducations: ['educations'],
-  addUserJobs: ['jobs'],
+  addUserExperiences: ['jobs'],
   removeUserEducations: ['educations'],
-  editUserEducations: ['educations']
+  editUserEducations: ['educations'],
+  removeUserExperiences: ['jobs'],
+  editUserExperiences: ['jobs']
 });
 
 export const UserTypes = Types;
@@ -21,7 +23,11 @@ export const INITIAL_STATE = Immutable({
 });
 
 export const setUser = (state, action) => {
-  const { userData } = action;
+  const userData = { 
+    ...action.userData, 
+    educations: action.userData.educations.map((e) => ({...e, id: e._id})),
+    jobs: action.userData.jobs.map((j) => ({...j, id: j._id}))
+  };
   return state.merge({ authUser: userData });
 };
 
@@ -35,7 +41,7 @@ export const addUserEducations = (state, action) => {
   return state.updateIn(['authUser', 'educations'], educationsList => educationsList.concat(educations));
 };
 
-export const addUserJobs = (state, action) => {
+export const addUserExperiences = (state, action) => {
   const { jobs } = action;
   return state.updateIn(['authUser', 'jobs'], jobsList => jobsList.concat(jobs));
 };
@@ -46,6 +52,17 @@ export const removeUserEducations = (state, action) => {
   return state.updateIn(
     ['authUser', 'educations'], 
     educationsList => educationsList.filter(
+      e => !(ids.includes(e.id))
+    )
+  );
+};
+
+export const removeUserExperiences = (state, action) => {
+  const { jobs } = action;
+  const ids = jobs.map(e => e.id);
+  return state.updateIn(
+    ['authUser', 'jobs'], 
+    jobsList => jobsList.filter(
       e => !(ids.includes(e.id))
     )
   );
@@ -67,11 +84,29 @@ export const editUserEducations = (state, action) => {
   );
 };
 
+export const editUserExperiences = (state, action) => {
+  const { jobs } = action;
+  const ids = jobs.map(e => e.id);
+  return state.updateIn(
+    ['authUser', 'jobs'], 
+    jobsList => jobsList.map(function(e) {
+      const id = e.id;
+			if (ids.includes(id)) {
+				return jobs.filter(e => e.id == id)[0];
+			} else {
+				return e;
+			}
+		})
+  );
+};
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_USER]: setUser,
   [Types.UPDATE_USER]: updateUser,
   [Types.ADD_USER_EDUCATIONS]: addUserEducations,
-  [Types.ADD_USER_JOBS]: addUserJobs,
+  [Types.ADD_USER_EXPERIENCES]: addUserExperiences,
   [Types.REMOVE_USER_EDUCATIONS]: removeUserEducations,
-  [Types.EDIT_USER_EDUCATIONS]: editUserEducations
+  [Types.EDIT_USER_EDUCATIONS]: editUserEducations,
+  [Types.REMOVE_USER_EXPERIENCES]: removeUserExperiences,
+  [Types.EDIT_USER_EXPERIENCES]: editUserExperiences
 });

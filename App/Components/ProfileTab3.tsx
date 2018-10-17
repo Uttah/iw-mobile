@@ -11,7 +11,7 @@ const engagementView = (engagement) => {
 	to = (new Date(to)).getFullYear();
 
 	return (
-		<View key={engagement._id}>
+		<View key={engagement.id}>
 			<View style={styles.listItemInner}>
 				<Text style={styles.listItemText}>{engagement.name}</Text>
 			</View>

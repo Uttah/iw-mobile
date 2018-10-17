@@ -11,30 +11,36 @@ type Props = {
 	navigation: NavigationScreenProp<any, any>,
 }
 
-class AddExperienceScreen extends Component<Props> {
+class EditExperienceScreen extends Component<Props> {
 	onSave = () => {
 		const { dispatch, navigation, job } = this.props;
-		!!job && dispatch(EditUserActions.addExperience(job));
+		const { id } = navigation.state.params;
+		!!job && dispatch(EditUserActions.editExperience({...job, id}));
 		navigation.goBack();
 	}
 
 	render() {
+		const { job } = this.props.navigation.state.params;
 		return (
 			<KeyboardAwareScrollView
 				style={styles.mainContainer}  
 			>
-				<Text style={styles.headerTitle}>Add job</Text>
-				<AddExperience onSave={this.onSave}/>
+				<Text style={styles.headerTitle}>Edit experience</Text>
+				<AddExperience 
+					onSave={this.onSave} 
+					edit={true}
+					job={job}
+				/>
 			</KeyboardAwareScrollView>
 		);
 	}
 }
 
-const mapStateToProps = ({form}:any) => {
+const mapStateToProps = ({form, edituser}:any) => {
 	return {
 		job: form.add_experience ? form.add_experience.values : []
 	}
 };
 
 
-export default connect(mapStateToProps)(AddExperienceScreen);
+export default connect(mapStateToProps)(EditExperienceScreen);

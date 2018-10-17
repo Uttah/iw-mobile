@@ -4,15 +4,15 @@ import uuid from 'uuid/v1';
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  addJob: ['job'],
-  addEducation: ['education'],
-  setJobs: ['jobs'],
+  setExperiences: ['jobs'],
   setEducations: ['educations'],
-	addUserEducations: ['educations'],
-	reset: [],
+	addEducation: ['education'],
+	addExperience: ['job'],
+	editEducation: ['education'],
+	editExperience: ['job'],
 	deleteEducation: ['id'],
 	deleteExperience: ['id'],
-	editEducation: ['education']
+	reset: [],
 });
 
 export const EditUserTypes = Types;
@@ -35,7 +35,7 @@ export const setEducations = (state, action) => {
 	}
 };
 
-export const setJobs = (state, action) => {
+export const setExperiences = (state, action) => {
 	const { jobs } = action;
 	return {
 		...state,
@@ -50,6 +50,14 @@ export const addEducation = (state, action) => {
 	return {
 		...state,
 		educationsAdded: state.educationsAdded.concat([{ ...education, id: uuid() }])
+	}
+};
+
+export const addExperience = (state, action) => {
+	const { job } = action;
+	return {
+		...state,
+		jobsAdded: state.jobsAdded.concat([{ ...job, id: uuid() }])
 	}
 };
 
@@ -83,11 +91,33 @@ export const editEducation = (state, action) => {
 	}
 };
 
-export const addJob = (state, action) => {
+export const editExperience = (state, action) => {
 	const { job } = action;
+
 	return {
 		...state,
-		jobsAdded: state.jobsAdded.concat([{ ...job, id: uuid() }])
+		jobsAdded: state.jobsAdded.map(function(e) {
+			if (e.id != job.id) {
+				return e;
+			} else {
+				return {
+					...job,
+					edited: true,
+					deleted: false,
+				};
+			}
+		}),
+		jobs: state.jobs.map(function(e) {
+			if (e.id != job.id) {
+				return e;
+			} else {
+				return {
+					...job,
+					edited: true,
+					deleted: false,
+				};
+			}
+		})
 	}
 };
 
@@ -123,12 +153,13 @@ export const reset = (state, action) => {
 };
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.ADD_JOB]: addJob,
-  [Types.ADD_EDUCATION]: addEducation,
-  [Types.SET_JOBS]: setJobs,
+	[Types.SET_EXPERIENCES]: setExperiences,
 	[Types.SET_EDUCATIONS]: setEducations,
-	[Types.RESET]: reset,
+  [Types.ADD_EXPERIENCE]: addExperience,
+  [Types.ADD_EDUCATION]: addEducation,
+	[Types.EDIT_EDUCATION]: editEducation,
+	[Types.EDIT_EXPERIENCE]: editExperience,
 	[Types.DELETE_EDUCATION]: deleteEducation,
 	[Types.DELETE_EXPERIENCE]: deleteExperience,
-	[Types.EDIT_EDUCATION]: editEducation
+	[Types.RESET]: reset
 });

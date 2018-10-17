@@ -33,11 +33,9 @@ type Props = {
 
 class EditProfileScreen extends Component<Props> {
 	componentDidMount(){
-		const { dispatch, authUser, navigation } = this.props;
-		const jobs = authUser.jobs.map((job) => ({...job, id: job._id}));
-		const educations = authUser.educations.map((education) => ({...education, id: education._id}));
-		dispatch(EditUserActions.setJobs(jobs));
-		dispatch(EditUserActions.setEducations(educations));
+		const { dispatch, authUser } = this.props;
+		dispatch(EditUserActions.setExperiences(authUser.jobs));
+		dispatch(EditUserActions.setEducations(authUser.educations));
 	}
 
 	onAddEducationPress = () => {
@@ -63,7 +61,17 @@ class EditProfileScreen extends Component<Props> {
 	}
 
 	onExperienceEdit = (id) => {
-		alert('you want to edit id ' + id);
+		const { navigation, jobs, jobsAdded } = this.props;
+		const isAdded = jobsAdded.filter((e) => e.id == id).length > 0;
+		let job:any;
+		
+		if (isAdded) {
+			job = jobsAdded.filter(e => e.id == id)[0];
+		} else {
+			job = jobs.filter(e => e.id == id)[0];
+		}
+
+		navigation.navigate('EditExperienceScreen', { id, job });
 	}
 
 	onEducationDelete = (id) => {
@@ -98,7 +106,7 @@ class EditProfileScreen extends Component<Props> {
 		return Promise.all(educations.map((education) => this.addEducation(id, education)));
 	}
 
-	addJob = async(id, job) => {
+	addExperience = async(id, job) => {
 		const data = await this.props.client.mutate({
 			mutation: ADD_JOB,
 			variables: { 
@@ -116,8 +124,8 @@ class EditProfileScreen extends Component<Props> {
 		}
 	}
 
-	addJobs = async(id, jobs) => {
-		return Promise.all(jobs.map((job) => this.addJob(id, job)));
+	addExperiences = async(id, jobs) => {
+		return Promise.all(jobs.map((job) => this.addExperience(id, job)));
 	}
 
 	removeEducation = async(id, education) => {
@@ -136,6 +144,24 @@ class EditProfileScreen extends Component<Props> {
 
 	removeEducations = async(id, educations) => {
 		return Promise.all(educations.map((education) => this.removeEducation(id, education)));
+	}
+
+	removeExperience = async(id, job) => {
+		const data = 	await this.props.client.mutate({
+			mutation: REMOVE_JOB,
+			variables: {
+				userId: id,
+				id: job.id
+			}
+		});
+		return {
+			id: job.id,
+			removed: data.data.removeJob
+		}
+	}
+
+	removeExperiences = async(id, jobs) => {
+		return Promise.all(jobs.map((job) => this.removeExperience(id, job)));
 	}
 
 	editEducation = async(id, education) => {
@@ -157,6 +183,27 @@ class EditProfileScreen extends Component<Props> {
 
 	editEducations = async(id, educations) => {
 		return Promise.all(educations.map((education) => this.editEducation(id, education)));
+	}
+
+	editExperience = async(id, job) => {
+		const data = await this.props.client.mutate({
+			mutation: UPDATE_JOB,
+			variables: {
+				userId: id,
+				id: job.id,
+				input: {
+					name: job.name,
+					from: job.from,
+					to: job.to
+				}
+			}
+		});
+
+		return {...job, updated: data.data.updateJob};
+	}
+
+	editExperiences = async(id, jobs) => {
+		return Promise.all(jobs.map((job) => this.editExperience(id, job)));
 	}
 
 	handleSave = async(id, form) => {
@@ -185,14 +232,20 @@ class EditProfileScreen extends Component<Props> {
 		const educationsAddedResult = await this.addEducations(id, educationsAdded.filter(e => !e.deleted));
 		dispatch(UserActions.addUserEducations(educationsAddedResult));
 
-		const jobsAddedResult = await this.addJobs(id, jobsAdded.filter(e => !e.deleted));
-		dispatch(UserActions.addUserJobs(jobsAddedResult));
+		const jobsAddedResult = await this.addExperiences(id, jobsAdded.filter(e => !e.deleted));
+		dispatch(UserActions.addUserExperiences(jobsAddedResult));
+
+		const educationsEditedResult = await this.editEducations(id, educations.filter(e => e.edited));
+		dispatch(UserActions.editUserEducations(educationsEditedResult.filter(e => e.updated == true)));
+
+		const jobsEditedResult = await this.editExperiences(id, jobs.filter(e => e.edited));
+		dispatch(UserActions.editUserExperiences(jobsEditedResult.filter(e => e.updated == true)));
 
 		const educationsRemovedResult = await this.removeEducations(id, educations.filter(e => e.deleted));
 		dispatch(UserActions.removeUserEducations(educationsRemovedResult.filter(e => e.removed == true)));
 
-		const educationsEditedResult = await this.editEducations(id, educations.filter(e => e.edited));
-		dispatch(UserActions.editUserEducations(educationsEditedResult.filter(e => e.updated == true)));
+		const jobsRemovedResult = await this.removeExperiences(id, jobs.filter(e => e.deleted));
+		dispatch(UserActions.removeUserExperiences(jobsRemovedResult.filter(e => e.removed == true)));
 
 		dispatch(EditUserActions.reset());
 
@@ -210,8 +263,6 @@ class EditProfileScreen extends Component<Props> {
 				<EditProfile 
 					educations={educations.concat(educationsAdded).filter((education) => !education.deleted)} 
 					jobs={jobs.concat(jobsAdded).filter((job) => !job.deleted)}
-					onAddEducationPress={this.onAddEducationPress}
-					onAddExperiencePress={this.onAddExperiencePress}
 					name={authUser.name}
 					login={authUser.login}
 					about={authUser.about}
@@ -220,10 +271,12 @@ class EditProfileScreen extends Component<Props> {
 					city={authUser.city}
 					site={authUser.site}
 					handleSave={() => this.handleSave(authUser.id, form)}
-					onEducationDelete={this.onEducationDelete}
-					onExperienceDelete={this.onExperienceDelete}
+					onAddEducationPress={this.onAddEducationPress}
+					onAddExperiencePress={this.onAddExperiencePress}
 					onEducationEdit={this.onEducationEdit}
 					onExperienceEdit={this.onExperienceEdit}
+					onEducationDelete={this.onEducationDelete}
+					onExperienceDelete={this.onExperienceDelete}
 				/>
 			</KeyboardAwareScrollView>
 		);
