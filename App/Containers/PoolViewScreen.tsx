@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Container, Text, Button, Fab } from 'native-base';
 import { NavigationScreenProp } from 'react-navigation';
 import styles from './Styles/PoolViewScreenStyles';

@@ -6,7 +6,7 @@ export default StyleSheet.create({
 		width: hp('2.1%'),
     height: hp('2.1%'),
     borderRadius: 18,
-		backgroundColor: '#EF0046',
+		backgroundColor: '#3f51b5',
 		alignItems: 'center',
 		justifyContent: 'center'
 	},

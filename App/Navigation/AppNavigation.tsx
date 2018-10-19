@@ -20,6 +20,7 @@ import AddEducationScreen from '../Containers/AddEducationScreen';
 import EditEducationScreen from '../Containers/EditEducationScreen';
 import EditExperienceScreen from '../Containers/EditExperienceScreen';
 import EditProfileScreen from '../Containers/EditProfileScreen';
+import SettingsScreen from '../Containers/SettingsScreen';
 import { MaterialIcons } from '@expo/vector-icons';
 import DrawerContent from '../Components/DrawerContent';
 
@@ -94,6 +95,15 @@ const DrawerNav =  createDrawerNavigator({
       },
       EditExperienceScreen: {
         screen: EditExperienceScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerRight: <View/>          
+        }        
+      },
+      SettingsScreen: {
+        screen: SettingsScreen,
         navigationOptions: {
           headerStyle: styles.header,
           headerTintColor: '#fff',

@@ -63,7 +63,7 @@ export default class MessageItem extends Component {
 	};
 
 	render() {
-		const { id, lastMessage, parnter } = this.props.item;
+		const { id, lastMessage, parnter, newMessages } = this.props.item;
 		const onPress = this.props.onMessagePress;
 		const date = new Date(lastMessage.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
 
@@ -75,7 +75,7 @@ export default class MessageItem extends Component {
 						author={parnter.name} 
 						date={{}}
 						authorNameStyle={styles.authorName}
-						messagesNum={0}
+						messagesNum={newMessages > 0 ? newMessages : null}
 					/>
 					<View style={styles.time}><Text style={styles.timeText}>{date}</Text></View>
 					<View style={styles.viewmore}>

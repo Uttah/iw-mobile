@@ -73,10 +73,10 @@ getChats(userId: $userId) {
       name
     }
     content
-      read
-      date
-    }
+    read
+    date
   }
+}
 }`;
 
 export const ADD_JOB = gql`

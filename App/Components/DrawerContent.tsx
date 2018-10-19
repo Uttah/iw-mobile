@@ -74,16 +74,22 @@ class DrawerContent extends Component {
 					</View>
 					<View style={styles.screenStyle}>
 						<View style={styles.iconWrap}>
-							<MaterialCommunityIcons active name='logout-variant' color={'#474747'} size={hp('3.6%')} style={styles.iconLogout}/>
+							<MaterialIcons active name='settings' color={'#474747'} size={hp('3.6%')} style={styles.iconLogout}/>
 						</View>
-						<Text onPress={this.logOut}>Log out</Text>
+						<Text onPress={this.navigateToScreen('SettingsScreen')}>Settings</Text>
 					</View>
 					<View style={styles.screenStyle}>
 						<View style={styles.iconWrap}>
 							<MaterialCommunityIcons active name='logout-variant' color={'#474747'} size={hp('3.6%')} style={styles.iconLogout}/>
 						</View>
-						<Text onPress={this.navigateToScreen('ChatLogsScreen')}>Chat logs</Text>
+						<Text onPress={this.logOut}>Log out</Text>
 					</View>
+					{/* <View style={styles.screenStyle}>
+						<View style={styles.iconWrap}>
+							<MaterialCommunityIcons active name='logout-variant' color={'#474747'} size={hp('3.6%')} style={styles.iconLogout}/>
+						</View>
+						<Text onPress={this.navigateToScreen('ChatLogsScreen')}>Chat logs</Text>
+					</View> */}
 				</View>
 			</View>
 		);

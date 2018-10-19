@@ -147,6 +147,7 @@ class Login extends Component<Props, State> {
           showError={false}
           inputRef={ref => this.passwordRef = ref}
           returnKeyType={'done'}
+          secureTextEntry={true}
         />
         <View onLayout={(e) => this.onBtnLayout(e)}>
         <Button 
