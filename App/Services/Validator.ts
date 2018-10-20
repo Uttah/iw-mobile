@@ -32,7 +32,27 @@ const validation = {
       flags: 'i',
       message: '^Фамилия должна быть не короче двух символов и не содержать *, /, ~, “'
     }
-  }
+  },
+  phone: {
+    presence: {
+      message: '^Enter phone'
+    },
+    format: {
+      pattern: '[0-9]{10}',
+      flags: 'i',
+      message: 'Phone should have 10 digits'
+    }
+  },
+  code: {
+    presence: {
+      message: '^Enter SMS code'
+    },
+    format: {
+      pattern: '[0-9]{4}',
+      flags: 'i',
+      message: 'SMS code should have 4 digits'
+    }
+  },
 };
 
 export default function validate(fieldName, value) {

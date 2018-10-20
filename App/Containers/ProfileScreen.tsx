@@ -184,7 +184,7 @@ class ProfileScreen extends Component {
 	}
 }
 
-function mapStateToProps ({user, root}:any) {
+function mapStateToProps ({user}:any) {
 	return {
 		authUser: user.authUser || {}
 	}

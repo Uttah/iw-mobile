@@ -22,6 +22,16 @@ class SettingsScreen extends Component<Props> {
   onSave = (settings) => {
     console.log('ha');
   }
+
+  onPhoneChange = () => {
+    const { navigation } = this.props;
+    navigation.navigate('ChangePhoneScreen');
+  }
+
+  onPasswordChange = () => {
+    const { navigation } = this.props;
+    navigation.navigate('ChangePasswordScreen');
+  }
   
   render() {
     const { user } = this.props;
@@ -31,7 +41,12 @@ class SettingsScreen extends Component<Props> {
           <Text style={styles.headerTitle}>Settings</Text>
           <Tabs onChangeTab={this.onChangeTab}>
             <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='user' size={25} style={styles.tabicon}/><Text style={styles.tabname}>General</Text></TabHeading>}>
-              <GeneralSettings email={user.email} phone={user.phone}/>
+              <GeneralSettings 
+                email={user.email} 
+                phone={user.phone} 
+                onPhoneChange={this.onPhoneChange} 
+                onPasswordChange={this.onPasswordChange}
+              />
             </Tab>
             <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><Ionicons name='md-lock' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Privacy and Security</Text></TabHeading>}>
               <Text>smth</Text>

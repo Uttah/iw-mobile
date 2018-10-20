@@ -21,6 +21,8 @@ import EditEducationScreen from '../Containers/EditEducationScreen';
 import EditExperienceScreen from '../Containers/EditExperienceScreen';
 import EditProfileScreen from '../Containers/EditProfileScreen';
 import SettingsScreen from '../Containers/SettingsScreen';
+import ChangePhoneScreen from '../Containers/ChangePhoneScreen';
+import ChangePasswordScreen from '../Containers/ChangePasswordScreen';
 import { MaterialIcons } from '@expo/vector-icons';
 import DrawerContent from '../Components/DrawerContent';
 
@@ -104,6 +106,24 @@ const DrawerNav =  createDrawerNavigator({
       },
       SettingsScreen: {
         screen: SettingsScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerRight: <View/>          
+        }        
+      },
+      ChangePhoneScreen: {
+        screen: ChangePhoneScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerRight: <View/>          
+        }        
+      },
+      ChangePasswordScreen: {
+        screen: ChangePasswordScreen,
         navigationOptions: {
           headerStyle: styles.header,
           headerTintColor: '#fff',

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, List, ListItem } from 'native-base';
-import { View, Platform, Alert } from 'react-native';
+import { View, Platform, Alert, TouchableOpacity } from 'react-native';
 import styles from './Styles/GeneralSettingsStyles';
 import { Field, reduxForm } from 'redux-form';
 import InputField from './InputField';
@@ -23,28 +23,33 @@ const validate = values => {
 
 type Props = any;
 
+const renderField = (field) => (
+  <Text>{field.input.value}</Text>
+);
+
+const renderLanguage = (field) => (
+  <Text>{field.input.value == 'en' ? 'English' : 'Russian'}</Text>
+);
+
+
 class GeneralSettings extends Component<Props> {
-  state = {
-    language: 'en'
-  }
 
   componentDidMount() {
-    const { email, phone } = this.props;
+    const { email, phone, language } = this.props;
     this.props.dispatch(registerField('general_settings', 'language', 'Field'));
     this.props.initialize({  
-      email: (!!email ? email : ''), 
-      phone: (!!phone ? phone : '')
+      email: (!!email ? email : ''),
+      phone: (!!phone ? phone : ''),
+      language: (!!language ? language : 'en')
     });
   }
-
+  
   onMenuPress = (value) => {
     this.props.dispatch(change('general_settings', 'language', value == 1 ? 'en' : 'ru'));
-    this.setState({
-      language: value == 1 ? 'en' : 'ru'
-    });
   }
 
   render() {
+    const { onPhoneChange, onPasswordChange } = this.props;
     return (
       <View style={styles.container}>
         <List style={styles.list}>
@@ -60,7 +65,7 @@ class GeneralSettings extends Component<Props> {
               showError={true}
             />
           </ListItem>
-          <ListItem noIndent style={styles.listItem}>
+          <ListItem noIndent button style={styles.listItem} onPress={onPasswordChange}>
             <View style={styles.listItemInner}>
               <Text style={styles.listItemTitle}>Password</Text>
             </View>
@@ -77,24 +82,29 @@ class GeneralSettings extends Component<Props> {
               </View>
             </View>
           </ListItem>
-          <ListItem noIndent style={styles.listItem}>
+          <ListItem noIndent button style={styles.listItem} onPress={onPhoneChange}>
             <View style={styles.listItemInner}>
-              <Text style={styles.listItemTitle}>Phone number</Text>
+              <Text style={styles.listItemTitle}>Phone</Text>
             </View>
-            <Field 
-              name='phone'
-              component={InputField} 
-              style={styles.input}
-              placeholder='Phone'
-              showError={true}
-            />
+            <View style={styles.listItemInner}>
+              <Field name='phone' component={renderField}/>
+            </View>
+            <View style={styles.iconWrap}>
+              <View style={styles.iconWrapInner}>
+                <Ionicons
+                  name={Platform.OS === "ios" ? 'ios-arrow-forward' : 'md-arrow-forward'} 
+                  size={hp('2.25%')}
+                  style={Platform.OS === "ios" ? styles.iosLeftMargin : styles.androidLeftMargin}
+                />
+              </View>
+            </View>        
           </ListItem>
           <ListItem noIndent style={styles.listItem}>
             <View style={styles.listItemInner}>
               <Text style={styles.listItemTitle}>Language</Text>
             </View>
             <View style={styles.listItemInner}>
-              <Text>{this.state.language == 'en' ? 'English' : 'Russian'}</Text>
+              <Field name='language' component={renderLanguage}/>
             </View>
             <View style={styles.iconWrap}>
               <View style={styles.iconWrapInner}>
