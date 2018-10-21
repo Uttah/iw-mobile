@@ -4,15 +4,15 @@ import styles from './Styles/HeaderLogoStyles';
 import { Images } from 'App/Themes';
 
 export default class HeaderLogo extends Component {
-	render() {
-		return (
-			<View style={styles.container}>
-				<Image
-					source={Images.icoWorldLogo}
-					style={styles.logo}
-					resizeMode={'contain'}
-				/>
-			</View>
-		);
-	}
+  render() {
+    return (
+      <View style={styles.container}>
+        <Image
+          source={Images.icoWorldLogo}
+          style={styles.logo}
+          resizeMode={'contain'}
+        />
+      </View>
+    );
+  }
 }

@@ -6,8 +6,8 @@ import { Input } from 'native-base';
 type Props = any;
 
 export default class AccordInputField extends Component<Props> {
-	
-	render() {
-		return <InputField {...this.props} style={styles.input}/>;
-	}
+  
+  render() {
+    return <InputField {...this.props} style={styles.input}/>;
+  }
 }

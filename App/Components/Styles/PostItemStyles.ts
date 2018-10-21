@@ -55,13 +55,13 @@ export default StyleSheet.create({
     borderRadius: 4   
   },
   postAuthorAvatarWrap: {
-		height: wp('6.8%') + 2,
-		width: wp('6.8%') + 2,
-		borderRadius: 4,
-		borderColor: '#b2b2b2',
+    height: wp('6.8%') + 2,
+    width: wp('6.8%') + 2,
+    borderRadius: 4,
+    borderColor: '#b2b2b2',
     borderWidth: 1,
     marginTop: 3
-	},
+  },
   postAuthor: {
     fontSize: hp('1.87%'),
     color: '#969FAA'

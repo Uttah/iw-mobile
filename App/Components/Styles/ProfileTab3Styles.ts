@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default StyleSheet.create({
-	listItem: {
+  listItem: {
     flex: 1, 
     flexDirection: 'column', 
     alignItems: 'stretch'
@@ -14,12 +14,12 @@ export default StyleSheet.create({
   },
   listItemTitle: {
     color: '#969FAA',
-		fontFamily: 'OpenSans_semi',
-		fontSize: hp('2.4%')
+    fontFamily: 'OpenSans_semi',
+    fontSize: hp('2.4%')
   },
   listItemText: {
     fontSize: hp('1.95%'),
-		marginTop: hp('0.97%')
+    marginTop: hp('0.97%')
   },
   listItemFollow: {
     marginTop: 0

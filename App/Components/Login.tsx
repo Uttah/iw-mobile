@@ -175,10 +175,10 @@ class Login extends Component<Props, State> {
 
 
 function mapStateToProps ({login}:any) {
-	let obj = {
+  let obj = {
     login: login.login == null ? '' : login.login
   };
-	return obj;
+  return obj;
 }
 
 export default connect(mapStateToProps)(Login);

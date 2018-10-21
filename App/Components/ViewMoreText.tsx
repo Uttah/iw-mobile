@@ -72,7 +72,7 @@ class ViewMoreText extends React.Component {
     }, () => {
       this.props.afterCollapse();
     });
-	}
+  }
 
   getWrapperStyle = () => {
     if (this.state.isFulltextShown) {
@@ -97,8 +97,8 @@ class ViewMoreText extends React.Component {
     >
       View Less
     </Text>
-	)
-	
+  )
+  
   renderFooter = () => {
     const {
       numberOfLines,
@@ -110,8 +110,8 @@ class ViewMoreText extends React.Component {
       }
       return (this.props.renderViewLess || this.renderViewLess)(this.onPressLess);
     } else {
-			return this.props.renderDefault();
-		}
+      return this.props.renderDefault();
+    }
     return null;
   }
 
@@ -156,9 +156,9 @@ ViewMoreText.propTypes = {
 
 ViewMoreText.defaultProps = {
   afterCollapse: () => {},
-	afterExpand: () => {},
-	renderDefault: () => {},
-	textStyle: {},
+  afterExpand: () => {},
+  renderDefault: () => {},
+  textStyle: {},
 };
 
 export default ViewMoreText;

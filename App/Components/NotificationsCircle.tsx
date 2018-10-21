@@ -4,14 +4,14 @@ import { Text } from 'native-base';
 import styles from './Styles/NotificationsCircleStyles';
 
 type Props = {
-	style: any
+  style: any
 };
 
 export default class NotificationsCircle extends Component<Props> {
-	render() {
-		const { style } = this.props;
-		return (
-			<View style={[styles.container, style]}></View>
-		);
-	}
+  render() {
+    const { style } = this.props;
+    return (
+      <View style={[styles.container, style]}></View>
+    );
+  }
 }
