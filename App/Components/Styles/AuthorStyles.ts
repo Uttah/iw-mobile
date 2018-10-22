@@ -21,7 +21,12 @@ export default StyleSheet.create({
     alignSelf: 'flex-start'
   },
   bottomContainer: {
-    marginTop: hp('1.87%'),
+    marginTop: hp('1.87%') - hp('2.1%')/2,
+    paddingTop: hp('2.1%')/2
+  },
+  zeroMessages: {
+    paddingTop: 0,
+    marginTop: hp('1.87%')
   },
   authorNameCol: {
     justifyContent: 'center', 
@@ -29,7 +34,7 @@ export default StyleSheet.create({
   },
   messagesNum: {
     position: 'absolute',
-    top: -5,
-    right: -5
+    bottom: wp('6.8%') + 2 - hp('2.1%')/2,
+    left: wp('6.8%') + 2 - hp('2.1%')/2
   }
 });

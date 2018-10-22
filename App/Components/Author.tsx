@@ -25,7 +25,7 @@ export default class Author extends Component<Props> {
   render() {
     const { style, author, authorNameStyle, messagesNum } = this.props;
     return (
-      <Grid style={[styles.bottomContainer, style]}>
+      <Grid style={[styles.bottomContainer, (messagesNum > 0 ? null : styles.zeroMessages), style]}>
         <Col style={{ width: wp('9.07%')}}>
           <TouchableHighlight style={styles.postAuthorAvatarWrap}>
             <View>
@@ -34,13 +34,13 @@ export default class Author extends Component<Props> {
                 resizeMode={'contain'}
                 style={styles.postAuthorAvatar}
               /> 
-              { messagesNum > 0 && <MessagesNum messagesNum={messagesNum} style={styles.messagesNum}/>}   
             </View>          
           </TouchableHighlight>
         </Col>
         <Col style={styles.authorNameCol}>
           <Text style={[styles.postAuthor, authorNameStyle]}>{author}</Text>
         </Col>
+        { messagesNum > 0 && <MessagesNum messagesNum={messagesNum} style={styles.messagesNum}/>}   
       </Grid>
     );
   }
