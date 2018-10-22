@@ -12,7 +12,8 @@ const { Types, Creators } = createActions({
   removeUserEducations: ['educations'],
   editUserEducations: ['educations'],
   removeUserExperiences: ['jobs'],
-  editUserExperiences: ['jobs']
+  editUserExperiences: ['jobs'],
+  updateGeneralSettings: ['settings']
 });
 
 export const UserTypes = Types;
@@ -100,6 +101,11 @@ export const editUserExperiences = (state, action) => {
   );
 };
 
+export const updateGeneralSettings = (state, action) => {
+  const { settings } = action;
+  return state.merge({authUser: settings}, {deep: true});
+}
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_USER]: setUser,
   [Types.UPDATE_USER]: updateUser,
@@ -108,5 +114,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.REMOVE_USER_EDUCATIONS]: removeUserEducations,
   [Types.EDIT_USER_EDUCATIONS]: editUserEducations,
   [Types.REMOVE_USER_EXPERIENCES]: removeUserExperiences,
-  [Types.EDIT_USER_EXPERIENCES]: editUserExperiences
+  [Types.EDIT_USER_EXPERIENCES]: editUserExperiences,
+  [Types.UPDATE_GENERAL_SETTINGS]: updateGeneralSettings
 });

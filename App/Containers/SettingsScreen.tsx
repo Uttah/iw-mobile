@@ -7,7 +7,13 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import GeneralSettings from '../Components/GeneralSettings';
 import styles from './Styles/SettingsScreenStyles';
 import { connect } from 'react-redux';
-import { UserTypes } from 'App';
+import {
+  UPDATE_USER
+} from '../Services/Graphql';
+import { withApollo } from 'react-apollo';
+import UserActions from '../Redux/UserRedux';
+import LoginActions from '../Redux/LoginRedux';
+import { ToastActionsCreators } from 'react-native-redux-toast';
 
 type Props = {
   navigation: NavigationScreenProp<any, any>,
@@ -20,7 +26,34 @@ class SettingsScreen extends Component<Props> {
   }
 
   onSave = (settings) => {
-    console.log('ha');
+    const { user, dispatch } = this.props;
+    let variables = {};
+
+    ['email', 'language', 'phone'].forEach(function(field) {
+      if (settings.initial[field] != settings.values[field]) {
+        variables[field] = settings.values[field];
+      }
+    });
+    this.props.client.mutate({
+      mutation: UPDATE_USER,
+      variables: {
+        input: {
+          ...variables,
+          id: user.id
+        }
+      }
+    })
+    .then(result => {   
+      dispatch(UserActions.updateGeneralSettings(variables));
+      if ('email' in variables) {
+        dispatch(LoginActions.setLogin(variables.email));
+      }
+      dispatch(ToastActionsCreators.displayInfo('Edited successfully!'));
+    })
+    .catch(error => { 
+      console.log(error);
+      dispatch(ToastActionsCreators.displayError('error!'));
+    });
   }
 
   onPhoneChange = () => {
@@ -44,6 +77,7 @@ class SettingsScreen extends Component<Props> {
               <GeneralSettings 
                 email={user.email} 
                 phone={user.phone} 
+                language={user.language}
                 onPhoneChange={this.onPhoneChange} 
                 onPasswordChange={this.onPasswordChange}
               />
@@ -64,8 +98,8 @@ class SettingsScreen extends Component<Props> {
 function mapStateToProps({user, form}:any) {
   return {
     user: user.authUser,
-    general_settings: form.general_settings ? form.general_settings.values : []
+    general_settings: form.general_settings ? form.general_settings : {}
   };
 }
 
-export default connect(mapStateToProps)(SettingsScreen);
+export default connect(mapStateToProps)(withApollo(SettingsScreen));

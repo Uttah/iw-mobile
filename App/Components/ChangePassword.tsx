@@ -9,10 +9,12 @@ import _validate from '../Services/Validator';
 
 const validate = values => {
   const error = {};
-  //а как проверять что пароли не совпадают?
-  //вешаем ошибку например на новый пароль
-  // error.email = _validate('email', values.email);
-  // error.name = _validate('name', values.name);
+  const repeatNewPassword = !!values.repeatNewPassword ? values.repeatNewPassword : '';
+  const newPassword = !!values.newPassword ? values.newPassword : '';
+
+  if (repeatNewPassword.length >= newPassword.length && newPassword != repeatNewPassword) {
+    error.repeatNewPassword= "passwords don't match";
+  }
   return error;
 };
 

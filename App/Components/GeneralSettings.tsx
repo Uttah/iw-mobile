@@ -49,7 +49,7 @@ class GeneralSettings extends Component<Props> {
   }
 
   render() {
-    const { onPhoneChange, onPasswordChange } = this.props;
+    const { email, phone, language, onPhoneChange, onPasswordChange } = this.props;
     return (
       <View style={styles.container}>
         <List style={styles.list}>

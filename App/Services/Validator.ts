@@ -40,7 +40,7 @@ const validation = {
     format: {
       pattern: '[0-9]{10}',
       flags: 'i',
-      message: 'Phone should have 10 digits'
+      message: 'should have 10 digits'
     }
   },
   code: {
@@ -50,7 +50,7 @@ const validation = {
     format: {
       pattern: '[0-9]{4}',
       flags: 'i',
-      message: 'SMS code should have 4 digits'
+      message: 'should have 4 digits'
     }
   },
 };
