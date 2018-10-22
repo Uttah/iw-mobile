@@ -61,7 +61,6 @@ export const GET_CHATS = gql`
 query getChats($userId: ID!){
 getChats(userId: $userId) {
   chatId
-  countUnreadMessages
   parnter {
     id
     name

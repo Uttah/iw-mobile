@@ -10,35 +10,44 @@ import ChatActions from '../Redux/ChatRedux';
 import Chats from '../Components/Chats';
 
 type Props = {
-	navigation: NavigationScreenProp<any, any>,
+  navigation: NavigationScreenProp<any, any>,
 }
 
 class MessagesScreen extends Component<Props> {
-	async componentDidMount() {
-		const { dispatch } = this.props;
-		const result = await this.props.client.query({
-			query: GET_CHATS,
-			variables: {userId: this.props.user.id},
-			fetchPolicy: 'network-only'
-		});
-		const contacts = result.data.getChats.slice().reverse();
-		dispatch(ChatActions.setContacts(contacts));
-	}
+  componentDidMount() {
+    const { dispatch, user } = this.props;
+    //здесь разобраться
+    this.props.client.query({
+      query: GET_CHATS,
+      variables: {userId: user.id},
+      fetchPolicy: 'network-only'
+    })
+    .then(result => {   
+      const contacts = result.data.getChats.slice().reverse();
+      dispatch(ChatActions.setContacts(contacts));
+    })
+    .catch(error => { 
+      console.log(error);
+      dispatch(ToastActionsCreators.displayError('error!'));
+    });
+  }
   
-	onMessagePress = (chatId, partnerId, partnerName) => {
-		this.props.navigation.navigate('MessageScreen', { chatId, partnerId, partnerName });
-	}
+  onMessagePress = (chatId, partnerId, partnerName) => {
+    this.props.navigation.navigate('MessageScreen', { chatId, partnerId, partnerName });
+  }
   
-	render() {
-		const { contactsList, chatMessages, user } = this.props;
-		const updatedContacts = contactsList.map((contact:any) => {
-			let count = 0;
-			chatMessages[contact.chatId] && chatMessages[contact.chatId].forEach((message:any) => {
-				if (!message.read && message.author.id !== user.id) ++count;
-			});
-			return {
+  render() {
+    const { contactsList, chatMessages, user } = this.props;
+    const updatedContacts = contactsList.map((contact:any) => {
+      const messages = chatMessages[contact.chatId] ? chatMessages[contact.chatId] : contact.messages;
+      let count = 0;
+      
+      messages.forEach((message:any) => {
+        if (!message.read && message.author.id !== user.id) ++count;
+      });
+      return {
         ...contact,
-        lastMessage: chatMessages[contact.chatId] ? chatMessages[contact.chatId][chatMessages[contact.chatId].length-1] : contact.messages[contact.messages.length-1],
+        lastMessage: messages[messages.length-1],
         newMessages: count
       }
     });
