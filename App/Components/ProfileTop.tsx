@@ -44,7 +44,7 @@ export default class ProfileTop extends Component {
           </View>
         </View>
         <Text style={styles.author}>{user.name}</Text>
-        <Text style={styles.nickname}>@{user.login}</Text>
+        {!!user.login && user.login.length > 0 && <Text style={styles.nickname}>@{user.login}</Text>}
       </View>
     );
   }

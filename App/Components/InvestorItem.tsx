@@ -31,7 +31,7 @@ export default class InvestorItem extends Component {
             <MaterialIcons active name='add-circle-outline' color={'#fff'} size={hp('2.25%')} style={styles.btnicon}/>
           </TouchableOpacity> 
           <Text style={styles.name}>{name}</Text>
-          <Text style={styles.login}>@login</Text>
+          {!!login && login.length > 0 && <Text style={styles.login}>@{login}</Text>}
           <Text style={styles.subscribers}>{countOfFollowers} subscribers</Text>
         </View>
       </TouchableOpacity>
