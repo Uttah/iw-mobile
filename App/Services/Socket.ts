@@ -119,6 +119,13 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
     });
   }
 
+  const readMessage = (unread, partnerId) => {
+    socket.emit('readMessage', {
+      messageIds: unread,
+      partnerId: partnerId
+    });
+  }
+
   const unmount = () => {
     socket.removeAllListeners();
   }
@@ -141,6 +148,7 @@ const create = (baseURL = 'http://icoworld.projects.oktend.com:3000/') => {
     sendMessage,
     sendTest,
     subscribeToMessage,
+    readMessage,
     unmount,
     getLogs,
     close,

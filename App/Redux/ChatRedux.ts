@@ -1,10 +1,11 @@
 import { createReducer, createActions } from 'reduxsauce';
 import { objWithoutKey } from '../Services/Utils';
+import { Message } from 'react-native-gifted-chat';
 
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  setMessages: ['chatMessages'],
+  setMessages: ['chatMessages', 'id'],
   addMessage: ['message'],
   addOlderMessages: ['messages'],
   chatUnmount: [],
@@ -21,13 +22,21 @@ export const INITIAL_STATE = {
   chatMessages: {}
 };
 
+const readMessage = (message, id) => {
+  return {
+    ...message,
+    read: !message.read && message.author.id !== id ? true : message.read
+  }
+}
+
 export const setMessages = (state, action) => {
-  const { chatMessages } = action;
+  const { chatMessages, id } = action;
+  const messages = chatMessages.messages.map((message) => readMessage(message, id));
   return {
     ...state,
     chatMessages: {
       ...state.chatMessages,
-      [chatMessages.id]: chatMessages.messages
+      [chatMessages.id]: messages
     }
   };
 };
