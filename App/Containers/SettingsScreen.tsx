@@ -26,7 +26,7 @@ class SettingsScreen extends Component<Props> {
   }
 
   onSave = (settings) => {
-    const { user, dispatch } = this.props;
+    const { dispatch } = this.props;
     let variables = {};
 
     ['email', 'language', 'phone'].forEach(function(field) {
@@ -38,8 +38,7 @@ class SettingsScreen extends Component<Props> {
       mutation: UPDATE_USER,
       variables: {
         input: {
-          ...variables,
-          id: user.id
+          ...variables
         }
       }
     })

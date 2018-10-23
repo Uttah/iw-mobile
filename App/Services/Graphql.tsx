@@ -79,45 +79,44 @@ getChats(userId: $userId) {
 }`;
 
 export const ADD_JOB = gql`
-mutation addJob($userId: ID!, $input: ExpirienceInput!) {
-  addJob(userId: $userId, input: $input)
+mutation addJob($input: ExpirienceInput!) {
+  addJob(input: $input)
 }
 `;
 
 export const UPDATE_JOB = gql`
-mutation updateJob($userId: ID!, $id: ID!, $input: ExpirienceInput!) {
-  updateJob(userId: $userId, id: $id, input: $input)
+mutation updateJob($id: ID!, $input: ExpirienceInput!) {
+  updateJob(id: $id, input: $input)
 }
 `;
 
 export const REMOVE_JOB = gql`
-mutation removeJob($userId: ID!, $id: ID!) {
-  removeJob(userId: $userId, id: $id)
+mutation removeJob($id: ID!) {
+  removeJob(id: $id)
 }
 `;
 
 export const ADD_EDUCATION = gql`
-mutation addEducation($userId: ID!, $input: ExpirienceInput!) {
-  addEducation(userId: $userId, input: $input)
+mutation addEducation( $input: ExpirienceInput!) {
+  addEducation(input: $input)
 }
 `;
 
 export const UPDATE_EDUCATION = gql`
-mutation updateEducation($userId: ID!, $id: ID!, $input: ExpirienceInput!) {
-  updateEducation(userId: $userId, id: $id, input: $input)
+mutation updateEducation($id: ID!, $input: ExpirienceInput!) {
+  updateEducation(id: $id, input: $input)
 }
 `;
 
 export const REMOVE_EDUCATION = gql`
-mutation removeEducation($userId: ID!, $id: ID!) {
-  removeEducation(userId: $userId, id: $id)
+mutation removeEducation($id: ID!) {
+  removeEducation(id: $id)
 }
 `;
 
 export const UPDATE_USER = gql`
 mutation updateUser($input: UserInput!) {
   updateUser(input: $input) {
-    id
     name
     login
     email
