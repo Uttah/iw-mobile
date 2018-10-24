@@ -13,3 +13,5 @@ export const objWithoutKey = (obj, key) => {
 
   return newObj;
 };
+
+export const endpoint = 'http://icoworld.projects.oktend.com:3000';

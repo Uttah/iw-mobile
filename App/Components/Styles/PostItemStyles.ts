@@ -29,7 +29,8 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     marginTop: hp('2%'),
-    alignItems: 'center'
+    alignItems: 'center',
+    marginLeft: wp('3.3%')
   },
   postStats: {
     fontWeight: 'bold',
