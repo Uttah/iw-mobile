@@ -8,7 +8,9 @@ import GeneralSettings from '../Components/GeneralSettings';
 import styles from './Styles/SettingsScreenStyles';
 import { connect } from 'react-redux';
 import {
-  UPDATE_USER
+  UPDATE_USER,
+  SET_PM_SENDERS,
+  SET_COMMENTERS
 } from '../Services/Graphql';
 import { withApollo } from 'react-apollo';
 import UserActions from '../Redux/UserRedux';
@@ -20,22 +22,31 @@ type Props = {
   navigation: NavigationScreenProp<any, any>,
 }
 
+const isFieldChanged = (form, field) => {
+  return form.initial[field] != form.values[field];
+}
+
 class SettingsScreen extends Component<Props> {
   
   onChangeTab = ({ i }) => {
     console.log(i);
   }
 
-  onSave = (settings) => {
-    const { dispatch } = this.props;
+  onSave = (general_settings, privacy_security) => {
+    const { dispatch, client } = this.props;
     let variables = {};
 
     ['email', 'language', 'phone'].forEach(function(field) {
-      if (settings.initial[field] != settings.values[field]) {
-        variables[field] = settings.values[field];
+      if (isFieldChanged(general_settings, field)) {
+        variables[field] = general_settings.values[field];
       }
     });
-    this.props.client.mutate({
+
+    if (isFieldChanged(privacy_security, 'twoFactorAuth')) {
+      variables['twoFactorAuth'] = privacy_security.values['twoFactorAuth'];
+    }
+
+    client.mutate({
       mutation: UPDATE_USER,
       variables: {
         input: {
@@ -54,6 +65,34 @@ class SettingsScreen extends Component<Props> {
       console.log(error);
       dispatch(ToastActionsCreators.displayError('error!'));
     });
+
+    if (isFieldChanged(privacy_security, 'pmsenders')) {
+      client.mutate({
+        mutation: SET_PM_SENDERS,
+        variables: {
+          mode: privacy_security.values['pmsenders']
+        }
+      })
+      .then((data:any)=> console.log(data))
+      .catch(error => { 
+        console.log(error);
+        dispatch(ToastActionsCreators.displayError('error!'));
+      });
+    }
+
+    if (isFieldChanged(privacy_security, 'commenters')) {
+      client.mutate({
+        mutation: SET_COMMENTERS,
+        variables: {
+          mode: privacy_security.values['commenters']
+        }
+      })
+      .then((data:any)=> console.log(data))
+      .catch(error => { 
+        console.log(error);
+        dispatch(ToastActionsCreators.displayError('error!'));
+      });
+    }
   }
 
   onPhoneChange = () => {
@@ -67,7 +106,7 @@ class SettingsScreen extends Component<Props> {
   }
   
   render() {
-    const { user } = this.props;
+    const { user, general_settings, privacy_security } = this.props;
     return (
       <Container>
         <ScrollView style={styles.mainContainer}>
@@ -85,7 +124,7 @@ class SettingsScreen extends Component<Props> {
             </Tab>
           </Tabs>
         </ScrollView>
-        <Button block primary onPress={() => this.onSave(this.props.general_settings)} style={styles.btn}>
+        <Button block primary onPress={() => this.onSave(general_settings, privacy_security)} style={styles.btn}>
           <Text style={styles.btnText}>Save</Text>
         </Button>
       </Container>
@@ -96,7 +135,8 @@ class SettingsScreen extends Component<Props> {
 function mapStateToProps({user, form}:any) {
   return {
     user: user.authUser,
-    general_settings: form.general_settings ? form.general_settings : {}
+    general_settings: form.general_settings ? form.general_settings : {},
+    privacy_security: form.privacy_security ? form.privacy_security : {},
   };
 }
 

@@ -155,3 +155,50 @@ mutation updateUser($input: UserInput!) {
   }
 }
 `;
+
+export const SEARCH_POST_IN_PROFILE = gql`
+  query searchPostInProfile($userId: ID!, $searchText: String!) {
+    searchPostInProfile(userId: $userId, searchText: $searchText) {
+      posts {
+        postId
+        userId
+        userName
+        userLogin
+        avatar
+        date
+        edited
+        content
+        likes
+        comments
+        tags
+        attachments
+      }
+      reposts {
+        id
+        postId
+        userId
+        userName
+        userLogin
+        avatar
+        date
+        edited
+        content
+        tags
+        reposted
+        likes
+      }
+    }
+  }
+`;
+
+export const SET_PM_SENDERS = gql`
+	mutation setPMSendersMode($mode: String!) {
+		setPMSendersMode(mode: $mode)
+	}
+`;
+
+export const SET_COMMENTERS = gql`
+	mutation setCommentersMode($mode: String!) {
+		setCommentersMode(mode: $mode)
+	}
+`;
