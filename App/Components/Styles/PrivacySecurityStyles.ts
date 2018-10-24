@@ -4,8 +4,20 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 export default StyleSheet.create({
   container: {
   },
+  subHeaderTitleWrap: {
+    paddingTop: hp('3.15%'), 
+    paddingBottom: hp('2.85%'), 
+    borderWidth: 1, 
+    borderColor: 'rgba(178, 178, 178, 0.5)', 
+    paddingLeft: wp('7.7%')
+  },
+  subHeaderTitle: {
+    fontSize: hp('2.4%'),
+    fontWeight: 'bold',
+    fontFamily: 'OpenSans_semi'
+  },
   list: {
-    marginTop: hp('1.5%')
+    //marginTop: hp('1.5%')
   },
 	listItem: {
     flex: 1, 
@@ -54,5 +66,13 @@ export default StyleSheet.create({
   iconWrapInner: {
     flex: 1,
     justifyContent: 'center' 
+  },
+  checkboxText: {
+    fontSize: hp('1.95%'),
+    color: '#4c4c4c'
+  },
+  authRightCol: {
+    justifyContent: 'center',
+    alignItems: 'flex-start'
   }
 });

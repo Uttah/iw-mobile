@@ -24,18 +24,18 @@ const validate = values => {
 type Props = any;
 
 const renderField = (field) => (
-  <Text>{field.input.value}</Text>
+  <Text style={styles.listText}>{field.input.value}</Text>
 );
 
 const renderLanguage = (field) => (
-  <Text>{field.input.value == 'en' ? 'English' : 'Russian'}</Text>
+  <Text style={styles.listText}>{field.input.value == 'en' ? 'English' : 'Russian'}</Text>
 );
 
 
 class GeneralSettings extends Component<Props> {
 
   componentDidMount() {
-    const { email, phone, language } = this.props;
+    const { email, phone, language } = this.props.user;
     this.props.dispatch(registerField('general_settings', 'language', 'Field'));
     this.props.initialize({  
       email: (!!email ? email : ''),
@@ -49,7 +49,7 @@ class GeneralSettings extends Component<Props> {
   }
 
   render() {
-    const { email, phone, language, onPhoneChange, onPasswordChange } = this.props;
+    const { onPhoneChange, onPasswordChange } = this.props;
     return (
       <View style={styles.container}>
         <List style={styles.list}>
@@ -70,7 +70,7 @@ class GeneralSettings extends Component<Props> {
               <Text style={styles.listItemTitle}>Password</Text>
             </View>
             <View style={styles.listItemInner}>
-              <Text>Changed 7 months ago</Text>
+              <Text style={styles.listText}>Changed 7 months ago</Text>
             </View>
             <View style={styles.iconWrap}>
               <View style={styles.iconWrapInner}>

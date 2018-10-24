@@ -16,7 +16,6 @@ type Props = {
 class MessagesScreen extends Component<Props> {
   componentDidMount() {
     const { dispatch, user } = this.props;
-    //здесь разобраться
     this.props.client.query({
       query: GET_CHATS,
       variables: {userId: user.id},

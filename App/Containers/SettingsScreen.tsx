@@ -14,6 +14,7 @@ import { withApollo } from 'react-apollo';
 import UserActions from '../Redux/UserRedux';
 import LoginActions from '../Redux/LoginRedux';
 import { ToastActionsCreators } from 'react-native-redux-toast';
+import PrivacySecurity from '../Components/PrivacySecurity';
 
 type Props = {
   navigation: NavigationScreenProp<any, any>,
@@ -74,15 +75,13 @@ class SettingsScreen extends Component<Props> {
           <Tabs onChangeTab={this.onChangeTab}>
             <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='user' size={25} style={styles.tabicon}/><Text style={styles.tabname}>General</Text></TabHeading>}>
               <GeneralSettings 
-                email={user.email} 
-                phone={user.phone} 
-                language={user.language}
+                user={user}
                 onPhoneChange={this.onPhoneChange} 
                 onPasswordChange={this.onPasswordChange}
               />
             </Tab>
             <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><Ionicons name='md-lock' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Privacy and Security</Text></TabHeading>}>
-              <Text>smth</Text>
+              <PrivacySecurity user={user}/>
             </Tab>
           </Tabs>
         </ScrollView>
