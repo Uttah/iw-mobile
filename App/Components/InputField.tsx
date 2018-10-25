@@ -19,13 +19,13 @@ export default class InputField extends Component<Props> {
       <View style={style}>
         <Item 
           regular 
-          error={hasError&&input.value.length ? true : false}
-          success={!hasError&&input.value.length ? true : false}
+          error={hasError&&input.value.length > 0 ? true : false}
+          success={!hasError&&input.value.length > 0 ? true : false}
           floatingLabel={true}
         >
           <Input {...input} placeholder={placeholder} style={styles.input}/>
         </Item>
-        {showError && hasError && input.value.length && <Label style={styles.errorLabel}>{error}</Label>}
+        {showError && hasError && input.value.length > 0 && <Label style={styles.errorLabel}>{error}</Label>}
       </View>
     );
   }
