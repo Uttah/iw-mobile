@@ -152,16 +152,12 @@ class PrivacySecurity extends Component<Props> {
               <Text style={styles.listItemTitle}>Two-factor authentication</Text>
             </View>
             <View style={styles.listItemInner}>
-              <Grid>
-                <Col style={{width: wp('20%')}}>
-                  <Field name='twoFactorAuth' component={this.renderTwoFactorAuth}/>
-                </Col>
-                <Col style={styles.authRightCol}>
-                  <View>
-                    <Text style={styles.listText}>by number {phone}</Text>
-                  </View>
-                </Col>
-            </Grid>
+              <View style={{flex:1, flexDirection: 'row'}}>
+                <Field name='twoFactorAuth' component={this.renderTwoFactorAuth}/>
+                <View>
+                  <Text style={[styles.listText, styles.switchText]}>by number {phone}</Text>
+                </View>
+              </View>
             </View>
           </ListItem>}
         </List>

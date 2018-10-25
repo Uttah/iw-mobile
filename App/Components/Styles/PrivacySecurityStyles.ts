@@ -40,6 +40,9 @@ export default StyleSheet.create({
   listText: {
     fontSize: hp('1.95%')
   },
+  switchText: {
+    paddingLeft: wp('3.7%')
+  },
   menu: {
   },
   iosLeftMargin: {
