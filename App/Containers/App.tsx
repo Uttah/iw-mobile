@@ -18,8 +18,8 @@ import { Toast } from 'react-native-redux-toast';
 const store = createStore();
 
 const client = new ApolloClient({
-	link: new HttpLink({ uri: 'http://icoworld.projects.oktend.com:3000/graphql' }),
-	//link: new HttpLink({ uri: 'http://localhost:3000/graphql' }),
+  link: new HttpLink({ uri: 'http://icoworld.projects.oktend.com:3000/graphql' }),
+  //link: new HttpLink({ uri: 'http://localhost:3000/graphql' }),
   cache: new InMemoryCache()
 });
 
@@ -33,26 +33,26 @@ const client = new ApolloClient({
 * We separate like this to play nice with React Native's hot reloading.
 */
 class App extends Component {
-	render () {
-		return (
-			<ApolloProvider client={client}>
-				<StyleProvider style={getTheme(platform)}>
-					<Provider store={store}>
-						<MenuProvider>
-							<RootContainer />
-							<Toast messageStyle={{ color: 'white' }} containerStyle={{backgroundColor: 'green'}} />
-						</MenuProvider>
-					</Provider>
-				</StyleProvider>			
-			</ApolloProvider>
-		)
-	}
+  render () {
+    return (
+      <ApolloProvider client={client}>
+        <StyleProvider style={getTheme(platform)}>
+          <Provider store={store}>
+            <MenuProvider>
+              <RootContainer />
+              <Toast messageStyle={{ color: 'white' }} containerStyle={{backgroundColor: 'green'}} />
+            </MenuProvider>
+          </Provider>
+        </StyleProvider>			
+      </ApolloProvider>
+    )
+  }
 }
 
 declare global {
-	interface Console {
-		tron: any
-	}
+  interface Console {
+    tron: any
+  }
 }
 
 // allow reactotron overlay for fast design in dev mode

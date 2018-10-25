@@ -8,32 +8,32 @@ import AddExperience from '../Components/AddExperience';
 import EditUserActions from '../Redux/EditUserRedux';
 
 type Props = {
-	navigation: NavigationScreenProp<any, any>,
+  navigation: NavigationScreenProp<any, any>,
 }
 
 class AddExperienceScreen extends Component<Props> {
-	onSave = () => {
-		const { dispatch, navigation, job } = this.props;
-		!!job && dispatch(EditUserActions.addExperience(job));
-		navigation.goBack();
-	}
+  onSave = () => {
+    const { dispatch, navigation, job } = this.props;
+    !!job && dispatch(EditUserActions.addExperience(job));
+    navigation.goBack();
+  }
 
-	render() {
-		return (
-			<KeyboardAwareScrollView
-				style={styles.mainContainer}  
-			>
-				<Text style={styles.headerTitle}>Add job</Text>
-				<AddExperience onSave={this.onSave}/>
-			</KeyboardAwareScrollView>
-		);
-	}
+  render() {
+    return (
+      <KeyboardAwareScrollView
+        style={styles.mainContainer}  
+      >
+        <Text style={styles.headerTitle}>Add job</Text>
+        <AddExperience onSave={this.onSave}/>
+      </KeyboardAwareScrollView>
+    );
+  }
 }
 
 const mapStateToProps = ({form}:any) => {
-	return {
-		job: form.add_experience ? form.add_experience.values : []
-	}
+  return {
+    job: form.add_experience ? form.add_experience.values : []
+  }
 };
 
 

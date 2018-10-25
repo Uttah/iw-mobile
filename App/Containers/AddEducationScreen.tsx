@@ -8,32 +8,32 @@ import AddEducation from '../Components/AddEducation';
 import EditUserActions from '../Redux/EditUserRedux';
 
 type Props = {
-	navigation: NavigationScreenProp<any, any>,
+  navigation: NavigationScreenProp<any, any>,
 }
 
 class AddEducationScreen extends Component<Props> {
-	onSave = () => {
-		const { dispatch, navigation, education } = this.props;
-		!!education && dispatch(EditUserActions.addEducation(education));
-		navigation.goBack();
-	}
+  onSave = () => {
+    const { dispatch, navigation, education } = this.props;
+    !!education && dispatch(EditUserActions.addEducation(education));
+    navigation.goBack();
+  }
 
-	render() {
-		return (
-			<KeyboardAwareScrollView
-				style={styles.mainContainer}  
-			>
-				<Text style={styles.headerTitle}>Add education</Text>
-				<AddEducation onSave={this.onSave}/>
-			</KeyboardAwareScrollView>
-		);
-	}
+  render() {
+    return (
+      <KeyboardAwareScrollView
+        style={styles.mainContainer}  
+      >
+        <Text style={styles.headerTitle}>Add education</Text>
+        <AddEducation onSave={this.onSave}/>
+      </KeyboardAwareScrollView>
+    );
+  }
 }
 
 const mapStateToProps = ({form}:any) => {
-	return {
-		education: form.add_education ? form.add_education.values : []
-	}
+  return {
+    education: form.add_education ? form.add_education.values : []
+  }
 };
 
 

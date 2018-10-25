@@ -9,51 +9,51 @@ import styles from './Styles/PoolAddScreenStyles';
 import HeaderLogo from '../Components/HeaderLogo';
 
 type Props = {
-	navigation: NavigationScreenProp<any, any>,
+  navigation: NavigationScreenProp<any, any>,
 }
 
 class PoolAddScreen extends Component<Props> {
-	static navigationOptions = {
-		headerTitle: <HeaderLogo/>,
-		headerRight: <View/>
-	};
+  static navigationOptions = {
+    headerTitle: <HeaderLogo/>,
+    headerRight: <View/>
+  };
 
-	state = {
-		extraScrollHeight: 0
-	};
+  state = {
+    extraScrollHeight: 0
+  };
 
-	getExtraScrollHeight = () => {
-		return this.state.extraScrollHeight;
-	}
+  getExtraScrollHeight = () => {
+    return this.state.extraScrollHeight;
+  }
 
-	onButtonViewLayout = (height) => {
-		this.setState({
-			extraScrollHeight: PixelRatio.getPixelSizeForLayoutSize(height)
-		});
-	}
+  onButtonViewLayout = (height) => {
+    this.setState({
+      extraScrollHeight: PixelRatio.getPixelSizeForLayoutSize(height)
+    });
+  }
 
-	onSuccess = (name) => {
-	}
+  onSuccess = (name) => {
+  }
 
-	render() {
-		const { authUser } = this.props;
-		return (
-			<KeyboardAwareScrollView
-				style={styles.mainContainer}  
-				enableOnAndroid={true}
-				extraScrollHeight={this.getExtraScrollHeight()}
-			>
-				<Text style={styles.headerTitle}>Создать пул</Text>
-				<PoolAdd style={styles.poolAdd} authUser={authUser}/>
-			</KeyboardAwareScrollView>
-		);
-	}
+  render() {
+    const { authUser } = this.props;
+    return (
+      <KeyboardAwareScrollView
+        style={styles.mainContainer}  
+        enableOnAndroid={true}
+        extraScrollHeight={this.getExtraScrollHeight()}
+      >
+        <Text style={styles.headerTitle}>Создать пул</Text>
+        <PoolAdd style={styles.poolAdd} authUser={authUser}/>
+      </KeyboardAwareScrollView>
+    );
+  }
 }
 
 function mapStateToProps(state) {
-	let obj = {};
-	obj.authUser = state.user.authUser;
-	return obj;
+  let obj = {};
+  obj.authUser = state.user.authUser;
+  return obj;
 }
 
 export default connect(mapStateToProps)(PoolAddScreen);

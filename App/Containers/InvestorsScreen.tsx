@@ -9,44 +9,44 @@ import UserActions from '../Redux/UserRedux';
 import { NavigationActions } from 'react-navigation';
 
 type Props = {
-	navigation: NavigationScreenProp<any, any>,
-	userId: string
+  navigation: NavigationScreenProp<any, any>,
+  userId: string
 }
 
 class InvestorsScreen extends Component<Props> {
-	onProfilePress = (id) => {
-		const navigateAction = NavigationActions.navigate({
-			routeName: 'ProfileScreen',
-			params: { id }
-		});
-		this.props.navigation.dispatch(navigateAction);
-	}
- 
-	render() {
-		const { userId } = this.props;
-		const items = [
-			{ id: '1', messagesNum: 3, author: 'Иван Фёдоров' },
-			{ id: '2', messagesNum: 0, author: 'Елена Кукушкина' }
-		];
-		return (
-			<Container>
-				<ScrollView style={styles.mainContainer}>
-					<Investors 
-						userId={userId} 
-						onProfilePress={this.onProfilePress}
-						fakeItems={items}
-					/>
-				</ScrollView>
-			</Container>
-		);
-	}
+  onProfilePress = (id) => {
+    const navigateAction = NavigationActions.navigate({
+      routeName: 'ProfileScreen',
+      params: { id }
+    });
+    this.props.navigation.dispatch(navigateAction);
+  }
+
+  render() {
+    const { userId } = this.props;
+    const items = [
+      { id: '1', messagesNum: 3, author: 'Иван Фёдоров' },
+      { id: '2', messagesNum: 0, author: 'Елена Кукушкина' }
+    ];
+    return (
+      <Container>
+        <ScrollView style={styles.mainContainer}>
+          <Investors 
+            userId={userId} 
+            onProfilePress={this.onProfilePress}
+            fakeItems={items}
+          />
+        </ScrollView>
+      </Container>
+    );
+  }
 }
 
 function mapStateToProps (state) {
-	let obj = {
+  let obj = {
     userId: state.user.authUser.id
   };
-	return obj;
+  return obj;
 }
 
 export default connect(mapStateToProps)(InvestorsScreen);
