@@ -32,7 +32,8 @@ class ProfileScreen extends Component {
     activeTab: ProfileTabs.Activity,
     isSubmitting: false,
     user: {},
-    posts: []
+    posts: [],
+    postsLoaded: false
   }
 
   componentDidMount() {
@@ -69,9 +70,12 @@ class ProfileScreen extends Component {
       const { posts, reposts }  = result.data.searchPostInProfile;
       if (!(posts.length == 0 && reposts.length == 0)) {
         this.setState({
-          posts: posts.concat(reposts)
+          posts: posts.concat(reposts),
         });
       }
+      this.setState({
+        postsLoaded: true
+      });
     })
     .catch(error => { 
       console.log(error);
@@ -152,7 +156,12 @@ class ProfileScreen extends Component {
             />
             <Tabs onChangeTab={this.onChangeTab}>
               <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
-                <ProfileTab1 items={this.state.posts} onCommentsPress={this.onCommentsPress}/>
+                <ProfileTab1 
+                  items={this.state.posts} 
+                  loaded={this.state.postsLoaded}
+                  onCommentsPress={this.onCommentsPress} 
+                  ownPage={ownPage}
+                />
               </Tab>
               <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='bar-chart-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Портфолио</Text></TabHeading>}>
                 <ProfileTab2 />

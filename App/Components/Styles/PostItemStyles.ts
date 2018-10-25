@@ -40,6 +40,10 @@ export default StyleSheet.create({
   postLikes: {
     marginRight: hp('2.1%')
   },
+  edited: {
+    marginLeft: wp('3.3%'),
+    marginTop: hp('1.8%')
+  },
   lead: {
     marginLeft: wp('3.3%'),
     marginTop: hp('2%'),

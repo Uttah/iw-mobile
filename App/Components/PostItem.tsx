@@ -21,9 +21,17 @@ export default class PostItem extends Component {
   }
   
   render() {
-    const { userName, userLogin, content, edited, avatar, userId } = this.props.item;
+    const { userName, userLogin, content, edited, avatar, userId, likes, comments } = this.props.item;
     const imageSource = !!avatar ? {uri: `${endpoint}/images/${userId}/${avatar}`} : Images.noAvatar;
-    
+    const options = this.props.ownPage ? [
+      { value: 1, text: 'Pin to top' },
+      { value: 2, text: 'Edit' },
+      { value: 3, text: 'Delete' } 
+    ] : 
+    [
+      { value: 1, text: 'Complain' }
+    ];
+
     return (
       <TouchableOpacity style={styles.post} onPress={() => alert('you pressed post!')}>
         <Grid style={styles.topContainer}>
@@ -45,22 +53,21 @@ export default class PostItem extends Component {
           <Text style={styles.leadText}>{content}</Text>
         </View>
         <View style={styles.postStatsContainer}>
-          <SocialStats likes={1} comments={2} shares={3} onCommentsPress={this.props.onCommentsPress}/>
+          <SocialStats likes={likes ? likes.length : 0} comments={comments ? comments.length : 0} shares={1} onCommentsPress={this.props.onCommentsPress}/>
+        </View>
+        <View style={styles.edited}>
+          <Text style={styles.postAuthor}>{new Date(edited).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
         </View>
         <Menu onSelect={value => this.onMenuPress(value, 1)} style={styles.button}>
           <MenuTrigger>
             <Entypo name='dots-three-vertical' style={styles.dots} size={hp('2.4%')} color={'#ccc'}/>
           </MenuTrigger>
           <MenuOptions>
-            <MenuOption value={1}>
-              <Text style={[styles.menuOption, styles.menuOptionFirst]}>Закрепить</Text>
-            </MenuOption>
-            <MenuOption value={2}>
-              <Text style={styles.menuOption}>Редактировать</Text>
-            </MenuOption>
-            <MenuOption value={3}>
-              <Text style={styles.menuOption}>Удалить</Text>
-            </MenuOption>
+            {options.map((option, index) => 
+              <MenuOption value={option.value} key={index}>
+                <Text style={[styles.menuOption, index == 0 ? styles.menuOptionFirst : null]}>{option.text}</Text>
+              </MenuOption>
+            )}
           </MenuOptions>
         </Menu>
       </TouchableOpacity>
