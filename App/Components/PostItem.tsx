@@ -14,15 +14,29 @@ import SocialStats from './SocialStats';
 import { Entypo } from '@expo/vector-icons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { endpoint } from '../Services/Utils';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 export default class PostItem extends Component {
+
   onMenuPress = (value, id) => {
     alert('you pressed!');
   }
-  
+
   render() {
-    const { userName, userLogin, content, edited, avatar, userId, likes, comments } = this.props.item;
-    const imageSource = !!avatar ? {uri: `${endpoint}/images/${userId}/${avatar}`} : Images.noAvatar;
+    const { 
+      userName, 
+      userLogin, 
+      content, 
+      edited, 
+      avatar, 
+      userId, 
+      likes, 
+      comments, 
+      __typename,
+      attachments
+    } = this.props.item;
+    
+    const avatarSource = !!avatar ? {uri: `${endpoint}/images/${userId}/${avatar}`} : Images.noAvatar;
     const options = this.props.ownPage ? [
       { value: 1, text: 'Pin to top' },
       { value: 2, text: 'Edit' },
@@ -31,6 +45,8 @@ export default class PostItem extends Component {
     [
       { value: 1, text: 'Complain' }
     ];
+    const date = new Date(edited).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+    const repost = __typename === 'Repost' ? '*' + __typename : '';
 
     return (
       <TouchableOpacity style={styles.post} onPress={() => alert('you pressed post!')}>
@@ -38,7 +54,7 @@ export default class PostItem extends Component {
           <Col style={{ width: wp('11%'), paddingLeft: wp('3.3%')}}>
             <TouchableHighlight style={styles.postAuthorAvatarWrap}>
               <Image
-                source={imageSource}
+                source={avatarSource}
                 resizeMode={'cover'}
                 style={styles.postAuthorAvatar}
               />              
@@ -49,6 +65,14 @@ export default class PostItem extends Component {
             {!!userLogin && userLogin.length > 0 && <Text style={styles.postAuthor}>@{userLogin}</Text>}
           </Col>
         </Grid>
+        {attachments && attachments.length > 0 && attachments.map((attachment) =>
+          <View style={styles.postImage} key={attachment}>
+            <AutoHeightImage
+              width={wp('90%')}
+              source={{ uri: `${endpoint}/images/${userId}/${attachment}` }}
+            />
+          </View> 
+        )}
         <View style={styles.lead}>
           <Text style={styles.leadText}>{content}</Text>
         </View>
@@ -56,7 +80,9 @@ export default class PostItem extends Component {
           <SocialStats likes={likes ? likes.length : 0} comments={comments ? comments.length : 0} shares={1} onCommentsPress={this.props.onCommentsPress}/>
         </View>
         <View style={styles.edited}>
-          <Text style={styles.postAuthor}>{new Date(edited).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
+          <Text style={styles.postAuthor}>
+            {`${date} ${repost}`}
+          </Text>
         </View>
         <Menu onSelect={value => this.onMenuPress(value, 1)} style={styles.button}>
           <MenuTrigger>

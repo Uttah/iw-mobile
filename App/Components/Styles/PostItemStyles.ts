@@ -92,5 +92,9 @@ export default StyleSheet.create({
     paddingRight: 8,
     paddingTop: 8,
     paddingBottom: 8
+  },
+  postImage: {
+    marginLeft: wp('3.3%'),
+    marginTop: hp('1.87%')
   }
 });
