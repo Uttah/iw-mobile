@@ -49,10 +49,6 @@ export default StyleSheet.create({
     marginTop: hp('2%'),
     marginRight: wp('4.4%')
   },
-  leadText: {
-    fontSize: wp('4%'),
-    color: '#47525E'
-  },
   postAuthorAvatar: {
     height: wp('6.8%'),
     width: wp('6.8%'),
