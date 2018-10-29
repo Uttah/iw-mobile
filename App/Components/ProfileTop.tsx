@@ -6,11 +6,22 @@ import StatsNumbers from './StatsNumbers';
 import { Images } from 'App/Themes';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
+import Follow from '../Components/Follow';
 
 export default class ProfileTop extends Component {
 
   render() {
-    const { stats, user, ownPage, onEditPress, onChatPress } = this.props;
+    const { 
+      stats, 
+      user, 
+      ownPage, 
+      onEditPress, 
+      onChatPress, 
+      followersLoaded,
+      afterFollow,
+      afterUnfollow,
+      isFollowing
+    } = this.props;
     return (
       <View style={styles.outer}>
         <View style={styles.container}>
@@ -35,10 +46,14 @@ export default class ProfileTop extends Component {
                   <Entypo active name='chat' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
                   <Text style={styles.btntext}>Message</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btn} onPress={() => {}}>
-                  <MaterialIcons active name='add-circle-outline' color={'#5A6978'} size={hp('2.25%')} style={styles.btnicon}/>
-                  <Text style={styles.btntext}>Follow</Text>
-                </TouchableOpacity>
+                {followersLoaded && 
+                  <Follow 
+                    id={user.id}
+                    afterFollow={afterFollow} 
+                    afterUnfollow={afterUnfollow}
+                    isFollowing={isFollowing}
+                  />
+                }
               </View>
             }
           </View>

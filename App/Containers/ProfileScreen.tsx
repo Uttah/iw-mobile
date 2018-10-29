@@ -11,7 +11,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ProfileTabs } from '../Services/Enums';
 import { withApollo } from 'react-apollo';
-import { GET_USER, GET_CHATS, SEARCH_POST_IN_PROFILE } from '../Services/Graphql';
+import { 
+  GET_USER, 
+  GET_CHATS, 
+  SEARCH_POST_IN_PROFILE,
+  GET_SUBSCRIBERS
+} from '../Services/Graphql';
 import { ToastActionsCreators } from 'react-native-redux-toast';
 import ControlPanel from '../Components/ControlPanel';
 
@@ -41,6 +46,19 @@ const fetchPosts = async(client:any, userId:string, searchText:string) => {
   }
 }
 
+const fetchFollowers = async(client:any, userId:string) => {
+  try {
+    const result = await client.query({
+      query: GET_SUBSCRIBERS,
+      variables: { userId },
+      fetchPolicy: 'network-only'
+    });
+    return result.data.getSubscribers;
+  } catch(err) {
+    alert(err); 
+  }
+}
+
 class ProfileScreen extends Component {
   state = {
     activeTab: ProfileTabs.Activity,
@@ -51,7 +69,11 @@ class ProfileScreen extends Component {
     filterStr: '',
     searchPressed: false,
     ownPage: false,
-    profileId: ''
+    profileId: '',
+    hasTagsFilter: false,
+    followers: [],
+    followersLoaded: false,
+    isFollowing: false
   }
 
   loadFilteredPosts = () => {
@@ -68,10 +90,26 @@ class ProfileScreen extends Component {
     })
     .catch(error => { 
       console.log(error);
-      dispatch(ToastActionsCreators.displayError('posts load error!'));
+      //dispatch(ToastActionsCreators.displayError('posts load error!'));
     });
   }
 
+  loadFollowers = () => {
+    const { client, dispatch, authUser } = this.props;
+    const { profileId } = this.state;
+    
+    fetchFollowers(client, profileId)
+      .then((data) => {
+        this.setState({
+          followers: data,
+          followersLoaded: true,
+          isFollowing: data.findIndex((user:any) => user.id === authUser.id) === -1 ? false : true
+        });
+      })
+      .catch(error => { 
+        console.log(error);
+      });
+  }
 
   async componentDidMount() {
     const { client, authUser } = this.props;
@@ -91,7 +129,12 @@ class ProfileScreen extends Component {
     user = ownPage ? authUser : await fetchUser(client, profileId);
 
     //to do: cancel fetch callbacks on component unmount, errors
-    this.setState({ ownPage, profileId, user }, this.loadFilteredPosts);
+    this.setState({ ownPage, profileId, user }, this.loadUserData);
+  }
+
+  loadUserData = () => {
+    this.loadFilteredPosts();
+    this.loadFollowers();
   }
 
   onSubmitSuccess = () => {
@@ -160,7 +203,8 @@ class ProfileScreen extends Component {
   onSearchStrChange = (text) => {
     this.setState({
       filterStr: text,
-      searchPressed: false
+      searchPressed: false,
+      hasTags: false
     });
   }
 
@@ -170,8 +214,23 @@ class ProfileScreen extends Component {
     }, this.loadFilteredPosts);
   }
 
+  setTagsFilter = (text) => {
+    this.setState({
+      filterStr: text,
+      hasTagsFilter: true
+    }, this.searchSubmit);
+  }
+
+  afterFollow = () => {
+    this.setState({ isFollowing: true });
+  }
+
+  afterUnfollow = () => {
+    this.setState({ isFollowing: false });
+  }
+
   profileView = (stats) => {
-    const { ownPage, profileId, user } = this.state;
+    const { ownPage, profileId, user, followersLoaded, isFollowing } = this.state;
     const authUserId = this.props.authUser.id;
     const emptyUser = Object.keys(user).length == 0;
     if (emptyUser) {
@@ -186,6 +245,10 @@ class ProfileScreen extends Component {
               ownPage={ownPage} 
               onEditPress={this.onEditPress} 
               onChatPress={ownPage ? null : () => this.onChatPress(authUserId, profileId) }
+              followersLoaded={followersLoaded}
+              afterFollow={this.afterFollow}
+              afterUnfollow={this.afterUnfollow}
+              isFollowing={isFollowing}
             />
             <View style={{height: hp('7.27%')}}>
               <ControlPanel 
@@ -193,6 +256,7 @@ class ProfileScreen extends Component {
                 searchStr={this.state.filterStr}
                 onSearchStrChange={this.onSearchStrChange}
                 searchSubmit={this.searchSubmit}
+                hasTagsFilter={this.state.hasTagsFilter}
               />
             </View>
             <Tabs onChangeTab={this.onChangeTab}>
@@ -202,6 +266,7 @@ class ProfileScreen extends Component {
                   loaded={this.state.postsLoaded}
                   onCommentsPress={this.onCommentsPress} 
                   ownPage={ownPage}
+                  setTagsFilter={this.setTagsFilter}
                 />
               </Tab>
               <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='bar-chart-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Портфолио</Text></TabHeading>}>

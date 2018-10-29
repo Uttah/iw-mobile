@@ -9,6 +9,10 @@ export default class ControlPanel extends Component {
   state = {
     showInput: false
   };
+
+  static defaultProps: {
+    hasTagsFilter: false
+  };
   
   onPressClose = () => {
     this.props.onChange({ btn: 'close' });
@@ -29,7 +33,8 @@ export default class ControlPanel extends Component {
       onChange,
       searchStr,
       onSearchStrChange,
-      searchSubmit
+      searchSubmit,
+      hasTagsFilter
     } = this.props;
     
     return (
@@ -44,7 +49,7 @@ export default class ControlPanel extends Component {
           onSubmitEditing={searchSubmit}
           returnKeyType={'done'}
         />
-        {this.state.showInput && <TouchableOpacity style={styles.close} onPress={this.onPressClose}>
+        {(this.state.showInput || hasTagsFilter) && <TouchableOpacity style={styles.close} onPress={this.onPressClose}>
           <EvilIcons active name='close' size={20} color={'#999'} style={styles.closeIcon}/>
         </TouchableOpacity>}
       </Item>

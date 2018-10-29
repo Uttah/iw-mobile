@@ -11,7 +11,9 @@ export default class ProfileTab1 extends Component {
       <PostItem 
         item={item} 
         onCommentsPress={this.props.onCommentsPress} 
-        ownPage={this.props.ownPage}/>
+        ownPage={this.props.ownPage}
+        setTagsFilter={this.props.setTagsFilter}
+      />
     );
   };
 

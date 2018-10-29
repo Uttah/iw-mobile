@@ -28,14 +28,14 @@ export default class PostItem extends Component {
 
     tags.forEach(function(item) {
       let pattern = new RegExp('(' + item + ')', 'g')
-      let elem = `<span class="tag">$1</span>`
+      let elem = `<a href="$1">$1</a>`
       replaceredText = replaceredText.replace(pattern, elem)
     })
 
     replaceredText = this.postReplacer(replaceredText);
 
     return (
-        replaceredText
+      replaceredText
     )
 }
 
@@ -58,8 +58,17 @@ export default class PostItem extends Component {
     )
   }
 
+  isLink = (link) => {
+    let linksRegExp = /(https?:\/\/[\w\/?.&-=]+)/g;
+    return linksRegExp.test(link);
+  }
+
   onLinkPress = (href, obj) => {
-    Linking.openURL(obj).catch(err => console.error('An error occurred', err));
+    if (this.isLink(obj)) {
+      Linking.openURL(obj).catch(err => console.error('An error occurred', err));
+    } else {
+      this.props.setTagsFilter(obj);
+    }
   }
 
   render() {

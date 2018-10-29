@@ -192,13 +192,36 @@ export const SEARCH_POST_IN_PROFILE = gql`
 `;
 
 export const SET_PM_SENDERS = gql`
-	mutation setPMSendersMode($mode: String!) {
-		setPMSendersMode(mode: $mode)
-	}
+  mutation setPMSendersMode($mode: String!) {
+    setPMSendersMode(mode: $mode)
+  }
 `;
 
 export const SET_COMMENTERS = gql`
-	mutation setCommentersMode($mode: String!) {
-		setCommentersMode(mode: $mode)
-	}
+  mutation setCommentersMode($mode: String!) {
+    setCommentersMode(mode: $mode)
+  }
+`;
+
+export const FOLLOW_USER = gql`
+  mutation followUser($userId: ID!) {
+    followUser(userId: $userId)
+  }
+`;
+
+export const UNFOLLOW_USER = gql`
+  mutation unfollowUser($userId: ID!) {
+    unfollowUser(userId: $userId)
+  }
+`;
+
+export const GET_SUBSCRIBERS = gql`
+  query getSubscribers($userId: ID!) {
+    getSubscribers(userId: $userId) {
+      id
+      name
+      photo
+      avatar
+    }
+  }
 `;
