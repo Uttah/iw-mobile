@@ -7,14 +7,15 @@ import ProfileTab1 from '../Components/ProfileTab1';
 import ProfileTab2 from '../Components/ProfileTab2';
 import ProfileTab3 from '../Components/ProfileTab3';
 import styles from './Styles/ProfileScreenStyles';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ProfileTabs } from '../Services/Enums';
 import { withApollo } from 'react-apollo';
 import { GET_USER, GET_CHATS, SEARCH_POST_IN_PROFILE } from '../Services/Graphql';
 import { ToastActionsCreators } from 'react-native-redux-toast';
+import ControlPanel from '../Components/ControlPanel';
 
-const fetchUser = async(client:any, id:number) => {
+const fetchUser = async(client:any, id:string) => {
   try {
     const result = await client.query({
       query: GET_USER,
@@ -27,18 +28,56 @@ const fetchUser = async(client:any, id:number) => {
   }
 }
 
+const fetchPosts = async(client:any, userId:string, searchText:string) => {
+  try {
+    const result = await client.query({
+      query: SEARCH_POST_IN_PROFILE,
+      variables: { userId, searchText },
+      fetchPolicy: 'network-only'
+    });
+    return result.data.searchPostInProfile;
+  } catch(err) {
+    alert(err); 
+  }
+}
+
 class ProfileScreen extends Component {
   state = {
     activeTab: ProfileTabs.Activity,
     isSubmitting: false,
     user: {},
     posts: [],
-    postsLoaded: false
+    postsLoaded: false,
+    filterStr: '',
+    searchPressed: false,
+    ownPage: false,
+    profileId: ''
   }
 
-  componentDidMount() {
+  loadFilteredPosts = () => {
+    const { client, dispatch } = this.props;
+    const { profileId, filterStr } = this.state;
+    
+    fetchPosts(client, profileId, filterStr)
+    .then((data) => {
+      const { posts, reposts } = data;
+      this.setState({
+        posts: !(posts.length == 0 && reposts.length == 0) ? posts.concat(reposts) : [],
+        postsLoaded: true
+      });
+    })
+    .catch(error => { 
+      console.log(error);
+      dispatch(ToastActionsCreators.displayError('posts load error!'));
+    });
+  }
+
+
+  async componentDidMount() {
+    const { client, authUser } = this.props;
     let profileId:string;
     let ownPage:boolean;
+    let user:any;
 
     if (typeof(this.props.navigation.state.params) !== 'undefined') {
       ownPage = false;
@@ -48,39 +87,11 @@ class ProfileScreen extends Component {
       ownPage = true;
       profileId = this.props.authUser.id;
     }
-    if (ownPage) {
-      this.setState({
-        user: this.props.authUser
-      });
-    } else {
-      fetchUser(this.props.client, profileId).then((data) => {
-        this.setState({
-          user: data
-        });
-      });
-    }
 
-    const { client, dispatch } = this.props;
-    client.query({
-      query: SEARCH_POST_IN_PROFILE,
-      variables: {userId: profileId, searchText: ''},
-      fetchPolicy: 'network-only'
-    })
-    .then(result => {  
-      const { posts, reposts }  = result.data.searchPostInProfile;
-      if (!(posts.length == 0 && reposts.length == 0)) {
-        this.setState({
-          posts: posts.concat(reposts),
-        });
-      }
-      this.setState({
-        postsLoaded: true
-      });
-    })
-    .catch(error => { 
-      console.log(error);
-      dispatch(ToastActionsCreators.displayError('posts load error!'));
-    });
+    user = ownPage ? authUser : await fetchUser(client, profileId);
+
+    //to do: cancel fetch callbacks on component unmount, errors
+    this.setState({ ownPage, profileId, user }, this.loadFilteredPosts);
   }
 
   onSubmitSuccess = () => {
@@ -139,8 +150,30 @@ class ProfileScreen extends Component {
     this.props.navigation.navigate('EditProfileScreen', { onSubmitSuccess: this.onSubmitSuccess });
   }
 
-  profileView = (profileUser, ownPage, profileId, authUserId, stats) => {
-    const emptyUser = Object.keys(profileUser).length == 0;
+  toggleSearch = () => {
+    this.setState({
+      filterStr: '',
+      searchPressed: false
+    }, this.loadFilteredPosts);
+  }
+
+  onSearchStrChange = (text) => {
+    this.setState({
+      filterStr: text,
+      searchPressed: false
+    });
+  }
+
+  searchSubmit = () => {
+    this.setState({
+      searchPressed: true
+    }, this.loadFilteredPosts);
+  }
+
+  profileView = (stats) => {
+    const { ownPage, profileId, user } = this.state;
+    const authUserId = this.props.authUser.id;
+    const emptyUser = Object.keys(user).length == 0;
     if (emptyUser) {
       return (<View><Spinner></Spinner></View>);
     } else {
@@ -149,11 +182,19 @@ class ProfileScreen extends Component {
           <ScrollView style={styles.mainContainer}>
             <ProfileTop 
               stats={stats} 
-              user={profileUser} 
+              user={user} 
               ownPage={ownPage} 
               onEditPress={this.onEditPress} 
               onChatPress={ownPage ? null : () => this.onChatPress(authUserId, profileId) }
             />
+            <View style={{height: hp('7.27%')}}>
+              <ControlPanel 
+                onChange={this.toggleSearch}
+                searchStr={this.state.filterStr}
+                onSearchStrChange={this.onSearchStrChange}
+                searchSubmit={this.searchSubmit}
+              />
+            </View>
             <Tabs onChangeTab={this.onChangeTab}>
               <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='newspaper-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Активность</Text></TabHeading>}>
                 <ProfileTab1 
@@ -167,7 +208,7 @@ class ProfileScreen extends Component {
                 <ProfileTab2 />
               </Tab>
               <Tab heading={ <TabHeading style={{flexDirection: 'column'}}><FontAwesome name='question-circle-o' size={25} style={styles.tabicon}/><Text style={styles.tabname}>Обо мне</Text></TabHeading>}>
-                <ProfileTab3 about={profileUser.about} clinks={profileUser.clinks} educations={profileUser.educations} jobs={profileUser.jobs}/>
+                <ProfileTab3 user={user}/>
               </Tab>
             </Tabs>
           </ScrollView>
@@ -177,38 +218,14 @@ class ProfileScreen extends Component {
   }
   
   render() {
-    let ownPage:boolean;
-    let profileId:string;
-    let profileUser:any;
-    const authUser = this.props.authUser;
 
-    if (typeof(this.props.navigation.state.params) !== 'undefined') {
-      ownPage = false;
-      profileId = this.props.navigation.state.params.id;
-      profileUser = this.state.user;
-    }
-    else {
-      ownPage = true;
-      profileId = authUser.id;
-      profileUser = authUser;
-    }
     //нужна библиотека которая склоняет
     const stats = [
       { text: 'подписчиков', number: 150 },
       { text: 'подписан', number: 10 },
       { text: 'поста', number: 73 },
     ];
-    // const items = [
-    //   {
-    //     id: '1',
-    //     name: 'forst'
-    //   },
-    //   {
-    //     id: '2',
-    //     name: 'second'
-    //   }
-    // ];
-    return (this.profileView(profileUser, ownPage, profileId, authUser.id, stats));
+    return (this.profileView(stats));
   }
 }
 

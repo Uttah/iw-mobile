@@ -7,12 +7,6 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0,0,0,0.16)'
   },
-  image: {
-    height: wp('22.7%'),
-    width: wp('22.7%'),
-    marginLeft: wp('3.3%'),
-    marginTop: 5
-  },
   topContainer: {
     marginTop: hp('1.8%')
   },
@@ -50,14 +44,14 @@ export default StyleSheet.create({
     marginRight: wp('4.4%')
   },
   postAuthorAvatar: {
-    height: wp('6.8%'),
-    width: wp('6.8%'),
+    height: wp('12%'),
+    width: wp('12%'),
     paddingRight: wp('2.27%'),
     borderRadius: 4   
   },
   postAuthorAvatarWrap: {
-    height: wp('6.8%') + 2,
-    width: wp('6.8%') + 2,
+    height: wp('12%') + 2,
+    width: wp('12%') + 2,
     borderRadius: 4,
     borderColor: '#b2b2b2',
     borderWidth: 1,

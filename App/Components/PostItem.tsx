@@ -93,7 +93,7 @@ export default class PostItem extends Component {
     return (
       <TouchableOpacity style={styles.post} onPress={() => alert('you pressed post!')}>
         <Grid style={styles.topContainer}>
-          <Col style={{ width: wp('11%'), paddingLeft: wp('3.3%')}}>
+          <Col style={{ width: wp('14.3%') + 2, paddingLeft: wp('3.3%')}}>
             <TouchableHighlight style={styles.postAuthorAvatarWrap}>
               <Image
                 source={avatarSource}

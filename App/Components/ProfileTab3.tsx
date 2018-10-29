@@ -35,7 +35,7 @@ const guid = ()  =>{
 
 export default class ProfileTab3 extends Component {
   render() {
-    const { about, clinks, educations, jobs } = this.props;
+    const { about, clinks, educations, jobs } = this.props.user;
     return (
       <List>
         <ListItem noIndent style={styles.listItem}>
