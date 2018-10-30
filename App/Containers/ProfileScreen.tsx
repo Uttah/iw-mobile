@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withApollo } from 'react-apollo';
 import { ScrollView, View } from 'react-native';
-import { Tabs, Tab, TabHeading, Text, Fab, Container, Spinner } from 'native-base';
+import { Tabs, Tab, TabHeading, Text,  Container, Spinner } from 'native-base';
 import ProfileTop from '../Components/ProfileTop';
 import ProfileTab1 from '../Components/ProfileTab1';
 import ProfileTab2 from '../Components/ProfileTab2';
 import ProfileTab3 from '../Components/ProfileTab3';
-import styles from './Styles/ProfileScreenStyles';
 import { FontAwesome } from '@expo/vector-icons';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ProfileTabs } from '../Services/Enums';
-import { withApollo } from 'react-apollo';
 import { 
   GET_USER, 
   GET_CHATS, 
@@ -19,6 +18,7 @@ import {
 } from '../Services/Graphql';
 import { ToastActionsCreators } from 'react-native-redux-toast';
 import ControlPanel from '../Components/ControlPanel';
+import styles from './Styles/ProfileScreenStyles';
 
 const fetchUser = async(client:any, id:string) => {
   try {
@@ -95,7 +95,7 @@ class ProfileScreen extends Component {
   }
 
   loadFollowers = () => {
-    const { client, dispatch, authUser } = this.props;
+    const { client, authUser } = this.props;
     const { profileId } = this.state;
     
     fetchFollowers(client, profileId)

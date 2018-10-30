@@ -8,6 +8,11 @@ import styles from './Styles/FollowStyles';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 class Follow extends Component<any> {
+  static defaultProps: {
+    primary: false,
+    style: {}
+  }
+
   followUser = async() => {
     const { client, id, afterFollow } = this.props;
     client.mutate({
@@ -37,21 +42,21 @@ class Follow extends Component<any> {
   }
 
   render() {
-    const { isFollowing } = this.props;
+    const { isFollowing, primary, style } = this.props;
     const text = isFollowing ? 'Unfollow' : 'Follow';
     const onPress = isFollowing ? this.unFollowUser : this.followUser;
     const iconName = isFollowing ? 'remove-circle-outline' : 'add-circle-outline';
 
     return (
-      <TouchableOpacity style={styles.btn} onPress={onPress}>
+      <TouchableOpacity style={[primary ? styles.btnPrimary : styles.btn, style]} onPress={onPress}>
         <MaterialIcons 
           active 
           name={iconName}
-          color={'#5A6978'} 
+          color={primary ? '#fff' : '#5A6978'} 
           size={hp('2.25%')} 
-          style={styles.btnicon}
+          style={primary ? styles.btnPrimaryIcon : styles.btnicon}
         />
-        <Text style={styles.btntext}>{text}</Text>
+        <Text style={primary ? styles.btnPrimaryText : styles.btntext}>{text}</Text>
       </TouchableOpacity>
     );
   }

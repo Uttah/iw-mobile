@@ -27,22 +27,6 @@ export default StyleSheet.create({
   },
   container: {
   },
-  button: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.brandPrimary,
-    borderRadius: 6,
-    width: hp('13.7%') + 2,
-    height: hp('3.15%'),
-    marginTop: hp('1.2%'),
-    marginBottom: hp('1.35%')
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: hp('1.95%')
-  },
   name: {
     color: Colors.brandPrimary,
     fontSize: hp('2.1%')
@@ -54,5 +38,9 @@ export default StyleSheet.create({
   subscribers: {
     fontSize: hp('1.95%'),
     color: '#969FAA',
+  },
+  follow: {
+    marginTop: hp('1.2%'),
+    marginBottom: hp('1.35%')
   }
 });
