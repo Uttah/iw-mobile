@@ -1,11 +1,12 @@
 import React from 'react';
 import { Query } from 'react-apollo';
+import {
+  GET_INVESTORS
+} from '../Services/Graphql';
 import { View, FlatList } from 'react-native';
 import { Text, Spinner } from 'native-base';
-import gql from 'graphql-tag';
-import styles from './Styles/InvestorsStyles';
 import InvestorItem from '../Components/InvestorItem';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import styles from './Styles/InvestorsStyles';
 
 type Props = {
   userId: number,
@@ -15,7 +16,7 @@ type Props = {
 
 const listTop = () => {
   return (
-    <View style={{ borderWidth: 1, borderColor: 'rgba(178, 178, 178, 0.5)', height: hp('9.29%'), flex: 1 }}>
+    <View style={styles.listTop}>
       <Text style={styles.headerTitle}>Investors</Text>
     </View>
   );
@@ -34,7 +35,7 @@ const InvestorsList = ({ items, onPress }) => (
   />
 );
 
-export default function Investors({userId, fakeItems, onProfilePress}: Props) {
+export default function Investors({fakeItems, onProfilePress}: Props) {
   const input = {
     "sortBy": "NUMBER_OF_FOLLOWERS"
   };
@@ -64,13 +65,3 @@ export default function Investors({userId, fakeItems, onProfilePress}: Props) {
     </Query>
   )
 }
-
-const GET_INVESTORS = gql`
-query getInvestors($input: InvestorsFilterParamsInput!) {
-  getInvestors(input: $input) {
-    id,
-    name,
-    login,
-    countOfFollowers
-  }
-}`;

@@ -225,3 +225,14 @@ export const GET_SUBSCRIBERS = gql`
     }
   }
 `;
+
+export const GET_INVESTORS = gql`
+query getInvestors($input: InvestorsFilterParamsInput!) {
+  getInvestors(input: $input) {
+    id
+    name
+    login
+    avatar
+    countOfFollowers
+  }
+}`;

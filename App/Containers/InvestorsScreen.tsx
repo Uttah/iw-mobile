@@ -23,7 +23,6 @@ class InvestorsScreen extends Component<Props> {
   }
 
   render() {
-    const { userId } = this.props;
     const items = [
       { id: '1', messagesNum: 3, author: 'Иван Фёдоров' },
       { id: '2', messagesNum: 0, author: 'Елена Кукушкина' }
@@ -32,9 +31,8 @@ class InvestorsScreen extends Component<Props> {
       <Container>
         <ScrollView style={styles.mainContainer}>
           <Investors 
-            userId={userId} 
-            onProfilePress={this.onProfilePress}
             fakeItems={items}
+            onProfilePress={this.onProfilePress}
           />
         </ScrollView>
       </Container>
