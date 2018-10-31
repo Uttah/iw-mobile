@@ -18,6 +18,7 @@ export const reducers = combineReducers({
   form: formReducer,
   toast: toast,
   edituser: require('./EditUserRedux').reducer,
+  investorsfilter: require('./InvestorsFilterRedux').reducer,
 })
 
 export default () => {

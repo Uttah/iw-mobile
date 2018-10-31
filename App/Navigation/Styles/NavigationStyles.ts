@@ -8,5 +8,9 @@ export default StyleSheet.create({
   menuicon: {
     color: '#fff',
     paddingLeft: 10
+  },
+  filterIcon: {
+    color: '#fff',
+    paddingRight: 10
   }
 })

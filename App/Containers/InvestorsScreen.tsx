@@ -3,14 +3,13 @@ import { ScrollView} from 'react-native';
 import { Container } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationScreenProp } from 'react-navigation';
-import styles from './Styles/InvestorsScreenStyles';
 import Investors from '../Components/Investors';
-import UserActions from '../Redux/UserRedux';
 import { NavigationActions } from 'react-navigation';
+import styles from './Styles/InvestorsScreenStyles';
+import InvestorsFilters from 'App';
 
 type Props = {
-  navigation: NavigationScreenProp<any, any>,
-  userId: string
+  navigation: NavigationScreenProp<any, any>
 }
 
 class InvestorsScreen extends Component<Props> {
@@ -27,11 +26,19 @@ class InvestorsScreen extends Component<Props> {
       { id: '1', messagesNum: 3, author: 'Иван Фёдоров' },
       { id: '2', messagesNum: 0, author: 'Елена Кукушкина' }
     ];
+    const filter = this.props.filter;
+    let input = {
+      sortBy: filter.sortBy
+    };
+    if ('country' in filter && filter.country.length > 0) {
+      input.country = filter.country;
+    }
     return (
       <Container>
         <ScrollView style={styles.mainContainer}>
           <Investors 
             fakeItems={items}
+            input={input}
             onProfilePress={this.onProfilePress}
           />
         </ScrollView>
@@ -40,11 +47,10 @@ class InvestorsScreen extends Component<Props> {
   }
 }
 
-function mapStateToProps (state) {
-  let obj = {
-    userId: state.user.authUser.id
+function mapStateToProps ({investorsfilter}:any) {
+  return {
+    filter: investorsfilter
   };
-  return obj;
 }
 
 export default connect(mapStateToProps)(InvestorsScreen);

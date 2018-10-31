@@ -23,6 +23,7 @@ import EditProfileScreen from '../Containers/EditProfileScreen';
 import SettingsScreen from '../Containers/SettingsScreen';
 import ChangePhoneScreen from '../Containers/ChangePhoneScreen';
 import ChangePasswordScreen from '../Containers/ChangePasswordScreen';
+import InvestorsFiltersScreen from '../Containers/InvestorsFiltersScreen';
 import { MaterialIcons } from '@expo/vector-icons';
 import DrawerContent from '../Components/DrawerContent';
 
@@ -33,6 +34,17 @@ function DrawerButton({navigation}) {
       navigation.openDrawer();
     }}>
       <MaterialIcons name='menu' size={25} style={styles.menuicon}/>
+    </TouchableOpacity>
+  );
+}
+
+const InvestorsFiltersWithNavigation = withNavigation(InvestorsFilters);
+function InvestorsFilters({navigation}) {
+  return (
+    <TouchableOpacity onPress={() => {
+      navigation.navigate('InvestorsFiltersScreen');
+    }}>
+      <MaterialIcons name='filter-list' size={25} style={styles.filterIcon}/>
     </TouchableOpacity>
   );
 }
@@ -214,7 +226,7 @@ const DrawerNav =  createDrawerNavigator({
           headerTintColor: '#fff',
           headerTitle: <HeaderLogo/>,
           headerLeft: <DrawerButtonWithNavigation />,
-          headerRight: <View/>
+          headerRight: <InvestorsFiltersWithNavigation />,
         }
       },
       ProfileScreen: {
@@ -228,6 +240,15 @@ const DrawerNav =  createDrawerNavigator({
       },
       MessageScreen: {
         screen: MessageScreen,
+        navigationOptions: {
+          headerStyle: styles.header,
+          headerTintColor: '#fff',
+          headerTitle: <HeaderLogo/>,
+          headerRight: <View/>          
+        }
+      },
+      InvestorsFiltersScreen: {
+        screen: InvestorsFiltersScreen,
         navigationOptions: {
           headerStyle: styles.header,
           headerTintColor: '#fff',

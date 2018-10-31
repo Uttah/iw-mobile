@@ -16,3 +16,8 @@ export enum Notifications {
   Join,
   Reply
 }
+
+export enum SortInvestors {
+  registrationDate = 'REGISTRATION_DATE',
+  followers = 'NUMBER_OF_FOLLOWERS'
+}

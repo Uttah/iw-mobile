@@ -35,11 +35,7 @@ const InvestorsList = ({ items, onPress }) => (
   />
 );
 
-export default function Investors({fakeItems, onProfilePress}: Props) {
-  const input = {
-    "sortBy": "NUMBER_OF_FOLLOWERS"
-  };
-
+export default function Investors({fakeItems, input, onProfilePress}: Props) {
   return (
     <Query query={GET_INVESTORS} variables={{input}}>
       {({ loading, error, data }) => {

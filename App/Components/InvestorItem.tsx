@@ -92,7 +92,7 @@ class InvestorItem extends Component {
           }
           <Text style={styles.name}>{name}</Text>
           {!!login && login.length > 0 && <Text style={styles.login}>@{login}</Text>}
-          <Text style={styles.subscribers}>{countOfFollowers} subscribers</Text>
+          <Text style={styles.subscribers}>{countOfFollowers} followers</Text>
         </View>
       </TouchableOpacity>
     );
