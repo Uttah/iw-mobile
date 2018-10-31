@@ -42,10 +42,11 @@ const RadioButtons = ({ name, options, onPress }) => (
 class InvestorsFilters extends Component<Props> {
 
   componentDidMount() {
-    const { country, sortBy } = this.props;
+    const { country, sortBy, name } = this.props;
     this.props.initialize({  
       country: (!!country ? country : ''),
       sortBy: (!!sortBy ? sortBy : SortInvestors.registrationDate),
+      name: (!!name ? name : '')
     });
   }
 
@@ -57,6 +58,13 @@ class InvestorsFilters extends Component<Props> {
     const { onSave } = this.props;
     return (
       <View style={styles.container}>
+        <Text style={styles.fieldTitle}>Name</Text>
+        <Field 
+          name='name'
+          component={InputField} 
+          style={styles.input}
+          placeholder='Name'
+        />
         <Text style={styles.fieldTitle}>Country</Text>
         <Field 
           name='country'

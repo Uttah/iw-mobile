@@ -19,7 +19,7 @@ class InvestorsFiltersScreen extends Component<Props> {
   }
 
   render() {
-    const { country, sortBy} = this.props.investorsfilter;
+    const { country, sortBy, name } = this.props.investorsfilter;
     return (
       <KeyboardAwareScrollView
         style={styles.mainContainer}  
@@ -28,6 +28,7 @@ class InvestorsFiltersScreen extends Component<Props> {
         <InvestorsFilters 
           country={country}
           sortBy={sortBy}
+          name={name}
           onSave={this.onSave}
         />
       </KeyboardAwareScrollView>

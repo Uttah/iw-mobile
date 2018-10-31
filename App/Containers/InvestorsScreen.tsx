@@ -6,7 +6,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import Investors from '../Components/Investors';
 import { NavigationActions } from 'react-navigation';
 import styles from './Styles/InvestorsScreenStyles';
-import InvestorsFilters from 'App';
+
 
 type Props = {
   navigation: NavigationScreenProp<any, any>
@@ -32,6 +32,9 @@ class InvestorsScreen extends Component<Props> {
     };
     if ('country' in filter && filter.country.length > 0) {
       input.country = filter.country;
+    }
+    if ('name' in filter && filter.name.length > 0) {
+      input.name = filter.name;
     }
     return (
       <Container>

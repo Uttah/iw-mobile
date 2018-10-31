@@ -13,12 +13,13 @@ export default Creators;
 
 export const INITIAL_STATE = Immutable({
   sortBy: SortInvestors.registrationDate,
-  country: ''
+  country: '',
+  name: ''
 });
 
 export const apply = (state, action) => {
-  const { sortBy, country } = action.filters;
-  return state.merge({ sortBy, country });
+  const { sortBy, country, name } = action.filters;
+  return state.merge({ sortBy, country, name });
 };
 
 export const reducer = createReducer(INITIAL_STATE, {
